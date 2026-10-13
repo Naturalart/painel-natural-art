@@ -8,7 +8,7 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "FRETE GRÁTIS PARA SUL E SUDESTE ACIMA DE R$ 299",
+            "text": "FRETE GRÁTIS: SUL E SUDESTE ACIMA DE R$ 299 · DEMAIS REGIÕES ACIMA DE R$ 399",
             "link": "",
             "font": "var(--font-subheading--family)",
             "font_size": "0.75rem",
