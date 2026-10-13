@@ -3,3 +3,7 @@ project_id = "dypfoaddfharggwrbfed"
 [functions.sync]
 # A função confere o próprio segredo (ver index.ts), então o JWT do Supabase não é exigido.
 verify_jwt = false
+
+[functions.conectar]
+# Recebe o redirecionamento do navegador depois de autorizar o app; não tem JWT.
+verify_jwt = false

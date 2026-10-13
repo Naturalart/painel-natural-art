@@ -130,7 +130,10 @@ const meta: Fonte = async (db, desde) => {
 
 // ---------------- Nuvemshop (vendas + etiquetas do Nuvem Envio) ----------------
 const nuvemshop: Fonte = async (db, desde) => {
-  const loja = env("NUVEMSHOP_STORE_ID"), token = env("NUVEMSHOP_TOKEN"), hoje = hojeBR();
+  // Token vem da autorização do app (função conectar); o segredo NUVEMSHOP_TOKEN fica como alternativa.
+  const { data: integ } = await db.from("integracoes").select("dados").eq("nome", "nuvemshop").maybeSingle();
+  const token = integ?.dados?.access_token ?? env("NUVEMSHOP_TOKEN");
+  const loja = integ?.dados?.loja || Deno.env.get("NUVEMSHOP_STORE_ID") || "2427817", hoje = hojeBR();
   const pedidos: any[] = [];
   for (let page = 1; page < 100; page++) {
     const r = await fetch(`https://api.tiendanube.com/v1/${loja}/orders?created_at_min=${desde}T00:00:00-03:00&per_page=200&page=${page}`, {
