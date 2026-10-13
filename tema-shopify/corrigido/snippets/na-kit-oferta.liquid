@@ -1,0 +1,47 @@
+{%- comment -%}
+  Natural Art: oferta de kit na página da bermuda avulsa ("Leve 3 por R$ X").
+  Mapa: trecho do handle do produto avulso -> handle do kit. O kit precisa existir e ter estoque.
+{%- endcomment -%}
+{%- liquid
+  assign kit_handle = blank
+  assign kit_qtd = 0
+  assign kit_cores = ''
+  unless product.tags contains 'sem-cupom-kit'
+    if product.handle contains 'walk-flat'
+      assign kit_handle = 'compre-1-leve-3-bermudas-passeio-walk-flat-20-preto-verde-e-cinza'
+      assign kit_qtd = 3
+      assign kit_cores = 'Preto, Verde e Cinza'
+    elsif product.handle contains 'walk-ibiza'
+      assign kit_handle = 'compre-1-leve-2-bermudas-passeio-walk-ibiza-20-marinho-e-verde'
+      assign kit_qtd = 2
+      assign kit_cores = 'Marinho e Verde'
+    endif
+  endunless
+  if kit_handle != blank
+    assign kit = all_products[kit_handle]
+  endif
+-%}
+{%- if kit != blank and kit.available -%}
+  {%- liquid
+    assign unit = product.selected_or_first_available_variant.price
+    assign avulsas = unit | times: kit_qtd
+    assign economia = avulsas | minus: kit.price
+    assign cada = kit.price | divided_by: kit_qtd
+  -%}
+  <a class="na-kit-oferta" href="{{ kit.url }}">
+    <span class="na-kit-oferta__tag">Kit</span>
+    <span class="na-kit-oferta__txt">
+      <strong>Leve {{ kit_qtd }} por {{ kit.price | money }}</strong>
+      <span>{{ kit_cores }} · sai {{ cada | money }} cada{% if economia > 0 %} · economize {{ economia | money }}{% endif %}</span>
+    </span>
+    <span class="na-kit-oferta__cta">Ver kit →</span>
+  </a>
+  <style>
+    .na-kit-oferta{display:flex;align-items:center;gap:12px;margin:6px 0 4px;padding:12px 14px;border:1.5px solid #1a7a1a;border-radius:10px;background:#f3f7f3;color:#111;text-decoration:none;font-family:var(--font-body--family),sans-serif}
+    .na-kit-oferta__tag{flex-shrink:0;background:#1a7a1a;color:#fff;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+    .na-kit-oferta__txt{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+    .na-kit-oferta__txt strong{font-size:15px}
+    .na-kit-oferta__txt span{font-size:12px;color:#444}
+    .na-kit-oferta__cta{flex-shrink:0;font-size:13px;font-weight:700;color:#1a7a1a;white-space:nowrap}
+  </style>
+{%- endif -%}

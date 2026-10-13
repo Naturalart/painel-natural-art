@@ -234,7 +234,7 @@
               "type": "custom-liquid",
               "name": "Tabela de medidas",
               "settings": {
-                "custom_liquid": "{% render 'na-size-guide' %}"
+                "custom_liquid": "{% render 'na-kit-oferta' %}\n{% render 'na-size-guide' %}"
               },
               "blocks": {}
             },
