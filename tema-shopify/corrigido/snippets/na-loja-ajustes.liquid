@@ -55,8 +55,8 @@
       var u = uf(getCep());
       if (u) {
         var M = meta(u), troca = comForm ? '<button type="button" class="na-frete-troca" data-na-troca>trocar CEP</button>' : '';
-        if (t >= M) return [(prod ? 'Levando esta peça, seu pedido tem ' : 'Seu pedido tem ') + '<strong>frete grátis</strong> para ' + u + ' ✅' + troca, 100];
-        return [(prod ? 'Com esta peça, faltam ' : 'Faltam ') + '<strong>' + fmt(M - t) + '</strong> para <strong>frete grátis</strong> para ' + u + troca, Math.round(t / M * 100)];
+        if (t >= M) return [(prod ? 'Levando esta peça, seu pedido tem ' : 'Seu pedido tem ') + '<strong>frete grátis</strong> para o seu CEP (' + u + ') ✅' + troca, 100];
+        return [(prod ? 'Com esta peça, faltam ' : 'Faltam ') + '<strong>' + fmt(M - t) + '</strong> para <strong>frete grátis</strong> no seu CEP (' + u + ')' + troca, Math.round(t / M * 100)];
       }
       var f = comForm ? form() : '';
       if (t >= OUTRAS) return [(prod ? 'Levando esta peça, seu pedido tem ' : 'Seu pedido tem ') + '<strong>frete grátis</strong> para todo o Brasil ✅', 100];
