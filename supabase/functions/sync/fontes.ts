@@ -17,11 +17,32 @@ const Q_SQL = `query S($q: String!) { shopifyqlQuery(query: $q) { tableData { co
 // Pedidos que contam como venda. VOIDED (Pix não pago, testes anulados) e REFUNDED ficam de fora.
 const PAGOS = new Set(["PAID", "PARTIALLY_PAID", "PARTIALLY_REFUNDED", "AUTHORIZED"]);
 
+// Token da Admin API. App do Dev Dashboard instalado na própria loja: client credentials (vale 24h, guardado em integracoes).
+// Se existir SHOPIFY_ADMIN_TOKEN (app antigo do admin), usa ele direto.
+let tokenShopify: string | null = null;
+async function shopifyToken(db: SupabaseClient, loja: string): Promise<string> {
+  const fixo = Deno.env.get("SHOPIFY_ADMIN_TOKEN");
+  if (fixo) return fixo;
+  if (tokenShopify) return tokenShopify;
+  const { data } = await db.from("integracoes").select("dados").eq("nome", "shopify").maybeSingle();
+  if (data?.dados?.access_token && (data.dados.expira_em ?? 0) > Date.now() + 600_000) return (tokenShopify = data.dados.access_token);
+  const r = await fetch(`https://${loja}/admin/oauth/access_token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
+    body: new URLSearchParams({ grant_type: "client_credentials", client_id: env("SHOPIFY_CLIENT_ID"), client_secret: env("SHOPIFY_CLIENT_SECRET") }),
+  });
+  const t = await r.json().catch(() => ({}));
+  if (!r.ok || !t.access_token) throw new Error(`Shopify login ${r.status}: ${JSON.stringify(t).slice(0, 200)}. Confira se o app está instalado na loja.`);
+  await db.from("integracoes").upsert({ nome: "shopify", dados: { access_token: t.access_token, expira_em: Date.now() + (t.expires_in ?? 86399) * 1000 }, atualizado_em: agora() });
+  return (tokenShopify = t.access_token);
+}
+
+let dbShopify: SupabaseClient;
 async function shopifyGQL(query: string, variables: Record<string, unknown>) {
-  const loja = env("SHOPIFY_STORE"); // ex. k4rwik-3n.myshopify.com
+  const loja = Deno.env.get("SHOPIFY_STORE") ?? "k4rwik-3n.myshopify.com";
   const j = await getJSON(`https://${loja}/admin/api/${SHOP_API}/graphql.json`, {
     method: "POST",
-    headers: { "X-Shopify-Access-Token": env("SHOPIFY_ADMIN_TOKEN"), "Content-Type": "application/json" },
+    headers: { "X-Shopify-Access-Token": await shopifyToken(dbShopify, loja), "Content-Type": "application/json" },
     body: JSON.stringify({ query, variables }),
   });
   if (j.errors) throw new Error("Shopify: " + JSON.stringify(j.errors).slice(0, 300));
@@ -39,6 +60,7 @@ async function shopifyQL(q: string): Promise<Record<string, string>[]> {
 }
 
 const shopify: Fonte = async (db, desde) => {
+  dbShopify = db; tokenShopify = null;
   const hoje = hojeBR();
   const vendas = new Map<string, { receita: number; bruto: number; descontos: number; frete_cobrado: number; pedidos: number; pecas: number }>();
   for (const d of dias(desde, hoje)) vendas.set(d, { receita: 0, bruto: 0, descontos: 0, frete_cobrado: 0, pedidos: 0, pecas: 0 });
