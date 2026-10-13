@@ -1,31 +1,70 @@
 {%- comment -%}
-  Natural Art: oferta de kit na página da bermuda avulsa ("Leve 3 por R$ X").
-  Mapa: trecho do handle do produto avulso -> handle do kit. O kit precisa existir e ter estoque.
+  Natural Art: oferta de kit na página da bermuda avulsa ("Leve 2 por R$ X").
+  Mapa: handle do produto avulso -> kits candidatos "handle;qtd;cores", separados por "|".
+  Usa o primeiro kit publicado e com estoque; se nenhum estiver no ar, o bloco não aparece.
 {%- endcomment -%}
 {%- liquid
-  assign kit_handle = blank
-  assign kit_qtd = 0
-  assign kit_cores = ''
+  assign k3_flat = 'compre-1-leve-3-bermudas-passeio-walk-flat-20-preto-verde-e-cinza;3;Preto, Verde e Cinza'
+  assign k2_flat = 'kit-2-bermudas-passeio-walk-flat-20-preto-e-verde;2;Preto e Verde'
+  assign k2_ibiza = 'compre-1-leve-2-bermudas-passeio-walk-ibiza-20-marinho-e-verde;2;Marinho e Verde'
+  assign k2_pocket = 'kit-2-bermudas-passeio-walk-pocket-20-bege-e-preto;2;Bege e Preto'
+  assign k2_hib = 'kit-2-bermudas-hibridas-20-clear-vermelho-e-neo-blend-chumbo;2;Clear Vermelho e Neo Blend Chumbo'
+  assign k2_stripe = 'kit-2-bermudas-hibridas-20-stripe-cinza-e-neo-blend-chumbo;2;Stripe Cinza e Neo Blend Chumbo'
+  assign k3_hib = 'kit-3-bermudas-hibridas-20-clear-vermelho-neo-blend-chumbo-e-stripe-chumbo;3;Clear, Neo Blend e Stripe'
+  assign k2_pc_cinza = 'kit-praia-e-cidade-20-walk-flat-cinza-e-hibrida-neo-blend-chumbo;2;Walk Flat Cinza e Híbrida Neo Blend'
+  assign k2_deep = 'kit-2-bermudas-elastico-deep-18-preto-e-caqui;2;Preto e Caqui'
+  assign k3_elastico = 'kit-3-bermudas-elastico-18-deep-preto-deep-caqui-e-degrade-logos;3;Deep Preto, Deep Caqui e Degradê'
+
+  assign candidatos = ''
   unless product.tags contains 'sem-cupom-kit'
-    if product.handle contains 'walk-flat'
-      assign kit_handle = 'compre-1-leve-3-bermudas-passeio-walk-flat-20-preto-verde-e-cinza'
-      assign kit_qtd = 3
-      assign kit_cores = 'Preto, Verde e Cinza'
-    elsif product.handle contains 'walk-ibiza'
-      assign kit_handle = 'compre-1-leve-2-bermudas-passeio-walk-ibiza-20-marinho-e-verde'
-      assign kit_qtd = 2
-      assign kit_cores = 'Marinho e Verde'
-    endif
+    case product.handle
+      when 'bermuda-passeio-walk-flat-20', 'bermuda-passeio-walk-flat-20-verde-f2nrl'
+        assign candidatos = k2_flat | append: '|' | append: k3_flat
+      when 'bermuda-passeio-walk-flat-20-cinza'
+        assign candidatos = k2_pc_cinza | append: '|' | append: k3_flat
+      when 'bermuda-passeio-walk-pocket-20-bege-9bx16', 'bermuda-passeio-walk-pocket-20-preto-1e81f'
+        assign candidatos = k2_pocket
+      when 'bermuda-c-bolso-hibrida-clear-20-vermelho-1itws', 'bermuda-c-bolso-hybrida-neo-blend-20-chumbo-il7al'
+        assign candidatos = k2_hib | append: '|' | append: k3_hib
+      when 'bermuda-c-bolso-hybrida-stripes-20-14vyf'
+        assign candidatos = k2_stripe
+      when 'bermuda-c-bolso-hybrida-stripes-20-chumbo-1k1j6'
+        assign candidatos = k3_hib
+      when 'bermuda-elastico-deep-18', 'bermuda-elastico-deep-19'
+        assign candidatos = k2_deep | append: '|' | append: k3_elastico
+      when 'shorts-elastico-degrade-logos-18-azul'
+        assign candidatos = k3_elastico
+      else
+        if product.handle contains 'walk-flat'
+          assign candidatos = k2_flat | append: '|' | append: k3_flat
+        elsif product.handle contains 'walk-ibiza'
+          assign candidatos = k2_ibiza
+        endif
+    endcase
   endunless
-  if kit_handle != blank
-    assign kit = all_products[kit_handle]
-  endif
+
+  assign kit = blank
+  assign lista = candidatos | split: '|'
+  for c in lista
+    assign partes = c | split: ';'
+    assign k = all_products[partes[0]]
+    if k != blank and k.available
+      assign kit = k
+      assign kit_qtd = partes[1] | plus: 0
+      assign kit_cores = partes[2]
+      break
+    endif
+  endfor
 -%}
 {%- if kit != blank and kit.available -%}
   {%- liquid
-    assign unit = product.selected_or_first_available_variant.price
-    assign avulsas = unit | times: kit_qtd
-    assign economia = avulsas | minus: kit.price
+    if kit.compare_at_price > kit.price
+      assign economia = kit.compare_at_price | minus: kit.price
+    else
+      assign unit = product.selected_or_first_available_variant.price
+      assign avulsas = unit | times: kit_qtd
+      assign economia = avulsas | minus: kit.price
+    endif
     assign cada = kit.price | divided_by: kit_qtd
   -%}
   <a class="na-kit-oferta" href="{{ kit.url }}">
