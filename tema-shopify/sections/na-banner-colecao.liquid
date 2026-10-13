@@ -1,0 +1,53 @@
+{%- comment -%}
+  Banner da coleção (Natural Art). Mapeia o handle da coleção para imagens em Arquivos.
+  Quando existe banner, esconde a seção de título padrão logo abaixo e mantém um h1 oculto para SEO.
+{%- endcomment -%}
+{%- liquid
+  assign h = collection.handle
+  assign desk = ''
+  assign mob = ''
+  case h
+    when 'hybrid', 'bermudas-passeio'
+      assign desk = 'na-banner-hibridas-desktop.jpg'
+      assign mob = 'na-banner-hibridas-mobile.jpg'
+    when 'bermudas-passeio-walk'
+      assign desk = 'na-banner-walk-desktop.jpg'
+  endcase
+  assign img_d = blank
+  assign img_m = blank
+  if desk != ''
+    assign img_d = images[desk]
+  endif
+  if mob != ''
+    assign img_m = images[mob]
+  endif
+-%}
+{%- if img_d != blank -%}
+  <div class="na-banner-colecao{% if img_m == blank %} na-banner-colecao--so-desktop{% endif %}">
+    <h1 class="visually-hidden">{{ collection.title }}</h1>
+    <picture>
+      {%- if img_m != blank -%}
+        <source media="(max-width: 749px)" srcset="{{ img_m | image_url: width: 750 }} 750w, {{ img_m | image_url: width: 1080 }} 1080w" sizes="100vw">
+      {%- endif -%}
+      <img src="{{ img_d | image_url: width: 1920 }}"
+        srcset="{{ img_d | image_url: width: 1200 }} 1200w, {{ img_d | image_url: width: 1600 }} 1600w, {{ img_d | image_url: width: 1920 }} 1920w"
+        sizes="100vw" width="1920" height="700" alt="{{ img_d.alt | escape }}" fetchpriority="high" loading="eager">
+    </picture>
+  </div>
+  <style>
+    .na-banner-colecao img { display:block; width:100%; height:auto; }
+    {%- if img_m != blank -%}
+      #shopify-section-{{ section.id }} + .shopify-section { display:none; }
+    {%- else -%}
+      @media (max-width: 749px) { .na-banner-colecao--so-desktop { display:none; } }
+      @media (min-width: 750px) { #shopify-section-{{ section.id }} + .shopify-section { display:none; } }
+    {%- endif -%}
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Banner da coleção (NA)",
+  "settings": []
+}
+{% endschema %}
