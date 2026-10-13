@@ -1,0 +1,5 @@
+project_id = "dypfoaddfharggwrbfed"
+
+[functions.sync]
+# A função confere o próprio segredo (ver index.ts), então o JWT do Supabase não é exigido.
+verify_jwt = false

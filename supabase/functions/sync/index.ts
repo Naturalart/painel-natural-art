@@ -43,11 +43,18 @@ async function avisarFalha(fonte: string, erro: string) {
   }).catch(() => {});
 }
 
-Deno.serve(async (req) => {
+// A agenda manda o segredo gerado dentro do banco (integracoes 'agenda'); ele nunca sai do Supabase.
+async function autorizado(req: Request): Promise<boolean> {
   const auth = req.headers.get("Authorization") ?? "";
-  if (auth !== `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`) {
-    return new Response("não autorizado", { status: 401 });
-  }
+  if (auth === `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`) return true;
+  const enviado = req.headers.get("x-sync-segredo");
+  if (!enviado) return false;
+  const { data } = await db.from("integracoes").select("dados").eq("nome", "agenda").maybeSingle();
+  return !!data?.dados?.segredo && data.dados.segredo === enviado;
+}
+
+Deno.serve(async (req) => {
+  if (!(await autorizado(req))) return new Response("não autorizado", { status: 401 });
   const url = new URL(req.url);
   const pedidas = (url.searchParams.get("fontes") ?? "").split(",").map((s) => s.trim()).filter(Boolean);
   const desdeParam = url.searchParams.get("desde");
