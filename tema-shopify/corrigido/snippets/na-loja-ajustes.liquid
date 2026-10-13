@@ -1,0 +1,54 @@
+{%- comment -%}
+  Natural Art, ajustes globais da loja (renderizado no rodapé):
+  1. Esconde o selo "ECONOMIZE R$ X" (blocks/price.liquid); o preço riscado continua.
+  2. Barra "faltam R$ X para frete grátis" no carrinho (gaveta e página /cart).
+     Regra: frete grátis acima de R$ 299 para Sul e Sudeste.
+{%- endcomment -%}
+<style>
+  .na-discount-badge{display:none!important}
+  .na-cart-frete{margin:10px 0 4px;padding:10px 12px;border-radius:8px;background:#f3f7f3;text-align:center;font-family:var(--font-body--family),sans-serif}
+  .na-cart-frete p{margin:0 0 6px;font-size:13px;line-height:1.35;color:#222}
+  .na-cart-frete p strong{color:#1a7a1a}
+  .na-cart-frete__track{height:5px;border-radius:3px;background:rgba(0,0,0,.08);overflow:hidden}
+  .na-cart-frete__fill{height:100%;width:0;background:#1a7a1a;border-radius:3px;transition:width .4s ease}
+  .na-cart-frete[hidden]{display:none}
+</style>
+<script>
+  (function () {
+    var T = 29900;
+    var total = null;
+    function fmt(c) { return 'R$ ' + (c / 100).toFixed(2).replace('.', ','); }
+    function html() {
+      if (total >= T) return '<p><strong>Seu pedido tem frete grátis</strong> para Sul e Sudeste ✅</p>';
+      return '<p>Faltam <strong>' + fmt(T - total) + '</strong> para <strong>frete grátis</strong> (Sul e Sudeste)</p>';
+    }
+    function paint() {
+      var anchors = document.querySelectorAll('.cart-drawer__header, .cart-page__title');
+      anchors.forEach(function (a) {
+        var bar = a.nextElementSibling;
+        if (!bar || !bar.classList || !bar.classList.contains('na-cart-frete')) {
+          bar = document.createElement('div');
+          bar.className = 'na-cart-frete';
+          bar.hidden = true;
+          bar.innerHTML = '<div></div><div class="na-cart-frete__track"><div class="na-cart-frete__fill"></div></div>';
+          a.insertAdjacentElement('afterend', bar);
+        }
+        if (total === null || total === 0) { bar.hidden = true; return; }
+        bar.firstElementChild.innerHTML = html();
+        bar.querySelector('.na-cart-frete__fill').style.width = Math.min(100, Math.round(total / T * 100)) + '%';
+        bar.hidden = false;
+      });
+    }
+    function refresh() {
+      fetch('/cart.js', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (c) { total = c.total_price; paint(); })
+        .catch(function () {});
+    }
+    var t;
+    new MutationObserver(function () { clearTimeout(t); t = setTimeout(paint, 60); })
+      .observe(document.body, { childList: true, subtree: true });
+    document.addEventListener('cart:update', function () { setTimeout(refresh, 150); });
+    refresh();
+  })();
+</script>
