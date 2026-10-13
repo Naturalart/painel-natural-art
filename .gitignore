@@ -1,0 +1,4 @@
+web/config.js
+node_modules/
+.env*
+supabase/.temp/

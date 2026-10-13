@@ -1,0 +1,9 @@
+{
+  "buildCommand": "node scripts/config.mjs",
+  "outputDirectory": "web",
+  "framework": null,
+  "installCommand": "",
+  "headers": [
+    { "source": "/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }, { "key": "Cache-Control", "value": "no-cache" }] }
+  ]
+}

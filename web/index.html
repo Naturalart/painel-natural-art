@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<title>Painel Natural Art</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="/config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: barra de período no topo, linha de resultado geral, depois um bloco por canal (loja online, TikTok Shop), loja ao vivo, lançamentos e custos. */
+:root{
+  --bg:#f3f5f6; --surface:#ffffff; --ink:#14212b; --muted:#5b6b77; --line:#dbe2e7;
+  --accent:#0d5b78; --accent-soft:#e1eef3;
+  --c-shop:#0d5b78; --c-nuvem:#7aa7b8; --c-tts:#c2477a;
+  --good:#1f7a4a; --good-bg:#e3f3ea; --warn:#9a6200; --warn-bg:#fbf0d9; --bad:#b03030; --bad-bg:#f8e3e3;
+  --f-display:"Archivo",system-ui,sans-serif; --f-body:"Figtree",system-ui,sans-serif; --f-data:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f161b; --surface:#172129; --ink:#e6edf1; --muted:#93a4b0; --line:#2a3741;
+  --accent:#5fb4d4; --accent-soft:#163746; --c-shop:#5fb4d4; --c-nuvem:#33677b; --c-tts:#e27aa5;
+  --good:#6fd39c; --good-bg:#16352a; --warn:#f0bf5c; --warn-bg:#3a2e14; --bad:#f08b8b; --bad-bg:#3d1d1d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161b; --surface:#172129; --ink:#e6edf1; --muted:#93a4b0; --line:#2a3741;
+  --accent:#5fb4d4; --accent-soft:#163746; --c-shop:#5fb4d4; --c-nuvem:#33677b; --c-tts:#e27aa5;
+  --good:#6fd39c; --good-bg:#16352a; --warn:#f0bf5c; --warn-bg:#3a2e14; --bad:#f08b8b; --bad-bg:#3d1d1d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:grid;gap:20px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+h1{font-size:1.6rem;font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.1rem;font-weight:700}
+h3{font-size:.95rem;font-weight:700}
+.num{font-family:var(--f-data);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:.82rem}
+.eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+header.top{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding-block:8px;z-index:5;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{font:inherit;font-size:.88rem;border:0;background:transparent;color:var(--ink);padding:7px 12px;cursor:pointer;white-space:nowrap}
+@media (max-width:420px){.seg button{padding:7px 8px;font-size:.82rem}}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface);font-weight:600}
+.datas{display:flex;gap:8px;align-items:end;flex-wrap:wrap;justify-content:end}
+.datas label{display:grid;gap:2px;font-size:.78rem;color:var(--muted)}
+.datas input{font:inherit;font-size:.88rem;padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+.datas .btn{padding:6px 12px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:14px;min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.kpi{background:var(--surface);padding:14px 16px;display:grid;gap:2px;align-content:start}
+.kpi .v{font-family:var(--f-data);font-size:1.35rem;font-weight:500;font-variant-numeric:tabular-nums}
+.kpi.hero .v{font-size:1.6rem;color:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pill.good{background:var(--good-bg);color:var(--good)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.neutral{background:var(--accent-soft);color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+.tbl{overflow-x:auto}
+.tbl.scroll{max-height:520px;overflow-y:auto}
+.sizes{font-family:var(--f-data);font-size:.78rem;color:var(--muted);white-space:normal}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em}
+td.r,th.r{text-align:right}
+tr.total td{font-weight:600;border-bottom:0;border-top:2px solid var(--line)}
+tr.sub td{color:var(--muted)}
+.note{font-size:.82rem;color:var(--muted);border-left:3px solid var(--line);padding-left:10px}
+.banner{font-size:.85rem;padding:10px 12px;border-radius:8px;background:var(--warn-bg);color:var(--warn)}
+.banner.bad{background:var(--bad-bg);color:var(--bad)}
+.funnel{display:grid;gap:8px}
+.frow{display:grid;grid-template-columns:110px 1fr 90px;gap:10px;align-items:center;font-size:.88rem}
+.fbar{height:14px;background:var(--accent-soft);border-radius:4px;overflow:hidden}
+.fbar span{display:block;height:100%;background:var(--accent);border-radius:4px}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-family:var(--f-data);font-size:10px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.8rem;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+form{display:grid;gap:10px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+label{display:grid;gap:4px;font-size:.78rem;color:var(--muted);font-weight:600}
+input,select{font:inherit;font-size:.9rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%;min-width:0}
+.btn{font:inherit;font-weight:600;font-size:.88rem;border:1px solid var(--accent);background:var(--accent);color:var(--surface);border-radius:6px;padding:8px 14px;cursor:pointer;justify-self:start}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.link{border:0;background:transparent;color:var(--muted);padding:2px 6px;font-weight:500;font-size:.8rem;text-decoration:underline}
+.btn.link.danger{color:var(--bad)}
+.status{font-size:.82rem;color:var(--muted);min-height:1.2em}
+.checklist{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.checklist li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:.88rem}
+.checklist li b{font-weight:600}
+@media (max-width:520px){.frow{grid-template-columns:84px 1fr 70px}.kpi .v{font-size:1.15rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.login{max-width:420px;margin:12vh auto;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:12px;display:grid;gap:14px}
+.login input{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.quem{display:flex;gap:10px;align-items:center;justify-content:end;font-size:.8rem;color:var(--muted)}
+[hidden]{display:none!important}
+</style>
+
+</head>
+<body>
+<main class="login" id="login" hidden>
+  <div class="eyebrow">Natural Art</div>
+  <h1 style="margin:0">Painel Natural Art</h1>
+  <p class="small muted" style="margin:0">Entre com seu e-mail. Mandamos um link de acesso, sem senha.</p>
+  <form id="f-login" style="display:grid;gap:10px">
+    <label for="lg-email" class="small">E-mail<input id="lg-email" type="email" required autocomplete="email" style="width:100%;margin-top:4px"></label>
+    <button class="btn" type="submit">Receber link de acesso</button>
+    <div class="status" id="lg-status" role="status"></div>
+  </form>
+</main>
+<div class="wrap" id="app" hidden>
+  <header class="top">
+    <div>
+      <div class="eyebrow">Natural Art · visão geral</div>
+      <h1>Painel Natural Art</h1>
+    </div>
+    <div style="display:grid;gap:6px;justify-items:end">
+      <div class="seg" role="group" aria-label="Período">
+        <button id="p-hoje" data-p="hoje" aria-pressed="false">Hoje</button>
+        <button id="p-ontem" data-p="ontem" aria-pressed="false">Ontem</button>
+        <button id="p-d7" data-p="d7" aria-pressed="true">7 dias</button>
+        <button id="p-mes" data-p="mes" aria-pressed="false">Mês atual</button>
+        <button id="p-custom" data-p="custom" aria-pressed="false">Datas</button>
+      </div>
+      <form id="f-datas" class="datas" hidden>
+        <label for="d-ini">De<input id="d-ini" type="date" required></label>
+        <label for="d-fim">Até<input id="d-fim" type="date" required></label>
+        <button class="btn" type="submit">Ver</button>
+      </form>
+      <div class="small muted" id="range"></div>
+      <div class="quem"><span id="quem"></span><button class="btn link" id="sair" type="button" hidden>Sair</button></div>
+    </div>
+  </header>
+
+  <section aria-label="Resultado geral">
+    <div id="acessoMsg"></div><div id="saudeMsg"></div>
+    <div class="kpis" id="kpis"></div>
+    <div id="metaMsg" style="margin-top:8px"></div>
+    <p class="small muted" style="margin:8px 0 0">Lucro real = faturamento menos peças, taxas de pagamento, imposto, sua comissão, frete, anúncios (com imposto do Meta), amostras e custos fixos. ROI = lucro antes dos anúncios ÷ verba de anúncio. Regras: ROI ≥ 2 e margem ≥ 15%.</p>
+  </section>
+
+  <div id="cfgWarn"></div>
+
+  <div class="grid2">
+    <section class="panel" aria-labelledby="h-loja">
+      <div class="head"><h2 id="h-loja">Shopify</h2><span id="pill-loja"></span></div>
+      <div class="tbl"><table id="t-loja"></table></div>
+      <p class="note">Vendas da Shopify, atualizadas de hora em hora. Anúncios: conta Meta "Natural Art Usa" (criativos), de hora em hora.</p>
+    </section>
+    <section class="panel" aria-labelledby="h-nuvem">
+      <div class="head"><h2 id="h-nuvem">Nuvemshop · catálogo</h2><span id="pill-nuvem"></span></div>
+      <div class="tbl"><table id="t-nuvem"></table></div>
+      <p class="note">Anúncios: conta Meta "Natural Art Conta de Anúncios" (catálogo), de hora em hora. Vendas e etiquetas do Nuvem Envio entram sozinhas pela API, atualizadas às 7h, 13h e 19h.</p>
+    </section>
+    <section class="panel" aria-labelledby="h-tts">
+      <div class="head"><h2 id="h-tts">TikTok Shop</h2><span id="pill-tts"></span></div>
+      <div class="tbl"><table id="t-tts"></table></div>
+      <p class="note">TikTok Shop não tem conector ainda: receita, pedidos, TikTok Ads e amostras para creators entram pelos lançamentos.</p>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="h-dia">
+    <div class="head"><h2 id="h-dia">Faturamento por dia</h2>
+      <div class="legend"><span><i class="dot" style="background:var(--c-shop)"></i>Shopify</span><span><i class="dot" style="background:var(--c-nuvem)"></i>Nuvemshop</span><span><i class="dot" style="background:var(--c-tts)"></i>TikTok Shop</span></div>
+    </div>
+    <div class="chart" id="chart"><p class="muted small">Carregando…</p></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-live">
+    <div class="head"><h2 id="h-live">Loja Shopify</h2><span class="small muted" id="fresh"></span></div>
+    <div id="liveMsg"></div>
+    <div class="grid2">
+      <div style="display:grid;gap:10px;min-width:0">
+        <h3>Funil da loja</h3>
+        <div class="funnel" id="funnel"><p class="muted small">Carregando…</p></div>
+        <p class="note">O checkout roda na Yampi. Visitas e carrinho vêm da Shopify; o passo de checkout vem da Yampi.</p>
+      </div>
+      <div style="display:grid;gap:10px;min-width:0">
+        <h3>De onde vêm as visitas</h3>
+        <div class="tbl"><table id="t-src"><tr><td class="muted small">Carregando…</td></tr></table></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div style="display:grid;gap:10px;min-width:0">
+        <h3>Checkout Yampi</h3>
+        <div class="tbl"><table id="t-yampi"><tr><td class="muted small">Os dados da Yampi aparecem aqui assim que a importação diária rodar.</td></tr></table></div>
+      </div>
+      <div style="display:grid;gap:10px;min-width:0">
+        <h3>Comportamento no site (Clarity)</h3>
+        <div class="tbl"><table id="t-clarity"><tr><td class="muted small">Os dados do Clarity aparecem aqui assim que a importação diária rodar.</td></tr></table></div>
+      </div>
+    </div>
+    <div style="display:grid;gap:10px;min-width:0">
+      <h3>Produtos que mais venderam</h3>
+      <div class="tbl"><table id="t-prod"><tr><td class="muted small">Carregando…</td></tr></table></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-est">
+    <div class="head"><h2 id="h-est">Estoque e-commerce</h2><span class="small muted" id="est-fresh"></span></div>
+    <div id="est-msg"></div>
+    <div class="kpis" id="est-kpis"></div>
+    <div class="tbl scroll"><table id="t-est"><tr><td class="muted small">Carregando estoque do Bling…</td></tr></table></div>
+    <p class="note">Só o depósito Geral - Ecommerce do Bling. Cobertura = estoque ÷ média de peças vendidas por dia na Shopify no período escolhido.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-lanc">
+    <div class="head"><h2 id="h-lanc">Lançamentos</h2><span class="small muted">Tudo que ainda não chega sozinho</span></div>
+    <form id="f-lanc" hidden>
+      <div class="fields">
+        <label for="l-data">Data<input id="l-data" type="date" required></label>
+        <label for="l-tipo">Tipo
+          <select id="l-tipo">
+            <option value="nuvemshop">Nuvemshop (só se a automação falhar)</option>
+            <option value="tiktok_ads">TikTok Ads / GMV Max (verba)</option>
+            <option value="tiktok_shop">TikTok Shop (vendas)</option>
+            <option value="meta_ads">Meta Ads Shopify (só se a automática falhar)</option>
+            <option value="meta_ads_catalogo">Meta Ads catálogo (só se a automática falhar)</option>
+            <option value="etiquetas_shopify">Etiquetas reais Shopify (Melhor Envio)</option>
+            <option value="etiquetas_nuvem">Etiquetas Nuvemshop (já automático pelo Nuvem Envio)</option>
+            <option value="amostras">Amostras para creators</option>
+            <option value="custo_fixo">Custo fixo (apps, designer…)</option>
+          </select></label>
+        <label for="l-valor" data-for="valor">Valor (R$)<input id="l-valor" type="number" step="0.01" min="0" inputmode="decimal"></label>
+        <label for="l-receita" data-for="receita">Receita (R$)<input id="l-receita" type="number" step="0.01" min="0" inputmode="decimal"></label>
+        <label for="l-pedidos" data-for="receita">Pedidos<input id="l-pedidos" type="number" step="1" min="0" inputmode="numeric"></label>
+        <label for="l-pecas" data-for="receita">Peças<input id="l-pecas" type="number" step="1" min="0" inputmode="numeric"></label>
+        <label for="l-nota">Nota<input id="l-nota" type="text" maxlength="120" placeholder="opcional"></label>
+      </div>
+      <button class="btn" type="submit">Adicionar lançamento</button>
+      <div class="status" id="l-status" role="status"></div>
+    </form>
+    <div class="tbl"><table id="t-lanc"><tr><td class="muted small">Carregando lançamentos…</td></tr></table></div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel" aria-labelledby="h-cfg">
+      <div class="head"><h2 id="h-cfg">Custos e taxas</h2><span class="small muted">Valem para todos os cálculos</span></div>
+      <form id="f-cfg">
+        <div class="fields" id="cfgFields"></div>
+        <button class="btn" type="submit" id="cfgSave" hidden>Salvar custos</button>
+        <div class="status" id="c-status" role="status"></div>
+      </form>
+      <details><summary class="small" style="cursor:pointer;color:var(--accent);font-weight:600">Custo reserva por modelo (quando o SKU não está no Bling)</summary>
+        <div class="tbl"><table id="t-mod"></table></div>
+        <p class="note">O custo principal vem do Bling, SKU a SKU. Esta tabela só entra quando o SKU vendido não tem custo no Bling.</p>
+      </details>
+    </section>
+    <section class="panel" aria-labelledby="h-con">
+      <div class="head"><h2 id="h-con">Atualizações</h2><span class="small muted">Shopify e Meta de hora em hora; o resto às 7h, 13h e 19h</span></div>
+      <ul class="checklist" id="t-saude"><li class="muted small">Carregando…</li></ul>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+const TZ='America/Sao_Paulo';
+const brl=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
+const int=new Intl.NumberFormat('pt-BR');
+const pct=v=>isFinite(v)?(v*100).toLocaleString('pt-BR',{maximumFractionDigits:1})+'%':'–';
+const money=v=>brl.format(v||0);
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const todayStr=()=>new Intl.DateTimeFormat('en-CA',{timeZone:TZ}).format(new Date());
+function addDays(s,n){const d=new Date(s+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
+function brDate(s){const [y,m,d]=s.split('-');return d+'/'+m}
+
+const CFG_FIELDS=[
+ ['custoPeca','Custo por peça sem cadastro (R$)',42,'Moletons, camisetas e lançamentos manuais'],
+ ['cartaoPct','Taxa cartão (%)',8.39],
+ ['pixPct','Taxa Pix (%)',0.99],
+ ['pixShare','Pedidos no Pix (%)',0,'Até a Yampi informar'],
+ ['impostoPct','Imposto sobre venda (%)',11,'Estrutura de custos de setembro'],
+ ['comissaoPct','Sua comissão (%)',10],
+ ['fretePedido','Etiqueta quando o estado é desconhecido (R$)',16,'Nuvemshop e pedidos sem estado; média Shopify'],
+ ['metaTaxPct','Imposto sobre Meta Ads (%)',12.15,'Confira na fatura do Meta'],
+ ['ttsTaxaPct','Comissão TikTok Shop (%)',12,'6% comissão + 6% programa de frete'],
+ ['ttsPorItem','Taxa TikTok por item (R$)',6],
+ ['ttsAfiliadoPct','Comissão de creators (%)',15,'Faixas 10, 15 ou 20%'],
+ ['ttsFretePedido','Frete por pedido, TikTok (R$)',0,'Parte paga por você'],
+];
+const REQUIRED=['impostoPct','fretePedido'];
+/* etiqueta real por estado: cotação mais barata no checkout em 09/10/2026 (Jadlog .COM; .Package no PA e CE; PAC no MS) */
+const ETIQUETA={'São Paulo':14.44,'Rio de Janeiro':18.22,'Minas Gerais':22.02,'Espírito Santo':22.76,'Paraná':19.18,'Santa Catarina':19.65,'Rio Grande do Sul':21.22,
+ 'Distrito Federal':21.22,'Goiás':22.76,'Mato Grosso do Sul':25.95,'Mato Grosso':26.20,'Bahia':24.57,'Sergipe':25.24,'Alagoas':26.20,'Pernambuco':29.04,'Paraíba':25.24,
+ 'Rio Grande do Norte':33.23,'Ceará':29.67,'Piauí':32.87,'Maranhão':31.91,'Pará':29.67,'Amapá':31.91,'Amazonas':32.87,'Roraima':31.91,'Acre':32.87,'Rondônia':36.35,'Tocantins':25.24};
+/* custo por peça por modelo; a primeira regra que bate vale (todas as palavras precisam aparecer no produto + variante) */
+const MODELOS=[['tie dye',40.5,'Tie Dye'],['ibiza',46.9,'Walk Ibiza'],['pocket',50.9,'Walk Pocket'],['walk stripe',45.9,'Walk Stripe'],['cargo',47.9,'Walk Cargo'],
+ ['flat+cinza',32,'Walk Flat Cinza'],['flat+verde',42.9,'Walk Flat Verde'],['flat+areia',42.9,'Walk Flat Areia'],['flat',49.9,'Walk Flat Preto'],
+ ['neo zip',42.5,'Neo Zip'],['ocean',32,'Ocean Zip'],['neo',35,'Híbrida Neo Blend'],['clear',40.5,'Híbrida Clear'],['stripes',43.9,'Híbrida Stripes'],
+ ['deep',32,'Elástico Deep'],['speed',42.5,'Speed'],['degrad',40.5,'Degradê Logos']];
+function custoSku(v){const b=v.sku&&bling.custos[v.sku];if(b>0)return{c:b,src:'bling'};const m=custoDe(v.title,v.variant);return m===null?null:{c:m,src:'modelo'}}
+function custoDe(title,variant){const t=(title+' '+variant).toLowerCase();for(const [k,c] of MODELOS){if(k.split('+').every(w=>t.includes(w)))return c}return null}
+let cfg=Object.fromEntries(CFG_FIELDS.map(f=>[f[0],f[2]]));
+let cfgLoaded=false;
+let entries=[]; let entriesState='loading'; let yampi=[]; let clarity=[];
+let shop={state:'loading',daily:[],funnel:null,src:null,prod:null,variants:null,regioes:null,storedAt:null,err:null};
+let period='d7';
+let bling={state:'loading',itens:[],custos:{},at:null,err:null};
+let custom={start:'',end:''};
+try{const p=localStorage.getItem('na-period');if(p&&['hoje','ontem','d7','mes','custom'].includes(p))period=p;const c=JSON.parse(localStorage.getItem('na-custom')||'null');if(c&&c.start&&c.end)custom=c}catch(e){}
+if(period==='custom'&&!(custom.start&&custom.end))period='d7';
+
+function rangeFor(p){
+  const t=todayStr();
+  if(p==='hoje')return{start:t,end:t};
+  if(p==='ontem'){const y=addDays(t,-1);return{start:y,end:y}}
+  if(p==='mes')return{start:t.slice(0,8)+'01',end:t};
+  if(p==='custom'&&custom.start&&custom.end){const a=custom.start<=custom.end?custom.start:custom.end,b=custom.start<=custom.end?custom.end:custom.start;return{start:a,end:b>t?t:b}}
+  return{start:addDays(t,-6),end:t};
+}
+
+/* ---------- cálculo ---------- */
+function compute(){
+  const r=rangeFor(period);
+  const inR=e=>e.data>=r.start&&e.data<=r.end;
+  const sum=(tipo,f)=>entries.filter(e=>e.tipo===tipo&&inR(e)).reduce((a,e)=>a+(+e[f]||0),0);
+  const sh=shop.daily.filter(d=>d.day>=r.start&&d.day<=r.end).reduce((a,d)=>{for(const k in d)if(k!=='day')a[k]=(a[k]||0)+d[k];return a},{orders:0,total_sales:0,quantity_ordered:0,discounts:0});
+  const yR=yampi.filter(y=>y.data>=r.start&&y.data<=r.end), yPix=yR.reduce((a,y)=>a+(+y.pedidosPix||0),0), yCar=yR.reduce((a,y)=>a+(+y.pedidosCartao||0),0);
+  const c=Object.assign({},cfg); if(yPix+yCar>0)c.pixShare=yPix/(yPix+yCar)*100;
+  const fee=(c.pixShare/100)*(c.pixPct/100)+(1-c.pixShare/100)*(c.cartaoPct/100);
+  const metaDay=(acc,manual)=>{const m=meta[acc];
+    if(m&&m.state==='ok')return{v:m.daily.filter(d=>d.day>=r.start&&d.day<=r.end).reduce((x,d)=>x+d.spend,0),live:true};
+    return{v:sum(manual,'valor'),live:false}};
+  // Shopify
+  const L={};
+  L.receita=sh.total_sales||0; L.pedidos=sh.orders||0; L.pecas=sh.quantity_ordered||0;
+  L.semCusto=new Set(); let cmvShop=0;
+  L.pecasBling=0;
+  if(shop.variants){for(const v of shop.variants){const cu=custoSku(v);if(cu===null)L.semCusto.add(v.title);else if(cu.src==='bling')L.pecasBling+=v.qty;cmvShop+=v.qty*(cu===null?c.custoPeca:cu.c)}}
+  else cmvShop=L.pecas*c.custoPeca;
+  L.cmv=cmvShop;
+  // Nuvemshop (catálogo)
+  const N={};
+  N.receita=sum('nuvemshop','receita'); N.pedidos=sum('nuvemshop','pedidos'); N.pecas=sum('nuvemshop','pecas'); {let q=0,v=0;for(const x of nuvemVars){const cu=custoSku(x);if(cu){q+=x.qty;v+=x.qty*cu.c}}N.cmv=v+Math.max(0,N.pecas-q)*c.custoPeca;N.pecasBling=q}
+  const mU=metaDay('usa','meta_ads'), mC=metaDay('cat','meta_ads_catalogo');
+  L.verba=mU.v; L.live=mU.live; N.verba=mC.v; N.live=mC.live;
+  for(const X of [L,N]){
+    X.taxas=X.receita*fee; X.imposto=X.receita*c.impostoPct/100; X.comissao=X.receita*c.comissaoPct/100; X.frete=X.pedidos*c.fretePedido;
+    X.ads=X.verba*(1+c.metaTaxPct/100);
+    if(X===L&&shop.regioes){let f=0,n=0;for(const g of shop.regioes){const v=ETIQUETA[g.uf];f+=g.orders*(v===undefined?c.fretePedido:v);n+=g.orders}
+      X.frete=f+Math.max(0,X.pedidos-n)*c.fretePedido; X.freteMedio=X.pedidos?X.frete/X.pedidos:0}
+    // dias com etiqueta real lançada: troca a estimativa daquele dia pelo valor pago
+    const tEt=X===L?'etiquetas_shopify':'etiquetas_nuvem';
+    const reais=entries.filter(e=>e.tipo===tEt&&inR(e)); X.diasReais=new Set(reais.map(e=>e.data)).size;
+    if(reais.length){
+      const medio=X.pedidos?X.frete/X.pedidos:c.fretePedido;
+      const pedDia=d=>X===L?((shop.daily.find(x=>x.day===d)||{}).orders||0):entries.filter(e=>e.tipo==='nuvemshop'&&e.data===d).reduce((a,e)=>a+(+e.pedidos||0),0);
+      const dias=[...new Set(reais.map(e=>e.data))];
+      X.frete=Math.max(0,X.frete-dias.reduce((a,d)=>a+pedDia(d)*medio,0))+reais.reduce((a,e)=>a+(+e.valor||0),0);
+    }
+    X.antesAds=X.receita-X.cmv-X.taxas-X.imposto-X.comissao-X.frete; X.lucro=X.antesAds-X.ads;
+  }
+  // TikTok Shop
+  const T={};
+  T.receita=sum('tiktok_shop','receita'); T.pedidos=sum('tiktok_shop','pedidos'); T.pecas=sum('tiktok_shop','pecas');
+  T.cmv=T.pecas*c.custoPeca; T.plataforma=T.receita*c.ttsTaxaPct/100+T.pecas*(+c.ttsPorItem||0); T.afiliados=T.receita*c.ttsAfiliadoPct/100;
+  T.imposto=T.receita*c.impostoPct/100; T.comissao=T.receita*c.comissaoPct/100; T.frete=T.pedidos*c.ttsFretePedido;
+  T.verba=sum('tiktok_ads','valor'); T.ads=T.verba; T.amostras=sum('amostras','valor');
+  T.antesAds=T.receita-T.cmv-T.plataforma-T.afiliados-T.imposto-T.comissao-T.frete;
+  T.lucro=T.antesAds-T.ads-T.amostras;
+  const fixos=sum('custo_fixo','valor');
+  const G={receita:L.receita+N.receita+T.receita,pedidos:L.pedidos+N.pedidos+T.pedidos,verba:L.verba+N.verba+T.verba,ads:L.ads+N.ads+T.ads+T.amostras,
+    antesAds:L.antesAds+N.antesAds+T.antesAds,fixos};
+  G.lucro=L.lucro+N.lucro+T.lucro-fixos;
+  // daily series
+  const days=[];for(let d=r.start;d<=r.end;d=addDays(d,1))days.push(d);
+  const series=days.map(d=>({d,shop:(shop.daily.find(x=>x.day===d)||{}).total_sales||0,
+    nuvem:entries.filter(e=>e.tipo==='nuvemshop'&&e.data===d).reduce((a,e)=>a+(+e.receita||0),0),
+    tts:entries.filter(e=>e.tipo==='tiktok_shop'&&e.data===d).reduce((a,e)=>a+(+e.receita||0),0)}));
+  return{r,L,N,T,G,series};
+}
+
+function rule(lucro,receita,antesAds,ads){
+  if(!receita)return'<span class="pill neutral">Sem vendas no período</span>';
+  const m=lucro/receita, roi=ads?antesAds/ads:Infinity;
+  const ok=m>=0.15&&roi>=2, bad=lucro<0||roi<1;
+  const txt=`Margem ${pct(m)} · ROI ${ads?roi.toLocaleString('pt-BR',{maximumFractionDigits:2}):'sem anúncio'}`;
+  return `<span class="pill ${ok?'good':bad?'bad':'warn'}">${ok?'Dentro da regra':bad?'Prejuízo':'Abaixo da regra'} · ${txt}</span>`;
+}
+
+/* ---------- render ---------- */
+function render(){
+  const {r,L,N,T,G,series}=compute(); const c=cfg;
+  $('range').textContent=(r.start===r.end?brDate(r.start):brDate(r.start)+' a '+brDate(r.end))+' · horário de Brasília';
+  document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p===period)));
+  const roi=G.ads?G.antesAds/G.ads:NaN, roas=G.verba?G.receita/G.verba:NaN, m=G.receita?G.lucro/G.receita:NaN;
+  const loadingShop=shop.state==='loading';
+  const k=(label,val,extra,hero)=>`<div class="kpi${hero?' hero':''}"><span class="eyebrow">${label}</span><span class="v">${val}</span>${extra?`<span class="small muted">${extra}</span>`:''}</div>`;
+  $('kpis').innerHTML=
+    k('Faturamento',loadingShop?'…':money(G.receita),int.format(G.pedidos)+' pedidos')+
+    k('Anúncios',money(G.verba),G.verba?'ROAS '+(isFinite(roas)?roas.toLocaleString('pt-BR',{maximumFractionDigits:2}):'–'):'sem verba lançada')+
+    k('Lucro real',loadingShop?'…':money(G.lucro),G.fixos?'já tira '+money(G.fixos)+' de custo fixo':'',true)+
+    k('Margem',pct(m),m>=0.15?'<span class="pill good">≥ 15%</span>':isFinite(m)?'<span class="pill warn">abaixo de 15%</span>':'')+
+    k('ROI',isFinite(roi)?roi.toLocaleString('pt-BR',{maximumFractionDigits:2}):'–',isFinite(roi)?(roi>=2?'<span class="pill good">≥ 2</span>':'<span class="pill warn">abaixo de 2</span>'):'lance a verba de anúncio');
+  const missing=REQUIRED.filter(k=>!(+cfg[k]));
+  $('cfgWarn').innerHTML=missing.length?`<div class="banner">O lucro está otimista: falta preencher ${missing.map(k=>CFG_FIELDS.find(f=>f[0]===k)[1].replace(/ \(.*\)/,'').toLowerCase()).join(', ')} em Custos e taxas.</div>`:'';
+  const row=(l,v,cls)=>`<tr class="${cls||''}"><td>${l}</td><td class="r num">${v}</td></tr>`;
+  const neg=v=>v?'− '+money(v):money(0);
+  const storeTbl=(X,label,extra)=>
+    row('Faturamento',money(X.receita))+
+    row('Pedidos · peças',int.format(X.pedidos)+' · '+int.format(X.pecas),'sub')+
+    row('Ticket médio',X.pedidos?money(X.receita/X.pedidos):'–','sub')+
+    row('Peças (custo)',neg(X.cmv))+row('Taxas de pagamento',neg(X.taxas))+row('Imposto',neg(X.imposto))+
+    row('Sua comissão',neg(X.comissao))+row('Frete e etiqueta'+(X.diasReais?` <span class="pill good">${X.diasReais} dia${X.diasReais>1?'s':''} real</span>`:' <span class="pill warn">estimado</span>'),neg(X.frete))+
+    row(label+(X.live?'':' <span class="pill warn">lançado</span>'),neg(X.ads))+
+    row('Verba sem imposto · ROAS',money(X.verba)+' · '+(X.verba?(X.receita/X.verba).toLocaleString('pt-BR',{maximumFractionDigits:2}):'–'),'sub')+
+    `<tr class="total"><td>Lucro do canal</td><td class="r num">${money(X.lucro)}</td></tr>`+(extra||'');
+  $('t-loja').innerHTML=storeTbl(L,'Meta Ads criativos + imposto',
+    (L.pecas&&shop.variants?`<tr class="sub"><td colspan="2" class="small">Custo das peças pelo Bling em ${int.format(L.pecasBling)} de ${int.format(L.pecas)} peças${L.pecasBling<L.pecas?', o resto pela tabela de modelos':''}.</td></tr>`:'')+
+    (L.semCusto.size?`<tr class="sub"><td colspan="2" class="small">Sem custo no Bling nem por modelo, usando ${money(c.custoPeca)}/peça: ${esc([...L.semCusto].join(', '))}</td></tr>`:''));
+  $('pill-loja').innerHTML=rule(L.lucro,L.receita,L.antesAds,L.ads);
+  $('t-nuvem').innerHTML=storeTbl(N,'Meta Ads catálogo + imposto',
+    (!N.receita&&N.verba)?`<tr class="sub"><td colspan="2" class="small">Tem verba no catálogo e nenhuma venda lançada no período. Lance as vendas da Nuvemshop para ver o lucro real.</td></tr>`:'');
+  $('pill-nuvem').innerHTML=rule(N.lucro,N.receita,N.antesAds,N.ads);
+  const mm=Object.values(meta).filter(m=>m.err);
+  $('metaMsg').innerHTML=mm.length?`<div class="banner ${mm[0].err.hard?'bad':''}">${esc(mm[0].err.text)}</div>`:'';
+  $('t-tts').innerHTML=
+    row('Faturamento',money(T.receita))+
+    row('Pedidos · peças',int.format(T.pedidos)+' · '+int.format(T.pecas),'sub')+
+    row('Peças (custo)',neg(T.cmv))+row('Comissão TikTok',neg(T.plataforma))+row('Comissão de creators',neg(T.afiliados))+
+    row('Imposto',neg(T.imposto))+row('Sua comissão',neg(T.comissao))+row('Frete',neg(T.frete))+
+    row('TikTok Ads / GMV Max',neg(T.ads))+row('Amostras para creators',neg(T.amostras))+
+    `<tr class="total"><td>Lucro do canal</td><td class="r num">${money(T.lucro)}</td></tr>`;
+  $('pill-tts').innerHTML=rule(T.lucro,T.receita,T.antesAds,T.ads+T.amostras);
+  renderChart(series);
+  renderLive();
+  renderEntries(r);
+}
+
+function renderChart(series){
+  const W=760,H=220,P={l:58,r:10,t:10,b:26};
+  const max=Math.max(1,...series.map(s=>s.shop+s.nuvem+s.tts));
+  const step=niceStep(max/4), top=Math.ceil(max/step)*step;
+  const y=v=>P.t+(H-P.t-P.b)*(1-v/top);
+  const bw=(W-P.l-P.r)/series.length, w=Math.max(2,Math.min(36,bw*0.7));
+  let g='';
+  for(let v=0;v<=top+1e-9;v+=step){g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${P.l-6}" y="${y(v)+3}" text-anchor="end">${v>=1000?(v/1000).toLocaleString('pt-BR')+' mil':v}</text>`}
+  const every=Math.ceil(series.length/10);
+  series.forEach((s,i)=>{
+    const x=P.l+bw*i+(bw-w)/2; let acc=0;
+    [['shop','var(--c-shop)'],['nuvem','var(--c-nuvem)'],['tts','var(--c-tts)']].forEach(([k,col])=>{
+      const v=s[k]; if(!v)return; const y1=y(acc+v),y0=y(acc);
+      g+=`<rect x="${x}" y="${y1}" width="${w}" height="${Math.max(1,y0-y1)}" fill="${col}" rx="2"><title>${brDate(s.d)} · ${money(v)}</title></rect>`; acc+=v;});
+    if(i%every===0||i===series.length-1)g+=`<text x="${x+w/2}" y="${H-8}" text-anchor="middle">${brDate(s.d)}</text>`;
+  });
+  $('chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Faturamento por dia e canal">${g}</svg>`;
+}
+function niceStep(v){const p=Math.pow(10,Math.floor(Math.log10(Math.max(v,1))));const n=v/p;return(n<=1?1:n<=2?2:n<=5?5:10)*p}
+
+function renderYC(r){
+  const yR=yampi.filter(y=>y.data>=r.start&&y.data<=r.end), cR=clarity.filter(y=>y.data>=r.start&&y.data<=r.end);
+  const S=(a,k)=>a.reduce((x,y)=>x+(+y[k]||0),0);
+  const row=(l,v)=>`<tr><td>${l}</td><td class="r num">${v}</td></tr>`;
+  if(yR.length){const pix=S(yR,'pedidosPix'),car=S(yR,'pedidosCartao');
+    $('t-yampi').innerHTML=row('Checkouts iniciados',int.format(S(yR,'checkouts')))+
+      row('Carrinhos abandonados',int.format(S(yR,'carrinhosAbandonados'))+' · '+money(S(yR,'valorAbandonado')))+
+      row('Pix gerado e não pago',int.format(S(yR,'pixNaoPagos'))+' · '+money(S(yR,'valorPixNaoPago')))+
+      row('Pagos no Pix · cartão',int.format(pix)+' · '+int.format(car)+(pix+car?' ('+pct(pix/(pix+car))+' Pix)':''));}
+  else $('t-yampi').innerHTML='<tr><td class="muted small">Sem dados da Yampi neste período ainda.</td></tr>';
+  if(cR.length){const ss=S(cR,'sessoes');
+    $('t-clarity').innerHTML=row('Sessões',int.format(ss))+
+      row('Cliques de raiva',int.format(S(cR,'rageClicks'))+(ss?' · '+pct(S(cR,'rageClicks')/ss)+' das sessões':''))+
+      row('Cliques mortos',int.format(S(cR,'deadClicks')))+
+      row('Voltaram rápido',int.format(S(cR,'quickbacks')))+
+      row('Rolagem média',cR.filter(x=>x.scrollMedio!=null).length?(cR.reduce((a,x)=>a+(+x.scrollMedio||0)*(+x.sessoes||0),0)/Math.max(1,ss)).toLocaleString('pt-BR',{maximumFractionDigits:0})+'%':'–');}
+  else $('t-clarity').innerHTML='<tr><td class="muted small">Sem dados do Clarity neste período ainda.</td></tr>';
+}
+function renderStock(){
+  const r=rangeFor(period); const dias=Math.round((new Date(r.end)-new Date(r.start))/864e5)+1;
+  $('est-msg').innerHTML=bling.err?`<div class="banner ${bling.err.hard?'bad':''}">${esc(bling.err.text)}</div>`:'';
+  $('est-fresh').textContent=bling.at?'Bling, '+new Date(bling.at).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ}):'';
+  if(!bling.itens.length){if(bling.state!=='loading')$('t-est').innerHTML='<tr><td class="muted small">Sem estoque lido do Bling ainda.</td></tr>';$('est-kpis').innerHTML='';return}
+  const vend={}; for(const v of shop.variants||[])if(v.sku)vend[v.sku]=(vend[v.sku]||0)+v.qty;
+  const g={}; let pecas=0,valor=0;
+  for(const [sku,nome,custo,qtd] of bling.itens){
+    const m=/^(.*?)\s*Cor:([^;]*);?\s*Tamanho:(.*)$/i.exec(nome||''); const base=m?m[1].trim():(nome||sku), cor=m?m[2].trim():'', tam=m?m[3].trim():sku.split('-').pop();
+    const key=base+'|'+cor; const x=g[key]||(g[key]={base,cor,qtd:0,valor:0,vend:0,tams:[]});
+    x.qtd+=qtd; x.valor+=qtd*(custo||0); x.vend+=vend[sku]||0; x.tams.push([tam,qtd]); pecas+=qtd; valor+=qtd*(custo||0);
+  }
+  const rows=Object.values(g).sort((a,b)=>b.qtd-a.qtd);
+  const vendTot=rows.reduce((s,x)=>s+x.vend,0);
+  const k=(l,v,e)=>`<div class="kpi"><span class="eyebrow">${l}</span><span class="v">${v}</span>${e?`<span class="small muted">${e}</span>`:''}</div>`;
+  $('est-kpis').innerHTML=k('Peças em estoque',int.format(pecas),int.format(bling.itens.length)+' SKUs')+k('Valor a custo',money(valor),'custo Bling')+k('Modelos e cores',int.format(rows.length))+k('Cobertura geral',vendTot?Math.round(pecas/(vendTot/dias))+' dias':'–',vendTot?int.format(vendTot)+' peças vendidas no período':'sem vendas com SKU no período');
+  $('t-est').innerHTML='<tr><th>Modelo · cor</th><th>Tamanhos</th><th class="r">Peças</th><th class="r">Vendeu</th><th class="r">Cobertura</th><th class="r">Valor a custo</th></tr>'+rows.map(x=>{
+    const cob=x.vend?Math.round(x.qtd/(x.vend/dias)):null; const tams=x.tams.sort((a,b)=>String(a[0]).localeCompare(String(b[0]),'pt-BR',{numeric:true})).map(([t,q])=>`${esc(t)}:${q}`).join(' · ');
+    return `<tr><td>${esc(x.base)}${x.cor?' · '+esc(x.cor):''}</td><td class="sizes">${tams}</td><td class="r num">${int.format(x.qtd)}</td><td class="r num">${x.vend?int.format(x.vend):'–'}</td><td class="r num">${cob===null?'–':`<span class="pill ${cob<15?'bad':cob<30?'warn':'good'}">${cob} dias</span>`}</td><td class="r num">${money(x.valor)}</td></tr>`}).join('');
+}
+function renderLive(){
+  renderStock();
+  renderYC(rangeFor(period));
+  const msg=$('liveMsg');
+  if(shop.err){msg.innerHTML=`<div class="banner ${shop.err.hard?'bad':''}">${esc(shop.err.text)}</div>${shop.err.approve?'<button class="btn ghost" id="approveBtn" type="button">Permitir leitura da Shopify</button>':''}`;
+    const b=$('approveBtn'); if(b)b.onclick=approveOnce;}
+  else msg.innerHTML='';
+  $('fresh').textContent=shop.storedAt?'Atualizado às '+new Date(shop.storedAt).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:TZ}):'';
+  const {r}=compute();
+  const orders=shop.daily.filter(d=>d.day>=r.start&&d.day<=r.end).reduce((a,d)=>a+(d.orders||0),0);
+  if(shop.funnel){
+    const f=shop.funnel, base=Math.max(1,f.sessions);
+    const yR=yampi.filter(y=>y.data>=r.start&&y.data<=r.end);
+    const steps=[['Visitas',f.sessions],['Carrinho',f.carts]].concat(yR.length?[['Checkout',yR.reduce((a,y)=>a+(+y.checkouts||0),0)]]:[]).concat([['Pedidos',orders]]);
+    $('funnel').innerHTML=steps.map(([l,v],i)=>`<div class="frow"><span>${l}</span><div class="fbar"><span style="width:${Math.max(v?1.5:0,v/base*100)}%"></span></div><span class="num r" style="text-align:right">${int.format(v)}${i?' · '+pct(v/base):''}</span></div>`).join('')+
+      `<p class="small muted" style="margin:0">Do carrinho para pedido: ${f.carts?pct(orders/f.carts):'–'}</p>`;
+  } else if(shop.state!=='loading') $('funnel').innerHTML='<p class="muted small">Sem dados de sessão.</p>';
+  if(shop.src){
+    $('t-src').innerHTML='<tr><th>Origem</th><th class="r">Visitas</th><th class="r">Carrinho</th></tr>'+
+      shop.src.map(s=>`<tr><td>${esc(s.name)}</td><td class="r num">${int.format(s.sessions)}</td><td class="r num">${int.format(s.carts)} · ${pct(s.sessions?s.carts/s.sessions:0)}</td></tr>`).join('');
+  }
+  if(shop.prod){
+    $('t-prod').innerHTML=shop.prod.length?'<tr><th>Produto</th><th class="r">Peças</th><th class="r">Venda líquida</th></tr>'+
+      shop.prod.map(p=>`<tr><td>${esc(p.title)}</td><td class="r num">${int.format(p.qty)}</td><td class="r num">${money(p.net)}</td></tr>`).join(''):'<tr><td class="muted small">Nenhuma venda no período.</td></tr>';
+  }
+}
+
+const TIPO={etiquetas_shopify:'Etiquetas Shopify',etiquetas_nuvem:'Etiquetas Nuvemshop',meta_ads:'Meta Ads Shopify',meta_ads_catalogo:'Meta Ads catálogo',tiktok_ads:'TikTok Ads',tiktok_shop:'TikTok Shop',nuvemshop:'Nuvemshop',amostras:'Amostras',custo_fixo:'Custo fixo'};
+let canWrite=false, pendingDel=null;
+function renderEntries(r){
+  const t=$('t-lanc');
+  if(entriesState==='off'){t.innerHTML='<tr><td class="muted small">Os lançamentos não estão disponíveis nesta visualização. Entre no painel com seu e-mail.</td></tr>';return}
+  if(entriesState==='loading')return;
+  const list=entries.filter(e=>e.data>=r.start&&e.data<=r.end).sort((a,b)=>b.data.localeCompare(a.data));
+  if(!list.length){t.innerHTML=`<tr><td class="muted small">Nenhum lançamento neste período. ${canWrite?'Use o formulário acima para lançar a verba do Meta Ads, vendas do TikTok Shop ou Nuvemshop.':''}</td></tr>`;return}
+  t.innerHTML='<tr><th>Data</th><th>Tipo</th><th class="r">Valor</th><th>Detalhe</th><th></th></tr>'+list.map(e=>{
+    const val=['tiktok_shop','nuvemshop'].includes(e.tipo)?money(e.receita):money(e.valor);
+    const det=['tiktok_shop','nuvemshop'].includes(e.tipo)?`${int.format(+e.pedidos||0)} pedidos · ${int.format(+e.pecas||0)} peças`:'';
+    const del=canWrite&&!e.auto?(pendingDel===e.id?`<button class="btn link danger" data-del="${esc(e.id)}" type="button">Confirmar exclusão</button>`:`<button class="btn link" data-ask="${esc(e.id)}" type="button">Excluir</button>`):'';
+    return `<tr><td class="num">${brDate(e.data)}</td><td>${TIPO[e.tipo]||esc(e.tipo)}</td><td class="r num">${val}</td><td class="small muted">${esc([det,e.nota].filter(Boolean).join(' · '))}</td><td class="r">${del}</td></tr>`}).join('');
+}
+
+/* ---------- período ---------- */
+function setPeriod(p){
+  period=p; try{localStorage.setItem('na-period',period);localStorage.setItem('na-custom',JSON.stringify(custom))}catch(e){}
+  watchShop(); watchMeta(); render();
+}
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{
+  if(b.dataset.p==='custom'){
+    const f=$('f-datas'); f.hidden=!f.hidden;
+    if(!f.hidden){const r=rangeFor(period);$('d-ini').value=custom.start||r.start;$('d-fim').value=custom.end||r.end;$('d-ini').max=$('d-fim').max=todayStr();$('d-ini').focus()}
+    return;
+  }
+  $('f-datas').hidden=true; setPeriod(b.dataset.p);
+}));
+$('f-datas').addEventListener('submit',ev=>{
+  ev.preventDefault(); const a=$('d-ini').value,b=$('d-fim').value; if(!a||!b)return;
+  custom={start:a,end:b}; $('f-datas').hidden=true; setPeriod('custom');
+});
+
+/* ---------- dados (Supabase) ---------- */
+const CFGP=window.PAINEL_CONFIG||{};
+const sb=window.supabase.createClient(CFGP.url,CFGP.anonKey);
+const CONTAS={usa:'916962516601176',cat:'656401004912172'};
+const meta={usa:{state:'loading',daily:[]},cat:{state:'loading',daily:[]}};
+let nuvemVars=[], saude=[], carregando=false;
+function approveOnce(){}
+function watchShop(){carregar()}
+function watchMeta(){}
+
+async function tudo(tabela,monta){
+  const out=[];
+  for(let de=0;;de+=1000){
+    let x=sb.from(tabela).select('*'); if(monta)x=monta(x);
+    const {data,error}=await x.range(de,de+999);
+    if(error)throw error;
+    out.push(...data); if(data.length<1000)break;
+  }
+  return out;
+}
+const noPeriodo=(r)=>x=>x.gte('data',r.start).lte('data',r.end);
+
+async function carregar(){
+  if(carregando)return; carregando=true;
+  const r=rangeFor(period), P=noPeriodo(r);
+  try{
+    const [vendas,sess,orig,ufs,skus,verba,lanc,etiq,yam,cla,est,custos,conf,st]=await Promise.all([
+      tudo('vendas_dia',P), tudo('sessoes_dia',P), tudo('sessoes_origem_dia',P), tudo('pedidos_uf_dia',x=>P(x).eq('canal','shopify')),
+      tudo('vendas_sku_dia',P), tudo('verba_dia',x=>P(x).eq('campanha_id','')), tudo('lancamentos',P), tudo('etiquetas_dia',P),
+      tudo('yampi_dia',P), tudo('clarity_dia',P), tudo('estoque'), tudo('custo_sku'), tudo('config'), tudo('sync_status')]);
+    // Shopify
+    shop.daily=vendas.filter(v=>v.canal==='shopify').map(v=>({day:v.data,orders:v.pedidos,gross_sales:+v.bruto,discounts:+v.descontos,
+      net_sales:+v.receita-(+v.frete_cobrado),shipping_charges:+v.frete_cobrado,total_sales:+v.receita,quantity_ordered:v.pecas}));
+    shop.funnel=sess.length?{sessions:sess.reduce((a,s)=>a+s.sessoes,0),carts:sess.reduce((a,s)=>a+s.sessoes_carrinho,0)}:null;
+    const og={};for(const o of orig){const g=og[o.origem]||(og[o.origem]={name:o.origem,sessions:0,carts:0});g.sessions+=o.sessoes;g.carts+=o.sessoes_carrinho}
+    shop.src=Object.values(og).sort((a,b)=>b.sessions-a.sessions).slice(0,8);
+    const ug={};for(const u of ufs)ug[u.uf]=(ug[u.uf]||0)+u.pedidos; shop.regioes=Object.entries(ug).map(([uf,orders])=>({uf,orders}));
+    const vg={};for(const s of skus.filter(s=>s.canal==='shopify')){const k=s.sku+'|'+s.titulo+'|'+s.variante;const g=vg[k]||(vg[k]={title:s.titulo,variant:s.variante,sku:s.sku,qty:0,net:0});g.qty+=s.qtd;g.net+=+s.receita}
+    shop.variants=Object.values(vg);
+    const by={};for(const v of shop.variants){const b=by[v.title]||(by[v.title]={title:v.title,qty:0,net:0});b.qty+=v.qty;b.net+=v.net}
+    shop.prod=Object.values(by).sort((a,b)=>b.net-a.net).slice(0,8);
+    nuvemVars=skus.filter(s=>s.canal==='nuvemshop').map(s=>({title:s.titulo,variant:s.variante,sku:s.sku,qty:s.qtd}));
+    shop.state='ok'; shop.err=null;
+    const stShop=st.find(s=>s.fonte==='shopify'); shop.storedAt=stShop&&stShop.ultima_ok?Date.parse(stShop.ultima_ok):null;
+    // Meta: verba por conta e dia
+    const stMeta=st.find(s=>s.fonte==='meta');
+    for(const k in CONTAS){meta[k].daily=verba.filter(v=>v.plataforma==='meta'&&v.conta===CONTAS[k]).map(v=>({day:v.data,spend:+v.valor}));
+      meta[k].state=stMeta&&stMeta.ultima_ok?'ok':'error'; meta[k].err=null}
+    // Lançamentos: os automáticos (Nuvemshop, TikTok Shop, etiquetas) entram como lançamentos do dia e valem mais que um manual do mesmo dia
+    const auto=[];
+    for(const v of vendas.filter(v=>v.canal!=='shopify'))auto.push({id:'auto-'+v.canal+v.data,auto:true,data:v.data,tipo:v.canal,receita:+v.receita,pedidos:v.pedidos,pecas:v.pecas,nota:'automático'});
+    for(const e of etiq)auto.push({id:'auto-etq-'+e.canal+e.data,auto:true,data:e.data,tipo:e.canal==='shopify'?'etiquetas_shopify':'etiquetas_nuvem',valor:+e.valor,pedidos:e.pedidos,nota:'automático ('+e.fonte+')'});
+    const temAuto=new Set(auto.map(a=>a.tipo+a.data));
+    entries=auto.concat(lanc.filter(l=>!temAuto.has(l.tipo+l.data)).map(l=>Object.assign({},l,{valor:l.valor==null?null:+l.valor,receita:l.receita==null?null:+l.receita})));
+    entriesState='ok';
+    yampi=yam.map(y=>({data:y.data,checkouts:y.checkouts,carrinhosAbandonados:y.carrinhos_abandonados,valorAbandonado:+y.valor_abandonado,
+      pedidosPix:y.pedidos_pix,pedidosCartao:y.pedidos_cartao,pixNaoPagos:y.pix_nao_pagos,valorPixNaoPago:+y.valor_pix_nao_pago}));
+    clarity=cla.map(c=>({data:c.data,sessoes:c.sessoes,rageClicks:c.rage_clicks,deadClicks:c.dead_clicks,quickbacks:c.quickbacks,scrollMedio:+c.scroll_medio}));
+    const cm={};for(const c of custos)cm[c.sku]=+c.custo;
+    bling.itens=est.map(e=>[e.sku,e.nome,+e.custo,e.qtd]); bling.custos=cm; bling.state='ok';
+    const stB=st.find(s=>s.fonte==='bling'); bling.at=stB&&stB.ultima_ok?Date.parse(stB.ultima_ok):null; bling.err=null;
+    const cc=conf.find(c=>c.chave==='custos'); if(cc)cfg=Object.assign({},cfg,cc.valor); cfgLoaded=true;
+    saude=st;
+    if(!vendas.length&&!conf.length){$('acessoMsg').innerHTML='<div class="banner bad">Seu e-mail ainda não está liberado para ver os dados. Peça para incluir no Supabase.</div>'}
+    else $('acessoMsg').innerHTML='';
+  }catch(e){
+    shop.err={text:'Não consegui ler o banco agora: '+(e&&e.message||e)+'. Tento de novo em instantes.'};
+  }finally{carregando=false}
+  renderCfgForm(); render(); renderSaude();
+}
+
+/* ---------- saúde das atualizações ---------- */
+const FONTES=[['shopify','Shopify','vendas, sessões, produtos',2],['meta','Meta Ads','verba das duas contas por campanha',2],
+  ['nuvemshop','Nuvemshop','vendas e etiquetas do Nuvem Envio',8],['yampi','Yampi','checkouts, carrinhos, Pix x cartão',8],
+  ['clarity','Clarity','comportamento no site',8],['bling','Bling','custo por SKU e estoque e-commerce',8],
+  ['melhorenvio','Melhor Envio','etiquetas reais da Shopify',8]];
+function renderSaude(){
+  const hora=t=>new Date(t).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ});
+  $('t-saude').innerHTML=FONTES.map(([k,nome,o,lim])=>{
+    const s=saude.find(x=>x.fonte===k);
+    let pill,txt;
+    if(!s||!s.ultima_tentativa){pill='<span class="pill neutral">Aguardando</span>';txt='Ainda não rodou. Falta a chave desta fonte.'}
+    else{
+      const velho=!s.ultima_ok||(Date.now()-Date.parse(s.ultima_ok))>lim*36e5;
+      const falhou=s.ultimo_erro&&(!s.ultima_ok||Date.parse(s.ultima_tentativa)>Date.parse(s.ultima_ok));
+      pill=falhou||velho?'<span class="pill bad">Parado</span>':'<span class="pill good">Em dia</span>';
+      txt=(s.ultima_ok?'Última leitura '+hora(s.ultima_ok)+'.':'Nunca leu com sucesso.')+(falhou?' Erro: '+esc(String(s.ultimo_erro).slice(0,160)):'');
+    }
+    return `<li>${pill}<span><b>${nome}.</b> ${o}. <span class="muted">${txt}</span></span></li>`}).join('')+
+    '<li><span class="pill neutral">Manual</span><span><b>TikTok Shop, TikTok Ads e Google Ads.</b> Lance por dia aqui até a conexão automática.</span></li>';
+  const parados=FONTES.filter(([k,,,lim])=>{const s=saude.find(x=>x.fonte===k);return s&&s.ultima_tentativa&&(!s.ultima_ok||(Date.now()-Date.parse(s.ultima_ok))>lim*36e5)}).map(f=>f[1]);
+  $('saudeMsg').innerHTML=parados.length?`<div class="banner bad">Dados parados: ${esc(parados.join(', '))}. Veja "Atualizações" no fim da página.</div>`:'';
+}
+
+/* ---------- custos e lançamentos ---------- */
+function renderCfgForm(){
+  $('cfgFields').innerHTML=CFG_FIELDS.map(([k,l,,hint])=>{
+    const miss=REQUIRED.includes(k)&&!(+cfg[k]);
+    return `<label for="c-${k}">${l}<input id="c-${k}" type="number" step="0.01" min="0" value="${cfg[k]}" ${canWrite?'':'disabled'}>${hint?`<span class="${miss?'':'muted'}" style="font-weight:500;${miss?'color:var(--warn)':''}">${hint}</span>`:''}</label>`}).join('');
+}
+$('f-cfg').addEventListener('submit',async ev=>{
+  ev.preventDefault();
+  const next={}; for(const [k] of CFG_FIELDS){const v=parseFloat($('c-'+k).value);next[k]=isFinite(v)?v:0}
+  $('c-status').textContent='Salvando…';
+  const {error}=await sb.from('config').upsert({chave:'custos',valor:next,atualizado_em:new Date().toISOString()});
+  if(error){$('c-status').textContent='Não salvou: '+error.message;return}
+  cfg=next;$('c-status').textContent='Custos salvos.';render();renderCfgForm();
+});
+function syncTipo(){
+  const t=$('l-tipo').value, sales=t==='tiktok_shop'||t==='nuvemshop';
+  document.querySelectorAll('[data-for="valor"]').forEach(el=>el.hidden=sales);
+  document.querySelectorAll('[data-for="receita"]').forEach(el=>el.hidden=!sales);
+}
+$('l-tipo').addEventListener('change',syncTipo);
+$('f-lanc').addEventListener('submit',async ev=>{
+  ev.preventDefault();
+  const tipo=$('l-tipo').value, sales=tipo==='tiktok_shop'||tipo==='nuvemshop';
+  const n=id=>{const v=parseFloat($(id).value);return isFinite(v)?v:0};
+  const doc={data:$('l-data').value,tipo,nota:$('l-nota').value.trim()};
+  if(sales){doc.receita=n('l-receita');doc.pedidos=Math.round(n('l-pedidos'));doc.pecas=Math.round(n('l-pecas'))} else doc.valor=n('l-valor');
+  if(!doc.data){$('l-status').textContent='Escolha a data.';return}
+  if(sales?!doc.receita:!doc.valor){$('l-status').textContent=sales?'Informe a receita.':'Informe o valor.';return}
+  $('l-status').textContent='Salvando…';
+  const {error}=await sb.from('lancamentos').insert(doc);
+  if(error){$('l-status').textContent='Não salvou: '+error.message;return}
+  $('l-status').textContent='Lançamento adicionado.';['l-valor','l-receita','l-pedidos','l-pecas','l-nota'].forEach(i=>$(i).value='');
+  carregar();
+});
+$('t-lanc').addEventListener('click',async ev=>{
+  const ask=ev.target.closest('[data-ask]'), del=ev.target.closest('[data-del]');
+  if(ask){pendingDel=ask.dataset.ask;render();return}
+  if(del){await sb.from('lancamentos').delete().eq('id',del.dataset.del); pendingDel=null; carregar()}
+});
+
+/* ---------- login ---------- */
+$('f-login').addEventListener('submit',async ev=>{
+  ev.preventDefault();
+  const email=$('lg-email').value.trim(); if(!email)return;
+  $('lg-status').textContent='Enviando…';
+  const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname,shouldCreateUser:true}});
+  $('lg-status').textContent=error?'Não enviou: '+error.message:'Pronto. Abra o link que chegou no seu e-mail.';
+});
+$('sair').addEventListener('click',async()=>{await sb.auth.signOut();location.reload()});
+
+$('t-mod').innerHTML=MODELOS.map(([,c,n])=>`<tr><td>${n}</td><td class="r num">${money(c)}</td></tr>`).join('');
+syncTipo(); $('l-data').value=todayStr();
+
+let iniciado=false;
+function entrar(session){
+  const logado=!!session;
+  $('login').hidden=logado; $('app').hidden=!logado; $('sair').hidden=!logado;
+  if(!logado||iniciado)return;
+  iniciado=true; canWrite=true;
+  $('quem').textContent=session.user.email;
+  $('f-lanc').hidden=false; $('cfgSave').hidden=false;
+  render(); renderCfgForm(); carregar();
+  setInterval(carregar,300000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)carregar()});
+}
+sb.auth.getSession().then(({data})=>entrar(data.session));
+sb.auth.onAuthStateChange((_e,session)=>entrar(session));
+})();
+</script>
+
+</body>
+</html>
