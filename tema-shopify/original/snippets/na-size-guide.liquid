@@ -1,0 +1,185 @@
+{%- comment -%}
+  na-size-guide.liquid
+  Detecta bermuda (38-48) vs camiseta (P/M/G…)
+  Detecta 20" vs 21" pelo titulo do produto
+{%- endcomment -%}
+
+{%- liquid
+  assign product_resource = closest.product | default: product
+
+  assign first_size = ''
+  for opt in product_resource.options
+    assign opt_lower = opt | downcase
+    if opt_lower == 'tamanho' or opt_lower == 'size' or opt_lower == 'talle'
+      assign first_variant = product_resource.variants | first
+      assign opt_key = 'option' | append: forloop.index
+      assign first_size = first_variant[opt_key]
+      break
+    endif
+  endfor
+
+  assign is_bermuda = false
+  if first_size == '38' or first_size == '40' or first_size == '42' or first_size == '44' or first_size == '46' or first_size == '48'
+    assign is_bermuda = true
+  endif
+
+  assign is_21pol = false
+  assign title_lower = product_resource.title | downcase
+  if title_lower contains '21"' or title_lower contains '21 pol' or title_lower contains '21"'
+    assign is_21pol = true
+  endif
+-%}
+
+<button type="button" class="na-sg-open" aria-haspopup="dialog" onclick="document.getElementById('na-sg-modal').showModal ? document.getElementById('na-sg-modal').showModal() : document.getElementById('na-sg-modal').setAttribute('open','')">
+  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="10" rx="1"/><line x1="6" y1="7" x2="6" y2="10"/><line x1="10" y1="7" x2="10" y2="11"/><line x1="14" y1="7" x2="14" y2="10"/><line x1="18" y1="7" x2="18" y2="11"/></svg>
+  <span>Tabela de medidas</span>
+</button>
+
+<dialog id="na-sg-modal" class="na-sg">
+  <div class="na-sg-inner">
+    <button type="button" class="na-sg-close" aria-label="Fechar" onclick="document.getElementById('na-sg-modal').close ? document.getElementById('na-sg-modal').close() : document.getElementById('na-sg-modal').removeAttribute('open')">&times;</button>
+
+    <p class="na-sg-eyebrow">Tabela de medidas</p>
+
+    {%- if is_bermuda -%}
+
+      <h3 class="na-sg-title">Bermuda · Boardshort · Híbrida</h3>
+      <p class="na-sg-label">Selecione um tamanho para ver as medidas da peça (cm):</p>
+
+      <div class="na-sg-btns" id="na-sg-btns">
+        {%- if is_21pol -%}
+          <button type="button" class="na-sg-btn" data-c="40.5" data-q="44.4" data-l="49.5">38<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="42"   data-q="45.5" data-l="51">40<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="43.5" data-q="47.5" data-l="52">42<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="46"   data-q="50.5" data-l="52.5">44<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="48"   data-q="52"   data-l="53">46<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="48.5" data-q="52.5" data-l="53">48<span class="chk">&#10003;</span></button>
+        {%- else -%}
+          <button type="button" class="na-sg-btn" data-c="40.5" data-q="44.4" data-l="48.5">38<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="42"   data-q="45.5" data-l="50">40<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="43.5" data-q="47.5" data-l="51">42<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="46"   data-q="50.5" data-l="51.5">44<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="48"   data-q="52"   data-l="52">46<span class="chk">&#10003;</span></button>
+          <button type="button" class="na-sg-btn" data-c="48.5" data-q="52.5" data-l="52">48<span class="chk">&#10003;</span></button>
+        {%- endif -%}
+      </div>
+
+      <div class="na-sg-table">
+        <div class="na-sg-row"><span>Cintura</span><strong id="na-sg-v0">&mdash;</strong></div>
+        <div class="na-sg-row"><span>Quadril</span><strong id="na-sg-v1">&mdash;</strong></div>
+        <div class="na-sg-row"><span>Comprimento</span><strong id="na-sg-v2">&mdash;</strong></div>
+      </div>
+
+      <p class="na-sg-note">Medidas da peça esticada sobre superfície plana, em cm. Tolerância de ±1&nbsp;cm. Modelo {{ is_21pol | default: false | case: true, '21"', '20"' }}{% if is_21pol %}21"{% else %}20"{% endif %}.</p>
+
+      <div class="na-sg-help">
+        <p><strong>Cintura</strong> — largura do cós de extremidade a extremidade (= metade da circunferência).</p>
+        <p><strong>Quadril</strong> — largura na parte mais larga da peça, de ponta a ponta.</p>
+        <p><strong>Comprimento</strong> — do topo do cós até a barra, pela lateral.</p>
+      </div>
+
+    {%- else -%}
+
+      <h3 class="na-sg-title">Camiseta</h3>
+      <p class="na-sg-label">Selecione um tamanho para ver as medidas da peça (cm):</p>
+
+      <div class="na-sg-btns" id="na-sg-btns">
+        <button type="button" class="na-sg-btn" data-a="53" data-b="69">P<span class="chk">&#10003;</span></button>
+        <button type="button" class="na-sg-btn" data-a="54" data-b="73">M<span class="chk">&#10003;</span></button>
+        <button type="button" class="na-sg-btn" data-a="58" data-b="73">G<span class="chk">&#10003;</span></button>
+        <button type="button" class="na-sg-btn" data-a="60" data-b="77">GG<span class="chk">&#10003;</span></button>
+        <button type="button" class="na-sg-btn" data-a="67" data-b="80">G1<span class="chk">&#10003;</span></button>
+        <button type="button" class="na-sg-btn" data-a="71" data-b="82">G2<span class="chk">&#10003;</span></button>
+        <button type="button" class="na-sg-btn" data-a="73" data-b="84">G3<span class="chk">&#10003;</span></button>
+      </div>
+
+      <div class="na-sg-table">
+        <div class="na-sg-row"><span>Largura</span><strong id="na-sg-v0">&mdash;</strong></div>
+        <div class="na-sg-row"><span>Comprimento</span><strong id="na-sg-v1">&mdash;</strong></div>
+      </div>
+
+      <p class="na-sg-note">Peça esticada sobre superfície plana, em cm. Variação de até 2&nbsp;cm.</p>
+
+      <div class="na-sg-help">
+        <p><strong>Largura</strong> — de uma axila à outra com a peça estendida.</p>
+        <p><strong>Comprimento</strong> — do ombro até a barra inferior.</p>
+      </div>
+
+    {%- endif -%}
+  </div>
+</dialog>
+
+<style>
+.na-sg-open{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;padding:0;margin:8px 0;font:inherit;font-size:13px;font-weight:700;color:currentColor;text-decoration:underline;text-underline-offset:2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.na-sg-open:hover{opacity:.7}
+.na-sg{border:0;padding:0;max-width:440px;width:calc(100% - 32px);border-radius:12px;background:#fff;color:#111;box-shadow:0 6px 32px rgba(0,0,0,.2)}
+.na-sg::backdrop{background:rgba(0,0,0,.5)}
+.na-sg-inner{padding:28px 22px 22px;position:relative;font-family:var(--font-body--family),sans-serif}
+.na-sg-close{position:absolute;top:10px;right:14px;background:none;border:0;font-size:26px;line-height:1;color:#aaa;cursor:pointer;padding:2px 4px;-webkit-tap-highlight-color:transparent}
+.na-sg-close:hover{color:#111}
+.na-sg-eyebrow{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#bbb;margin:0 0 4px;text-align:center}
+.na-sg-title{font-size:17px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin:0 0 14px;text-align:center;color:#111}
+.na-sg-label{font-size:13px;color:#666;text-align:center;margin:0 0 12px}
+.na-sg-btns{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:16px}
+.na-sg-btn{position:relative;border:1.5px solid #ddd;background:#fff;padding:8px 13px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;min-width:40px;text-align:center;border-radius:4px;-webkit-tap-highlight-color:transparent;transition:border-color .1s}
+.na-sg-btn:hover{border-color:#999}
+.na-sg-btn.is-active{border-color:#111;border-width:2px;font-weight:700;background:#f9f9f9}
+.na-sg-btn .chk{position:absolute;top:-7px;right:-7px;width:16px;height:16px;border-radius:50%;background:#111;color:#fff;font-size:10px;line-height:16px;text-align:center;display:none;pointer-events:none}
+.na-sg-btn.is-active .chk{display:block}
+.na-sg-table{border-top:1px solid #eee}
+.na-sg-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #eee;font-size:14px}
+.na-sg-row span{color:#777;font-weight:400}
+.na-sg-row strong{color:#111;font-weight:600;font-size:15px}
+.na-sg-note{font-size:11px;color:#aaa;margin:10px 0 0;line-height:1.55}
+.na-sg-help{margin-top:14px;border-top:1px solid #eee;padding-top:12px}
+.na-sg-help p{font-size:12px;color:#777;line-height:1.5;margin:0 0 5px}
+@media(max-width:600px){
+  .na-sg{max-width:100%;width:100%;border-radius:18px 18px 0 0;position:fixed;bottom:0;left:0;margin:0;top:auto;max-height:90svh;overflow-y:auto}
+  .na-sg::backdrop{background:rgba(0,0,0,.55)}
+  .na-sg-inner{padding:20px 18px 36px}
+  .na-sg-btn{padding:10px 12px;font-size:14px}
+  .na-sg-row{font-size:14px}
+}
+</style>
+
+<script>
+(function(){
+  var dlg = document.getElementById('na-sg-modal');
+  if (!dlg) return;
+
+  var isBermuda = {{ is_bermuda | json }};
+  var btns = dlg.querySelectorAll('.na-sg-btn');
+
+  function val(id, text){
+    var el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  function select(btn){
+    btns.forEach(function(b){ b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+    if (isBermuda) {
+      val('na-sg-v0', (btn.dataset.c || '—') + ' cm');
+      val('na-sg-v1', (btn.dataset.q || '—') + ' cm');
+      val('na-sg-v2', (btn.dataset.l || '—') + ' cm');
+    } else {
+      val('na-sg-v0', (btn.dataset.a || '—') + ' cm');
+      val('na-sg-v1', (btn.dataset.b || '—') + ' cm');
+    }
+  }
+
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){ select(btn); });
+  });
+
+  if (btns.length) select(btns[0]);
+
+  /* fechar clicando fora (backdrop) */
+  dlg.addEventListener('click', function(e){
+    var r = dlg.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+      dlg.close ? dlg.close() : dlg.removeAttribute('open');
+    }
+  });
+})();
+</script>

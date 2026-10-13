@@ -1,0 +1,726 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "carousel",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+            "icons_style": "none",
+            "slideshow_controls_style": "thumbnails",
+            "slideshow_mobile_controls_style": "thumbnails",
+            "thumbnail_position": "bottom",
+            "thumbnail_width": 44,
+            "thumbnail_radius": 0,
+            "aspect_ratio": "1/1.25",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 0,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "details_position": "flex-start",
+            "gap": 11,
+            "sticky_details_desktop": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-1",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 3,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "group_icgrde": {
+              "type": "group",
+              "name": "Header",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 7,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fill",
+                "custom_height": 0,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_xrnftG": {
+                  "type": "text",
+                  "name": "Product title",
+                  "settings": {
+                    "text": "<h1>{{ closest.product.title }}</h1>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "h3",
+                    "font": "var(--font-heading--family)",
+                    "font_size": "1.5rem",
+                    "line_height": "tight",
+                    "letter_spacing": "normal",
+                    "case": "uppercase",
+                    "wrap": "balance",
+                    "color": "var(--color-foreground-heading)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "text_subtitle_qwrRt2": {
+                  "type": "text",
+                  "name": "Subtítulo",
+                  "settings": {
+                    "text": "<p>{{ closest.product.metafields.custom.subtitle.value }}</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "paragraph",
+                    "font": "var(--font-primary--family)",
+                    "font_size": "0.9rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "custom_liquid_reviews_widget": {
+                  "type": "custom-liquid",
+                  "settings": {
+                    "custom_liquid": "<div class=\"rating-widget-reviews_8W8iiV\"><div class=\"rating-text-reviews_8W8iiV\">★★★★★ <span class=\"highlight-reviews_8W8iiV\">4.9/5</span> | + 250.000 <span class=\"highlight-reviews_8W8iiV\">clientes satisfeitos</span></div></div><style>.rating-widget-reviews_8W8iiV{display:flex;align-items:center;gap:8px;margin:6px 0;}.profile-images-reviews_8W8iiV{display:flex;align-items:center;}.profile-images-reviews_8W8iiV img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 0 0 1px #e5e5e5;margin-left:-8px;}.profile-images-reviews_8W8iiV img:first-child{margin-left:0;}.rating-text-reviews_8W8iiV{font-size:12px;color:#f5a623;line-height:1.4;font-family:var(--font-body--family);}.rating-text-reviews_8W8iiV .highlight-reviews_8W8iiV{color:#1a1a1a;font-weight:700;}@media(max-width:749px){.profile-images-reviews_8W8iiV img{width:20px;height:20px;}.rating-text-reviews_8W8iiV{font-size:11px;}}</style>"
+                  },
+                  "blocks": {}
+                },
+                "price_tVjtKg": {
+                  "type": "price",
+                  "settings": {
+                    "show_sale_price_first": true,
+                    "show_installments": true,
+                    "show_tax_info": false,
+                    "type_preset": "custom",
+                    "width": "fit-content",
+                    "alignment": "left",
+                    "font": "var(--font-heading--family)",
+                    "font_size": "1.125rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "color": "var(--color-foreground-heading)",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_xrnftG",
+                "text_subtitle_qwrRt2",
+                "custom_liquid_reviews_widget",
+                "price_tVjtKg"
+              ]
+            },
+            "divider_VJhene": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "width_percent": 100,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "custom_liquid_benefit_cards": {
+              "type": "custom-liquid",
+              "name": "Cards de benefício",
+              "settings": {
+                "custom_liquid": "{% liquid\n  assign cards = product.metafields.custom.benefit_cards.value\n%}\n{% if cards %}\n<div class=\"na-benefit-cards\">\n  {% for card in cards %}\n    <div class=\"na-benefit-card\">\n      <div class=\"na-benefit-card__icon\">\n        {% case card.icon %}\n          {% when 'wave' %}<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 16c1.5-2 3.5-2 5 0s3.5 2 5 0 3.5-2 5 0 3.5 2 5 0\"/><path d=\"M2 10c1.5-2 3.5-2 5 0s3.5 2 5 0 3.5-2 5 0 3.5 2 5 0\"/></svg>\n          {% when 'ruler' %}<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"7\" width=\"18\" height=\"10\" rx=\"1\"/><path d=\"M7 7v3M11 7v3M15 7v3M19 7v3\"/></svg>\n          {% when 'shirt' %}<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 3l3 3-3 3M8 3L5 6l3 3M8 3s1 2 4 2 4-2 4-2M5 8v13h14V8\"/></svg>\n          {% else %}<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>\n        {% endcase %}\n      </div>\n      <div class=\"na-benefit-card__title\">{{ card.title }}</div>\n      <div class=\"na-benefit-card__text\">{{ card.text }}</div>\n    </div>\n  {% endfor %}\n</div>\n{% endif %}\n<style>.na-benefit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0;}.na-benefit-card{border:1px solid #e8e8e8;border-radius:10px;padding:14px 10px;text-align:center;font-family:var(--font-body--family);background:#fff;}.na-benefit-card__icon{width:22px;height:22px;margin:0 auto 8px;color:#111;}.na-benefit-card__icon svg{width:100%;height:100%;}.na-benefit-card__title{font-size:11px;font-weight:700;letter-spacing:0.02em;color:#111;text-transform:uppercase;margin-bottom:2px;}.na-benefit-card__text{font-size:11px;color:#666;}@media(max-width:749px){.na-benefit-cards{gap:4px;}.na-benefit-card{padding:8px 2px;border-radius:8px;}.na-benefit-card__icon{width:15px;height:15px;margin:0 auto 4px;}.na-benefit-card__title{font-size:9.5px;line-height:1.2;word-break:break-word;}.na-benefit-card__text{font-size:9px;line-height:1.25;word-break:break-word;}}@media(max-width:380px){.na-benefit-card{padding:6px 1px;}.na-benefit-card__icon{width:13px;height:13px;}.na-benefit-card__title{font-size:8.5px;}.na-benefit-card__text{font-size:8.5px;}}</style>"
+              },
+              "blocks": {}
+            },
+            "variant_picker_R3rGDr": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": false,
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "custom_liquid_83pFLf": {
+              "type": "custom-liquid",
+              "name": "Tabela de medidas",
+              "settings": {
+                "custom_liquid": "{% render 'na-size-guide' %}"
+              },
+              "blocks": {}
+            },
+            "custom_liquid_shipping_bar": {
+              "type": "custom-liquid",
+              "name": "Barra frete",
+              "settings": {
+                "custom_liquid": "<div id=\"na-free-shipping-bar\" class=\"na-shipping-bar-inline\" hidden><p id=\"na-shipping-bar-message\"></p><div class=\"na-shipping-bar-inline__track\"><div id=\"na-shipping-bar-fill\"></div></div></div><style>.na-shipping-bar-inline{margin:4px auto 8px;text-align:center;}.na-shipping-bar-inline p{margin:0 0 6px;font-size:12.5px;font-weight:600;color:#333;}.na-shipping-bar-inline p strong{color:#1a7a1a;}.na-shipping-bar-inline__track{height:5px;border-radius:3px;background:rgba(0,0,0,0.08);overflow:hidden;}#na-shipping-bar-fill{height:100%;width:0%;background:#1a7a1a;border-radius:3px;transition:width 0.4s ease;}</style><script>(function(){var T=29900,bar=document.getElementById('na-free-shipping-bar');if(!bar)return;var msg=document.getElementById('na-shipping-bar-message'),fill=document.getElementById('na-shipping-bar-fill');function fmt(c){return'R$ '+(c/100).toFixed(2).replace('.',',')}function render(t){fill.style.width=Math.min(100,Math.round(t/T*100))+'%';msg.innerHTML=t>=T?'<strong>Frete grátis ✅</strong>':'Faltam <strong>'+fmt(T-t)+'</strong> para <strong>frete grátis</strong>';bar.hidden=false;}fetch('/cart.js').then(r=>r.json()).then(c=>render(c.total_price)).catch(()=>{});})();</script>"
+              },
+              "blocks": {}
+            },
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": false,
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "custom_liquid_estoque_badge": {
+              "type": "custom-liquid",
+              "name": "Badge estoque",
+              "settings": {
+                "custom_liquid": "<div class=\"na-stock-badge\"><span class=\"na-stock-dot\"></span>Peças em estoque com <strong>envio imediato</strong></div><style>.na-stock-badge{display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #e0e0e0;border-radius:4px;padding:9px 14px;font-size:13px;color:#333;font-family:var(--font-body--family),sans-serif;background:#fff;margin-top:2px;}.na-stock-dot{flex-shrink:0;width:9px;height:9px;border-radius:50%;background:#22a722;animation:na-stock-pulse 2s ease-in-out infinite;}@keyframes na-stock-pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,167,34,0.5);}50%{box-shadow:0 0 0 5px rgba(34,167,34,0);}}@media(max-width:749px){.na-stock-badge{font-size:12px;padding:8px 12px;}}</style>"
+              },
+              "blocks": {}
+            },
+            "custom_liquid_nMcaUh": {
+              "type": "custom-liquid",
+              "name": "Barra confiança",
+              "settings": {
+                "custom_liquid": "<div class=\"na-trust-row\"><div class=\"na-trust-item\"><span class=\"na-trust-item__icon\"><img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/fast_1.png?v=1788530898\" alt=\"Envio Rastreado\" width=\"34\" height=\"34\" loading=\"lazy\"></span><span class=\"na-trust-item__label\">Envio Rastreado</span></div><div class=\"na-trust-item\"><span class=\"na-trust-item__icon\"><img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/svgexport-1.svg?v=1788531088\" alt=\"Garantia\" width=\"34\" height=\"34\" loading=\"lazy\"></span><span class=\"na-trust-item__label\">Garantia Natural Art</span></div><div class=\"na-trust-item\"><span class=\"na-trust-item__icon\"><img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/exchange.webp?v=1788530960\" alt=\"Troca\" width=\"34\" height=\"34\" loading=\"lazy\"></span><span class=\"na-trust-item__label\">Troca Fácil e Gratuita</span></div><div class=\"na-trust-item\"><span class=\"na-trust-item__icon\"><img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/desconto_1.webp?v=1788530898\" alt=\"Frete\" width=\"34\" height=\"34\" loading=\"lazy\"></span><span class=\"na-trust-item__label\">Frete Grátis acima de R$ 299</span></div></div><style>.na-trust-row{display:flex;flex-wrap:nowrap;align-items:flex-start;justify-content:space-between;gap:6px;width:100%;padding:12px 2px;}.na-trust-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;flex:1 1 0;min-width:0;}.na-trust-item__icon{width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;}.na-trust-item__icon img{width:100%;height:100%;object-fit:contain;}.na-trust-item__label{font-size:11px;color:#111;font-family:var(--font-primary--family),sans-serif;line-height:1.25;}@media(max-width:749px){.na-trust-row{gap:4px;padding:10px 0;}.na-trust-item{gap:5px;}.na-trust-item__icon{width:24px;height:24px;}.na-trust-item__label{font-size:8.5px;line-height:1.15;word-break:break-word;}}@media(max-width:380px){.na-trust-item__label{font-size:7.5px;}}</style>"
+              },
+              "blocks": {}
+            },
+            "custom_liquid_coupon_banner": {
+              "type": "custom-liquid",
+              "name": "Banner cupom",
+              "settings": {
+                "custom_liquid": "<div class=\"na-coupon-banner\"><div class=\"na-coupon-banner__title\">10% OFF na sua primeira compra</div><div class=\"na-coupon-banner__subtitle\">Em compras acima de R$ 299. Clique abaixo e copie seu cupom:</div><div class=\"na-coupon-banner__timer\" aria-hidden=\"true\"><div class=\"na-coupon-timer__unit\"><span class=\"na-coupon-timer__value\" id=\"na-coupon-h\">06</span><span class=\"na-coupon-timer__label\">Horas</span></div><span class=\"na-coupon-timer__sep\">:</span><div class=\"na-coupon-timer__unit\"><span class=\"na-coupon-timer__value\" id=\"na-coupon-m\">00</span><span class=\"na-coupon-timer__label\">Min</span></div><span class=\"na-coupon-timer__sep\">:</span><div class=\"na-coupon-timer__unit\"><span class=\"na-coupon-timer__value\" id=\"na-coupon-s\">00</span><span class=\"na-coupon-timer__label\">Seg</span></div></div><button type=\"button\" class=\"na-coupon-banner__btn\" id=\"na-coupon-copy-btn\" data-code=\"BEMVINDO10\"><span id=\"na-coupon-code-label\">BEMVINDO10</span><span id=\"na-coupon-check\" hidden>✓ Copiado</span></button></div><style>.na-coupon-banner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;background:#000;border-radius:20px;padding:22px 20px;font-family:var(--font-primary--family),sans-serif;}.na-coupon-banner__title{color:#fff;font-size:20px;font-weight:700;margin:0;}.na-coupon-banner__subtitle{color:#fff;font-size:13px;font-weight:500;margin:0;}.na-coupon-banner__timer{display:flex;align-items:center;gap:6px;}.na-coupon-timer__unit{background:#262626;border-radius:10px;padding:6px 10px;display:flex;flex-direction:column;align-items:center;min-width:44px;}.na-coupon-timer__value{color:#fff;font-size:22px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;}.na-coupon-timer__label{color:#ccc;font-size:9px;text-transform:uppercase;letter-spacing:0.03em;margin-top:2px;}.na-coupon-timer__sep{color:#fff;font-size:18px;font-weight:600;}.na-coupon-banner__btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:15px;font-weight:700;color:#000;background:#fff;border:1px dashed #9a9a9a;border-radius:10px;padding:10px 18px;cursor:pointer;}@media(max-width:749px){.na-coupon-banner__title{font-size:17px;}.na-coupon-timer__value{font-size:18px;}}</style><script>(function(){var D=6*60*60*1000,h=document.getElementById('na-coupon-h'),m=document.getElementById('na-coupon-m'),s=document.getElementById('na-coupon-s');if(!h)return;var t=Date.now()+D;function p(n){return String(n).padStart(2,'0');}function tick(){var r=t-Date.now();if(r<=0){t=Date.now()+D;r=D;}var ts=Math.floor(r/1000);h.textContent=p(Math.floor(ts/3600));m.textContent=p(Math.floor(ts%3600/60));s.textContent=p(ts%60);}tick();setInterval(tick,1000);var btn=document.getElementById('na-coupon-copy-btn'),chk=document.getElementById('na-coupon-check'),lbl=document.getElementById('na-coupon-code-label');if(btn){btn.addEventListener('click',function(){function done(){lbl.hidden=true;chk.hidden=false;setTimeout(function(){lbl.hidden=false;chk.hidden=true;},1800);}if(navigator.clipboard){navigator.clipboard.writeText('BEMVINDO10').then(done).catch(done);}else done();});}})();</script>"
+              },
+              "blocks": {}
+            },
+            "accordion_trust_na9F3k": {
+              "type": "accordion",
+              "name": "Confiança",
+              "settings": {
+                "icon": "caret",
+                "dividers": true,
+                "type_preset": "h5",
+                "inherit_color_scheme": true,
+                "color_scheme": "scheme-1",
+                "border": "solid",
+                "border_width": 1,
+                "border_opacity": 9,
+                "border_radius": 10,
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 16,
+                "padding-inline-end": 16
+              },
+              "blocks": {
+                "row_especificacoes_na": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Descrição",
+                    "open_by_default": false,
+                    "icon": "clipboard",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_especificacoes_na": {
+                      "type": "text",
+                      "settings": {
+                        "text": "{{ closest.product.description }}",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-primary--family)",
+                        "font_size": "",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_especificacoes_na"
+                  ]
+                },
+                "row_garantia_na": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Garantia",
+                    "open_by_default": false,
+                    "icon": "check_box",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_garantia_na": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p><strong>Compra segura do início ao fim.</strong><br/>Nossos produtos passam por controle de qualidade. Após o recebimento, você tem 7 dias corridos para devolução gratuita.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-primary--family)",
+                        "font_size": "",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_garantia_na"
+                  ]
+                },
+                "row_devolucoes_na": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Envios & Devoluções",
+                    "open_by_default": false,
+                    "icon": "box",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_devolucoes_na": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Enviamos em até 3 a 7 dias úteis com rastreamento. Frete grátis acima de R$ 299.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-primary--family)",
+                        "font_size": "",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_devolucoes_na"
+                  ]
+                }
+              },
+              "block_order": [
+                "row_especificacoes_na",
+                "row_garantia_na",
+                "row_devolucoes_na"
+              ]
+            },
+            "text_aEtTtq": {
+              "type": "text",
+              "name": "Product description",
+              "disabled": true,
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "group_icgrde",
+            "divider_VJhene",
+            "custom_liquid_benefit_cards",
+            "variant_picker_R3rGDr",
+            "custom_liquid_83pFLf",
+            "custom_liquid_shipping_bar",
+            "buy_buttons_eYQEYi",
+            "custom_liquid_estoque_badge",
+            "custom_liquid_nMcaUh",
+            "custom_liquid_coupon_banner",
+            "accordion_trust_na9F3k",
+            "text_aEtTtq"
+          ]
+        }
+      },
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": true,
+        "limit_details_width": false,
+        "gap": 20,
+        "enable_sticky_add_to_cart": true,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "video_bubble_na": {
+      "type": "na-video-bubble",
+      "disabled": true,
+      "settings": {
+        "video_url": "https://video.ishorts.com.br/33c47517-5931-439f-876a-e3015e735792-140p.mp4",
+        "poster_url": "https://video.ishorts.com.br/thumbnails/33c47517-5931-439f-876a-e3015e735792-thumbnail.0000000.jpg",
+        "bubble_label": "Ver vídeo",
+        "modal_label": "Veja como fica na prática"
+      }
+    },
+    "na-social-proof": {
+      "type": "na-social-proof",
+      "settings": {
+        "prefix": "+",
+        "count_target": 250,
+        "suffix": ".000",
+        "tagline": "Vestindo Natural Art pelo mundo.",
+        "speed": 28,
+        "eyebrow": "The Natural Art · Since 1971",
+        "headline": "Da praia a cidade.",
+        "subtext": "Mais de 50 anos entregando produtos que unem conforto e estilo.",
+        "bg_color": "#ffffff"
+      }
+    },
+    "section_faq": {
+      "type": "na-faq-content",
+      "settings": {}
+    },
+    "1788968429ecc23c83": {
+      "type": "_blocks",
+      "blocks": {
+        "bk_reviews_bk_reviews_review_section_VEkB9z": {
+          "type": "shopify://apps/bk-reviews/blocks/bk-reviews-review-section/592f39b6-a0c6-4829-a095-8e5558e58026",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "bk_reviews_bk_reviews_review_section_VEkB9z"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "product_recommendations_qggXJq": {
+      "type": "product-recommendations",
+      "blocks": {
+        "text_cbcgyb": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<h3>Veja Também</h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h4",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_DNizbJ": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_M7MJkb": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_gLWgA6": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h5",
+                "width": "fit-content",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground-heading)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_DNizbJ",
+            "product_title_M7MJkb",
+            "price_gLWgA6"
+          ]
+        }
+      },
+      "block_order": [
+        "text_cbcgyb"
+      ],
+      "name": "t:names.product_recommendations",
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "carousel",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "video_bubble_na",
+    "na-social-proof",
+    "section_faq",
+    "1788968429ecc23c83",
+    "product_recommendations_qggXJq"
+  ]
+}
