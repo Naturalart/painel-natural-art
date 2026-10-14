@@ -68,7 +68,7 @@
         function allFrames() { var out = []; roots.forEach(function (r) { try { r.querySelectorAll('iframe').forEach(function (f) { out.push(f); }); } catch (e) {} }); return out; }
         function watch(root, where) {
           new MutationObserver(function (ms) { ms.forEach(function (m) {
-            if (m.type === 'attributes') { log('IFRAME src mudou ' + desc(m.target) + (where ? ' em ' + where : '')); return; }
+            if (m.type === 'attributes') { if (m.target.tagName === 'IFRAME') log('IFRAME src mudou ' + desc(m.target) + (where ? ' em ' + where : '')); return; }
             m.addedNodes.forEach(function (n) { if (n.nodeType !== 1) return; var fs = n.tagName === 'IFRAME' ? [n] : (n.querySelectorAll ? [].slice.call(n.querySelectorAll('iframe')) : []); fs.forEach(function (f) { log('IFRAME novo ' + desc(f) + (where ? ' em ' + where : '') + ' por ' + who()); f.addEventListener('load', function () { log('IFRAME carregou ' + desc(f)); }); }); });
           }); }).observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
         }
