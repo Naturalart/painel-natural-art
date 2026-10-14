@@ -11,24 +11,54 @@
         Botão voltar (14/10): scripts de fora do tema (ex.: UTMify, apps) chamam history.pushState
         na mesma página, só trocando parâmetros (?utm_...) ou #. Cada chamada cria uma entrada no
         histórico e o cliente aperta voltar e continua na mesma página.
-        Aqui, pushState para a mesma página vira replaceState. Precisa ficar antes de qualquer script.
+        Aqui, pushState para a mesma página vira replaceState (no objeto e no protótipo, para pegar
+        também quem chama History.prototype.pushState). Precisa ficar antes de qualquer script.
+
+        Diagnóstico: abrir qualquer página com ?debugvoltar=1 mostra no rodapé tudo o que mexe no
+        histórico (pushState, replaceState, iframes, navegações). Desliga com ?debugvoltar=0.
       */
       (function () {
+        var dbg = false, KEY = 'na_dbg_voltar', LOG = 'na_dbg_voltar_log';
         try {
-          var h = window.history;
-          var push = h.pushState;
-          h.pushState = function (state, title, url) {
-            try {
-              if (url != null) {
-                var next = new URL(url, location.href);
-                if (next.origin === location.origin && next.pathname === location.pathname) {
-                  return h.replaceState(state, title, url);
-                }
-              }
-            } catch (e) {}
-            return push.apply(h, arguments);
-          };
+          if (/[?&]debugvoltar=1/.test(location.search)) sessionStorage.setItem(KEY, '1');
+          if (/[?&]debugvoltar=0/.test(location.search)) { sessionStorage.removeItem(KEY); sessionStorage.removeItem(LOG); }
+          dbg = sessionStorage.getItem(KEY) === '1';
         } catch (e) {}
+        function short(u) { try { var x = new URL(u, location.href); return (x.origin === location.origin ? '' : x.host) + x.pathname.slice(0, 40) + (x.search ? x.search.slice(0, 40) : '') + x.hash.slice(0, 20); } catch (e) { return String(u).slice(0, 60); } }
+        function who() { var st = (new Error().stack || '').split('\n'); for (var i = 2; i < st.length; i++) { var m = st[i].match(/https?:\/\/[^\s)]+/); if (m && m[0].indexOf('na-dbg') < 0) return short(m[0].replace(/:\d+:\d+$/, '')); } return '?'; }
+        function log(msg) {
+          if (!dbg) return;
+          var line = new Date().toTimeString().slice(3, 8) + ' [' + history.length + '] ' + msg;
+          try { var arr = JSON.parse(sessionStorage.getItem(LOG) || '[]'); arr.push(line); sessionStorage.setItem(LOG, JSON.stringify(arr.slice(-40))); } catch (e) {}
+          var box = document.getElementById('na-dbg-voltar'); if (box) box.textContent = line + '\n' + box.textContent;
+        }
+        try {
+          var H = window.History && History.prototype, push = H.pushState, repl = H.replaceState;
+          H.pushState = function (state, title, url) {
+            var same = false;
+            try { if (url != null) { var n = new URL(url, location.href); same = n.origin === location.origin && n.pathname === location.pathname; } } catch (e) {}
+            log((same ? 'push->replace ' : 'PUSH ') + short(url) + ' por ' + who());
+            return same ? repl.apply(this, arguments) : push.apply(this, arguments);
+          };
+          if (dbg) H.replaceState = function (state, title, url) { log('replace ' + short(url) + ' por ' + who()); return repl.apply(this, arguments); };
+          if (window.history.pushState !== H.pushState) window.history.pushState = H.pushState;
+        } catch (e) {}
+        if (!dbg) return;
+        log('CARREGOU ' + short(location.href) + ' (veio de ' + (document.referrer ? short(document.referrer) : 'nada') + ')');
+        window.addEventListener('popstate', function () { log('popstate ' + short(location.href)); });
+        window.addEventListener('hashchange', function () { log('hashchange ' + location.hash); });
+        window.addEventListener('pageshow', function (e) { if (e.persisted) log('voltou do cache ' + short(location.href)); });
+        if (window.navigation && navigation.addEventListener) navigation.addEventListener('navigate', function (e) { log('navigate ' + e.navigationType + ' ' + short(e.destination.url)); });
+        var last = history.length;
+        setInterval(function () { if (history.length !== last) { log('historico ' + last + ' -> ' + history.length); last = history.length; } }, 300);
+        new MutationObserver(function (ms) { ms.forEach(function (m) { m.addedNodes.forEach(function (n) { if (n.tagName === 'IFRAME') log('IFRAME ' + short(n.src || n.getAttribute('src') || 'sem src') + ' ' + (n.id || n.name || '')); }); }); }).observe(document.documentElement, { childList: true, subtree: true });
+        document.addEventListener('DOMContentLoaded', function () {
+          var box = document.createElement('pre');
+          box.id = 'na-dbg-voltar';
+          box.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:2147483647;max-height:38vh;overflow:auto;margin:0;padding:6px 8px;background:rgba(0,0,0,.85);color:#7CFC00;font:10px/1.35 monospace;white-space:pre-wrap;pointer-events:auto';
+          try { box.textContent = JSON.parse(sessionStorage.getItem(LOG) || '[]').slice().reverse().join('\n'); } catch (e) {}
+          document.body.appendChild(box);
+        });
       })();
     </script>
     {%- if settings.favicon != blank -%}
