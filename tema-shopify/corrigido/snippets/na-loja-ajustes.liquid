@@ -7,6 +7,9 @@
      barra; ele fica salvo no navegador (localStorage "na_cep") e a meta passa a
      ser a da região dele. A barra da página de produto (#na-free-shipping-bar,
      product.json) usa a mesma lógica.
+  3. Banner principal com link (slide_link): o tema embrulha a imagem num <a>,
+     e as regras "slideshow-slide > .slide__image-container" deixam de valer
+     (imagem encolhia e sobrava espaço branco). Repete as regras para o <a>.
 {%- endcomment -%}
 <style>
   .na-discount-badge{display:none!important}
@@ -22,6 +25,12 @@
   .na-frete-cep button{padding:6px 10px;border:0;border-radius:6px;background:#1a7a1a;color:#fff;font-size:12.5px;font-weight:600;cursor:pointer}
   .na-frete-troca{background:none;border:0;padding:0;margin-left:4px;color:#555;font-size:12px;text-decoration:underline;cursor:pointer}
   .na-frete-erro{color:#b3261e;font-size:12px;margin:4px 0 0}
+  slideshow-slide > a > .slide__image-container{display:flex;width:100%;height:100%;overflow:hidden;position:absolute;inset:0}
+  @media screen and (max-width:749px){
+    slideshow-slide > a > .slide__image-container{aspect-ratio:1196/1315;position:relative!important;height:auto!important}
+    slideshow-slide > a > .slide__image-container > .slide__image,slideshow-slide > a > .slide__image-container > picture{width:100%;position:relative!important;height:auto!important}
+    slideshow-slide > a > .slide__image-container > picture > img{width:100%;height:auto;display:block}
+  }
 </style>
 <script>
   (function () {
