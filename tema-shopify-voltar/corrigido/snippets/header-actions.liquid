@@ -85,29 +85,31 @@
     <div
       class="account-button header-actions__action{% if display_style == 'text' %} account-button--text{% endif %} color-{{ settings.popover_color_scheme }}"
     >
-      {% comment %}
-        14/10 (botão voltar): o <shopify-account> da Shopify carrega escondido um iframe de login do Shop
-        (shop.app). No iPhone esse iframe recarrega a cada 1-2 s e cada recarga cria entradas no histórico,
-        então o cliente aperta voltar e não sai da página. Trocado por um link simples para a conta.
-      {% endcomment %}
-      <a
-        href="{{ routes.account_url }}"
-        class="account-button__link"
-        aria-label="{{ 'content.account_title' | t }}"
+      <shopify-account
+        menu="{{ customer_account_menu }}"
         {% if account_actions_style != blank %}
           style="{{ account_actions_style }}"
         {% endif %}
       >
-        <span class="account-button__text header-actions__text-style {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
-          {{ 'content.account_title' | t }}
-        </span>
-        <span
-          class="{% if display_style != 'icon' %}desktop:hidden{% endif %}"
-          aria-hidden="true"
-        >
-          {{ account_icon }}
-        </span>
-      </a>
+        {% if customer %}
+          <div class="account-button__fallback"></div>
+        {% else %}
+          <span
+            slot="signed-out-avatar"
+            class="account-button__text header-actions__text-style {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}"
+          >
+            {{ 'content.account_title' | t }}
+          </span>
+
+          <span
+            slot="signed-out-avatar"
+            class="{% if display_style != 'icon' %}desktop:hidden{% endif %}"
+            aria-hidden="true"
+          >
+            {{ account_icon }}
+          </span>
+        {% endif %}
+      </shopify-account>
     </div>
   {% endif %}
 
@@ -310,29 +312,6 @@
       /* Match the line height of the other buttons */
       line-height: normal;
     }
-  }
-
-  .account-button__link {
-    min-width: 44px;
-    height: 44px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--gap-xs);
-    line-height: normal;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  /* Sem o <shopify-account> o Horizon mandava a busca para a direita no celular; mantém a busca à esquerda como antes */
-  @media screen and (max-width: 749px) {
-    .header__columns:has(.account-button__link) .search-action {
-      grid-area: leftB;
-    }
-  }
-
-  #header-component[data-menu-style='drawer'] .header__columns:has(.account-button__link) .search-action {
-    grid-area: leftB;
   }
 
   .account-button__fallback {

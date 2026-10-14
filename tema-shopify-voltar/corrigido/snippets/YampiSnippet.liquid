@@ -1,7 +1,17 @@
 <link rel="preconnect" crossorigin href="https://api.dooki.com.br">
 <link rel="preconnect" crossorigin href="https://api.yampi.io">
 
-{% comment %} 14/10: removido o security.js do Mercado Pago (pagamento é Stone; o script cria iframe e é suspeito no bug do botão voltar). {% endcomment %}
+{% if template.name == 'product' %}
+  <script src="https://www.mercadopago.com/v2/security.js" view="item"></script>
+{% endif %}
+
+{% if template.name == 'index' %}
+  <script src="https://www.mercadopago.com/v2/security.js" view="home"></script>
+{% endif %}
+
+{% if template.name == 'search' %}
+  <script src="https://www.mercadopago.com/v2/security.js" view="search"></script>
+{% endif %}
 
 <style>
     .yampi-loader {display: none; position: fixed; width: 100%; height: 100%; background: #fff; left: 0; top: 0; z-index:99999}

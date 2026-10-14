@@ -8,14 +8,12 @@
   <head>
     <script>
       /*
-        Botão voltar (14/10): scripts de fora do tema (ex.: UTMify, apps) chamam history.pushState
-        na mesma página, só trocando parâmetros (?utm_...) ou #. Cada chamada cria uma entrada no
-        histórico e o cliente aperta voltar e continua na mesma página.
-        Aqui, pushState para a mesma página vira replaceState (no objeto e no protótipo, para pegar
-        também quem chama History.prototype.pushState). Precisa ficar antes de qualquer script.
-
-        Diagnóstico: abrir qualquer página com ?debugvoltar=1 mostra no rodapé tudo o que mexe no
-        histórico (pushState, replaceState, iframes, navegações). Desliga com ?debugvoltar=0.
+        CÓPIA DE TESTE do botão voltar (14/10). Não publicar assim.
+        Sem parâmetro, nada aqui muda a loja para o cliente.
+        ?debugvoltar=1 mostra no rodapé o que mexe no histórico (pushState, replaceState, iframes,
+        navegações); ?debugvoltar=0 desliga.
+        ?bloquear=utmify | clarity | utmify,clarity não carrega esses scripts só neste navegador,
+        para achar qual deles faz o histórico crescer sozinho no iPhone; ?bloquear=0 desfaz.
       */
       (function () {
         var dbg = false, KEY = 'na_dbg_voltar', LOG = 'na_dbg_voltar_log';
@@ -27,9 +25,9 @@
         try {
           var bq = location.search.match(/[?&]bloquear=([^&]*)/);
           if (bq) { bq[1] === '0' ? sessionStorage.removeItem('na_bloquear') : sessionStorage.setItem('na_bloquear', decodeURIComponent(bq[1])); }
-          var bloq = (sessionStorage.getItem('na_bloquear') || '').split(',').filter(Boolean);
+          var bloq = (sessionStorage.getItem('na_bloquear') || '').split(',').filter(function (b) { return b === 'utmify' || b === 'clarity'; });
           if (bloq.length) {
-            var barrar = function (n) { return n && n.tagName === 'SCRIPT' && n.src && bloq.some(function (b) { return n.src.indexOf(b) > -1; }); };
+            var barrar = function (n) { return n && n.tagName === 'SCRIPT' && n.src && bloq.some(function (b) { return n.src.indexOf(b === 'utmify' ? 'cdn.utmify.com.br' : 'clarity.ms/') > -1; }); };
             var ap = Node.prototype.appendChild, ib = Node.prototype.insertBefore;
             Node.prototype.appendChild = function (n) { if (barrar(n)) { log('BLOQUEADO ' + short(n.src)); return n; } return ap.apply(this, arguments); };
             Node.prototype.insertBefore = function (n) { if (barrar(n)) { log('BLOQUEADO ' + short(n.src)); return n; } return ib.apply(this, arguments); };
@@ -43,18 +41,12 @@
           try { var arr = JSON.parse(sessionStorage.getItem(LOG) || '[]'); arr.push(line); sessionStorage.setItem(LOG, JSON.stringify(arr.slice(-40))); } catch (e) {}
           var box = document.getElementById('na-dbg-voltar'); if (box) box.textContent = line + '\n' + box.textContent;
         }
+        if (!dbg) return;
         try {
           var H = window.History && History.prototype, push = H.pushState, repl = H.replaceState;
-          H.pushState = function (state, title, url) {
-            var same = false;
-            try { if (url != null) { var n = new URL(url, location.href); same = n.origin === location.origin && n.pathname === location.pathname; } } catch (e) {}
-            log((same ? 'push->replace ' : 'PUSH ') + short(url) + ' por ' + who());
-            return same ? repl.apply(this, arguments) : push.apply(this, arguments);
-          };
-          if (dbg) H.replaceState = function (state, title, url) { log('replace ' + short(url) + ' por ' + who()); return repl.apply(this, arguments); };
-          if (window.history.pushState !== H.pushState) window.history.pushState = H.pushState;
+          H.pushState = function (state, title, url) { log('PUSH ' + short(url) + ' por ' + who()); return push.apply(this, arguments); };
+          H.replaceState = function (state, title, url) { log('replace ' + short(url) + ' por ' + who()); return repl.apply(this, arguments); };
         } catch (e) {}
-        if (!dbg) return;
         log('CARREGOU ' + short(location.href) + ' (veio de ' + (document.referrer ? short(document.referrer) : 'nada') + ')');
         window.addEventListener('popstate', function () { log('popstate ' + short(location.href)); });
         window.addEventListener('hashchange', function () { log('hashchange ' + location.hash); });
@@ -118,7 +110,7 @@
     <script>
       (function () {
         /* Teste do botão voltar: ?bloquear=utmify (ou clarity, ou utmify,clarity) não carrega esses scripts só neste navegador; ?bloquear=0 desfaz */
-        try { if ((sessionStorage.getItem('na_bloquear') || '').indexOf('utmify') > -1) return; } catch (e) {}
+        try { if ((sessionStorage.getItem('na_bloquear') || '').split(',').indexOf('utmify') > -1) return; } catch (e) {}
         var s = document.createElement('script');
         s.src = 'https://cdn.utmify.com.br/scripts/utms/latest.js';
         s.async = true;
