@@ -1,0 +1,889 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_Fd66Vg": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_fTdMyJ": {
+          "type": "_slide",
+          "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/Desktop02.png",
+            "mobile_image": "shopify://shop_images/banenr_bermuda_o_melhor.png",
+            "slide_link": "shopify://collections/bermudas",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "space-between",
+            "gap": 0,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-6",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "slide_3b4TTy": {
+          "type": "_slide",
+          "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/Desktop01.png",
+            "mobile_image": "shopify://shop_images/banenrcamisetamobile.png",
+            "slide_link": "shopify://collections/camisetas",
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 0,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-6",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "slide_QExVy9": {
+          "type": "_slide",
+          "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/banner_moletom_50_desktop.png",
+            "mobile_image": "shopify://shop_images/banner_moletom_50_mobile.png",
+            "slide_link": "shopify://collections/moletons",
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 0,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-6",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "slide_WzhkzL": {
+          "type": "_slide",
+          "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/Desktop03.png",
+            "mobile_image": "shopify://shop_images/Mobile03.png",
+            "slide_link": "shopify://collections/outlet",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 0,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-6",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "slide_fTdMyJ",
+        "slide_3b4TTy",
+        "slide_QExVy9",
+        "slide_WzhkzL"
+      ],
+      "name": "t:names.slideshow_full_frame",
+      "settings": {
+        "display_mode": "full_frame",
+        "section_width": "full-width",
+        "full_frame_on_mobile": true,
+        "slideshow_gap": 12,
+        "corner_radius": 0,
+        "slide_height": "medium",
+        "content_position": "on-media",
+        "color_scheme": "scheme-1",
+        "icons_style": "arrows_large",
+        "icons_shape": "none",
+        "slideshow_controls_style": "dots",
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "custom_liquid_YCcDMR": {
+      "type": "custom-liquid",
+      "name": "Custom Liquid",
+      "settings": {
+        "custom_liquid": "<style>\n  .na-benefits { background: #111111; overflow: hidden; padding: 0; border-top: 1px solid #222; border-bottom: 1px solid #222; }\n  .na-benefits__track { display: flex; align-items: center; width: max-content; animation: na-ben-scroll 28s linear infinite; will-change: transform; }\n  .na-benefits__track:hover { animation-play-state: paused; }\n  .na-benefits__item { display: flex; align-items: center; gap: 10px; padding: 16px 40px; white-space: nowrap; flex-shrink: 0; }\n  .na-benefits__icon { width: 22px; height: 22px; flex-shrink: 0; opacity: .9; }\n  .na-benefits__text { display: flex; flex-direction: column; gap: 1px; }\n  .na-benefits__title { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; color: #ffffff; letter-spacing: .12em; text-transform: uppercase; line-height: 1.2; }\n  .na-benefits__sub { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 400; color: #aaaaaa; letter-spacing: .08em; text-transform: uppercase; line-height: 1.2; }\n  .na-benefits__sep { width: 4px; height: 4px; border-radius: 50%; background: #444; flex-shrink: 0; margin: 0 4px; }\n  @keyframes na-ben-scroll { from { transform: translateX(0) } to { transform: translateX(-50%) } }\n  @media (max-width: 640px) {\n    .na-benefits__item { padding: 14px 28px; gap: 8px; }\n    .na-benefits__title { font-size: 10px; }\n    .na-benefits__sub { font-size: 9px; }\n  }\n</style>\n\n<div class=\"na-benefits\" aria-hidden=\"true\">\n  <div class=\"na-benefits__track\">\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"3\" width=\"15\" height=\"13\" rx=\"1\"/><path d=\"M16 8h4l3 5v3h-7V8z\"/><circle cx=\"5.5\" cy=\"18.5\" r=\"2.5\"/><circle cx=\"18.5\" cy=\"18.5\" r=\"2.5\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">Frete Grátis</span>\n        <span class=\"na-benefits__sub\">R$&nbsp;299 Sul e Sudeste, R$&nbsp;399 demais regiões</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"4\" width=\"22\" height=\"16\" rx=\"2\"/><line x1=\"1\" y1=\"10\" x2=\"23\" y2=\"10\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">Pagamento Facilitado</span>\n        <span class=\"na-benefits__sub\">Em até 6x sem juros</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M9 9h.01M15 9h.01\"/><path d=\"M8 14s1.5 2 4 2 4-2 4-2\"/><line x1=\"12\" y1=\"2\" x2=\"12\" y2=\"5\"/><line x1=\"12\" y1=\"19\" x2=\"12\" y2=\"22\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">5% de Desconto</span>\n        <span class=\"na-benefits__sub\">Pagamento via Pix</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"1 4 1 10 7 10\"/><polyline points=\"23 20 23 14 17 14\"/><path d=\"M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">Primeira Troca Grátis</span>\n        <span class=\"na-benefits__sub\">Sem custo adicional</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"/><polyline points=\"9 12 11 14 15 10\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">Compra Segura</span>\n        <span class=\"na-benefits__sub\">Site protegido e certificado</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n    <!-- DUPLICATA PARA LOOP -->\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"3\" width=\"15\" height=\"13\" rx=\"1\"/><path d=\"M16 8h4l3 5v3h-7V8z\"/><circle cx=\"5.5\" cy=\"18.5\" r=\"2.5\"/><circle cx=\"18.5\" cy=\"18.5\" r=\"2.5\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">Frete Grátis</span>\n        <span class=\"na-benefits__sub\">R$&nbsp;299 Sul e Sudeste, R$&nbsp;399 demais regiões</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"4\" width=\"22\" height=\"16\" rx=\"2\"/><line x1=\"1\" y1=\"10\" x2=\"23\" y2=\"10\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">Pagamento Facilitado</span>\n        <span class=\"na-benefits__sub\">Em até 6x sem juros</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M9 9h.01M15 9h.01\"/><path d=\"M8 14s1.5 2 4 2 4-2 4-2\"/><line x1=\"12\" y1=\"2\" x2=\"12\" y2=\"5\"/><line x1=\"12\" y1=\"19\" x2=\"12\" y2=\"22\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">5% de Desconto</span>\n        <span class=\"na-benefits__sub\">Pagamento via Pix</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"1 4 1 10 7 10\"/><polyline points=\"23 20 23 14 17 14\"/><path d=\"M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">Primeira Troca Grátis</span>\n        <span class=\"na-benefits__sub\">Sem custo adicional</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n    <div class=\"na-benefits__item\">\n      <svg class=\"na-benefits__icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"/><polyline points=\"9 12 11 14 15 10\"/></svg>\n      <div class=\"na-benefits__text\">\n        <span class=\"na-benefits__title\">Compra Segura</span>\n        <span class=\"na-benefits__sub\">Site protegido e certificado</span>\n      </div>\n    </div>\n\n    <div class=\"na-benefits__sep\"></div>\n\n  </div>\n</div>",
+        "color_scheme": "",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "product_list_fa6P9H": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "name": "t:names.header",
+          "static": true,
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-end",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_list_text_YFtzcL": {
+              "type": "_product-list-text",
+              "name": "t:names.collection_title",
+              "settings": {
+                "text": "<h4>{{ closest.collection.title }}</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_list_button_MWeP9V": {
+              "type": "_product-list-button",
+              "name": "t:names.product_list_button",
+              "settings": {
+                "label": "Ver mais",
+                "open_in_new_tab": false,
+                "style_class": "link",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_list_text_YFtzcL",
+            "product_list_button_MWeP9V"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_677WP3": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "portrait",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 8,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_YXxMTj": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_JQzVV4": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "custom",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-heading--family)",
+                "font_size": "1.125rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_677WP3",
+            "product_title_YXxMTj",
+            "price_JQzVV4"
+          ]
+        }
+      },
+      "custom_css": [
+        "/* Sombra suave nos cards ao hover */.featured-collection .card-wrapper {transition: transform 0.25s ease;}",
+        ".featured-collection .card-wrapper:hover {transform: translateY(-4px);}",
+        " /* Botões do carrossel mais visíveis */.featured-collection .slider-button {opacity: 1 !important;}"
+      ],
+      "name": "Featured collection",
+      "settings": {
+        "collection": "frontpage",
+        "layout_type": "carousel",
+        "carousel_on_mobile": false,
+        "max_products": 8,
+        "columns": 4,
+        "mobile_columns": "2",
+        "mobile_card_size": "44cqw",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "section_width": "page-width",
+        "horizontal_alignment": "center",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "collection_list_4axxq9": {
+      "type": "collection-list",
+      "blocks": {
+        "group_M9FftA": {
+          "type": "group",
+          "name": "t:names.header",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 16,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_8wJ3Wf": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<h4>Compre Por Categoria</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 16,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_8wJ3Wf"
+          ]
+        },
+        "static-collection-card": {
+          "type": "_collection-card",
+          "name": "t:names.collection_card",
+          "static": true,
+          "settings": {
+            "placement": "on_image",
+            "horizontal_alignment": "center",
+            "vertical_alignment": "flex-end",
+            "collection_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0
+          },
+          "blocks": {
+            "collection_title_NDycTi": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "h4",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground-heading)",
+                "background": false,
+                "background_color": "#ffffff",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
+              "static": true,
+              "settings": {
+                "image_ratio": "adapt",
+                "toggle_overlay": true,
+                "overlay_color": "#00000021",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_title_NDycTi"
+          ]
+        }
+      },
+      "block_order": [
+        "group_M9FftA"
+      ],
+      "name": "t:names.collections_bento",
+      "settings": {
+        "collection_list": [
+          "moletons",
+          "bermudas",
+          "camisetas"
+        ],
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "columns": 3,
+        "mobile_columns": "1",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 8,
+        "bento_gap": 8,
+        "rows_gap": 8,
+        "max_collections": 4,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 12,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 24,
+        "padding-block-end": 24
+      }
+    },
+    "product_list_9UHWmW": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "name": "t:names.header",
+          "static": true,
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-end",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_list_text_9pkHiC": {
+              "type": "_product-list-text",
+              "name": "t:names.collection_title",
+              "settings": {
+                "text": "<h4>{{ closest.collection.title }}</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_list_button_688x9X": {
+              "type": "_product-list-button",
+              "name": "t:names.product_list_button",
+              "settings": {
+                "label": "Ver mais",
+                "open_in_new_tab": false,
+                "style_class": "link",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_list_text_9pkHiC",
+            "product_list_button_688x9X"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_NDdUgD": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "portrait",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 8,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_4xTadb": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground-heading)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_KJMFRt": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "custom",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-accent--family)",
+                "font_size": "1.125rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_NDdUgD",
+            "product_title_4xTadb",
+            "price_KJMFRt"
+          ]
+        }
+      },
+      "custom_css": [
+        "/* Sombra suave nos cards ao hover */.featured-collection .card-wrapper {transition: transform 0.25s ease;}",
+        ".featured-collection .card-wrapper:hover {transform: translateY(-4px);}",
+        " /* Botões do carrossel mais visíveis */.featured-collection .slider-button {opacity: 1 !important;}"
+      ],
+      "name": "Featured collection",
+      "settings": {
+        "collection": "moletons",
+        "layout_type": "carousel",
+        "carousel_on_mobile": false,
+        "max_products": 8,
+        "columns": 4,
+        "mobile_columns": "2",
+        "mobile_card_size": "44cqw",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "section_width": "page-width",
+        "horizontal_alignment": "center",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "custom_liquid_nBN64e": {
+      "type": "custom-liquid",
+      "name": "Custom Liquid",
+      "settings": {
+        "custom_liquid": "<section class=\"na-ugc\" style=\"\n  --bg: #ffffff;\n  --text: #111111;\n  --muted: #666666;\n  --radius: 12px;\n  --pt: 72px;\n  --pb: 40px;\n  --heading-size: 31px;\n  --sub-size: 14px;\n  --gap: 8px;\n\">\n<style>\n  .na-ugc {\n    background: var(--bg);\n    padding: var(--pt) 20px var(--pb);\n    box-sizing: border-box;\n    overflow: hidden;\n  }\n  .na-ugc__container {\n    max-width: 1200px;\n    margin: 0 auto;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    gap: 0;\n  }\n  .na-ugc__heading {\n    font-size: var(--heading-size);\n    font-weight: 400;\n    color: var(--text);\n    text-align: center;\n    margin: 0 0 12px;\n  }\n  .na-ugc__sub {\n    font-size: var(--sub-size);\n    color: var(--muted);\n    text-align: center;\n    margin: 0 0 32px;\n  }\n  .na-ugc__wrapper {\n    position: relative;\n    width: 100%;\n  }\n  .na-ugc__viewport {\n    overflow: hidden;\n    width: 100%;\n  }\n  .na-ugc__track {\n    display: flex;\n    gap: var(--gap);\n    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);\n    will-change: transform;\n    touch-action: pan-y;\n  }\n  .na-ugc__card {\n    flex: 0 0 calc(25% - var(--gap) * 3 / 4);\n    position: relative;\n    border-radius: var(--radius);\n    overflow: hidden;\n    background: #ddd;\n    display: block;\n    text-decoration: none;\n  }\n  .na-ugc__card::before {\n    content: '';\n    display: block;\n    padding-top: 125%;\n  }\n  .na-ugc__card img {\n    position: absolute;\n    inset: 0;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    transition: transform 0.6s ease;\n    user-select: none;\n    -webkit-user-drag: none;\n  }\n  .na-ugc__card:hover img {\n    transform: scale(1.04);\n  }\n  .na-ugc__gradient {\n    position: absolute;\n    inset: 0;\n    background: linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.5) 100%);\n    pointer-events: none;\n  }\n  .na-ugc__overlay {\n    position: absolute;\n    inset: 0;\n    padding: 14px 16px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-end;\n  }\n  .na-ugc__handle {\n    color: #fff;\n    font-size: 12px;\n    font-weight: 500;\n    letter-spacing: 0.01em;\n    text-shadow: 0 1px 4px rgba(0,0,0,0.4);\n  }\n  .na-ugc__icon {\n    position: absolute;\n    top: 12px;\n    right: 12px;\n    width: 32px;\n    height: 32px;\n    border-radius: 50%;\n    background: rgba(255,255,255,0.18);\n    backdrop-filter: blur(6px);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    pointer-events: none;\n  }\n  .na-ugc__icon svg {\n    width: 14px;\n    height: 14px;\n    fill: #fff;\n  }\n  .na-ugc__arrow {\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    z-index: 2;\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n    border: none;\n    background: rgba(255,255,255,0.88);\n    backdrop-filter: blur(4px);\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 2px 10px rgba(0,0,0,0.15);\n    transition: background 0.2s, opacity 0.2s;\n  }\n  .na-ugc__arrow:hover { background: #fff; }\n  .na-ugc__arrow:disabled { opacity: 0.25; cursor: not-allowed; }\n  .na-ugc__arrow--left { left: -16px; }\n  .na-ugc__arrow--right { right: -16px; }\n  @media (max-width: 900px) {\n    .na-ugc__card { flex: 0 0 calc(33.333% - var(--gap) * 2 / 3); }\n    .na-ugc__arrow--left { left: 4px; }\n    .na-ugc__arrow--right { right: 4px; }\n  }\n  @media (max-width: 600px) {\n    .na-ugc { padding: 48px 12px 32px; }\n    .na-ugc__heading { font-size: 22px; }\n    .na-ugc__card { flex: 0 0 calc(50% - var(--gap) / 2); }\n    .na-ugc__arrow { width: 32px; height: 32px; }\n    .na-ugc__arrow--left { left: 2px; }\n    .na-ugc__arrow--right { right: 2px; }\n  }\n</style>\n\n<div class=\"na-ugc__container\">\n  <h2 class=\"na-ugc__heading\">FEITA PARA QUEM VIVE O LITORAL</h2>\n  <p class=\"na-ugc__sub\">Uma comunidade de surfistas, viajantes e apaixonados pela liberdade que existe entre a praia e a cidade.</p>\n\n  <div class=\"na-ugc__wrapper\">\n    <button class=\"na-ugc__arrow na-ugc__arrow--left\" id=\"na-prev\" aria-label=\"Anterior\">\n      <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M15 18l-6-6 6-6\"/></svg>\n    </button>\n\n    <div class=\"na-ugc__viewport\" id=\"na-viewport\">\n      <div class=\"na-ugc__track\" id=\"na-track\">\n\n        <a class=\"na-ugc__card\" href=\"https://www.instagram.com/naturalart.oficial/\" target=\"_blank\" rel=\"noopener\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/atleta-1.jpg?v=1791484902&width=400\" alt=\"Natural Art\" loading=\"lazy\">\n          <div class=\"na-ugc__gradient\"></div>\n          <div class=\"na-ugc__overlay\"><span class=\"na-ugc__handle\">@naturalart.oficial</span></div>\n          <div class=\"na-ugc__icon\"><svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg></div>\n        </a>\n\n        <a class=\"na-ugc__card\" href=\"https://www.instagram.com/naturalart.oficial/\" target=\"_blank\" rel=\"noopener\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/atleta-2.jpg?v=1791484902&width=400\" alt=\"Natural Art\" loading=\"lazy\">\n          <div class=\"na-ugc__gradient\"></div>\n          <div class=\"na-ugc__overlay\"><span class=\"na-ugc__handle\">@naturalart.oficial</span></div>\n          <div class=\"na-ugc__icon\"><svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg></div>\n        </a>\n\n        <a class=\"na-ugc__card\" href=\"https://www.instagram.com/naturalart.oficial/\" target=\"_blank\" rel=\"noopener\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/atleta-5.jpg?v=1791484902&width=400\" alt=\"Natural Art\" loading=\"lazy\">\n          <div class=\"na-ugc__gradient\"></div>\n          <div class=\"na-ugc__overlay\"><span class=\"na-ugc__handle\">@naturalart.oficial</span></div>\n          <div class=\"na-ugc__icon\"><svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg></div>\n        </a>\n\n        <a class=\"na-ugc__card\" href=\"https://www.instagram.com/naturalart.oficial/\" target=\"_blank\" rel=\"noopener\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/moletom-na-1k-logoajustado-rua.png?v=1791484903&width=400\" alt=\"Natural Art\" loading=\"lazy\">\n          <div class=\"na-ugc__gradient\"></div>\n          <div class=\"na-ugc__overlay\"><span class=\"na-ugc__handle\">@naturalart.oficial</span></div>\n          <div class=\"na-ugc__icon\"><svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg></div>\n        </a>\n\n        <a class=\"na-ugc__card\" href=\"https://www.instagram.com/naturalart.oficial/\" target=\"_blank\" rel=\"noopener\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/caarro-feed.png?v=1791484903&width=400\" alt=\"Natural Art\" loading=\"lazy\">\n          <div class=\"na-ugc__gradient\"></div>\n          <div class=\"na-ugc__overlay\"><span class=\"na-ugc__handle\">@naturalart.oficial</span></div>\n          <div class=\"na-ugc__icon\"><svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg></div>\n        </a>\n\n        <a class=\"na-ugc__card\" href=\"https://www.instagram.com/naturalart.oficial/\" target=\"_blank\" rel=\"noopener\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/rua-feed.png?v=1791484904&width=400\" alt=\"Natural Art\" loading=\"lazy\">\n          <div class=\"na-ugc__gradient\"></div>\n          <div class=\"na-ugc__overlay\"><span class=\"na-ugc__handle\">@naturalart.oficial</span></div>\n          <div class=\"na-ugc__icon\"><svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg></div>\n        </a>\n\n        <a class=\"na-ugc__card\" href=\"https://www.instagram.com/naturalart.oficial/\" target=\"_blank\" rel=\"noopener\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/atleta-3.webp?v=1791484902&width=400\" alt=\"Natural Art\" loading=\"lazy\">\n          <div class=\"na-ugc__gradient\"></div>\n          <div class=\"na-ugc__overlay\"><span class=\"na-ugc__handle\">@naturalart.oficial</span></div>\n          <div class=\"na-ugc__icon\"><svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg></div>\n        </a>\n\n        <a class=\"na-ugc__card\" href=\"https://www.instagram.com/naturalart.oficial/\" target=\"_blank\" rel=\"noopener\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/atleta-4.jpg?v=1791484902&width=400\" alt=\"Natural Art\" loading=\"lazy\">\n          <div class=\"na-ugc__gradient\"></div>\n          <div class=\"na-ugc__overlay\"><span class=\"na-ugc__handle\">@naturalart.oficial</span></div>\n          <div class=\"na-ugc__icon\"><svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg></div>\n        </a>\n\n        <a class=\"na-ugc__card\" href=\"https://www.instagram.com/naturalart.oficial/\" target=\"_blank\" rel=\"noopener\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/atleta-6.jpg?v=1791484902&width=400\" alt=\"Natural Art\" loading=\"lazy\">\n          <div class=\"na-ugc__gradient\"></div>\n          <div class=\"na-ugc__overlay\"><span class=\"na-ugc__handle\">@naturalart.oficial</span></div>\n          <div class=\"na-ugc__icon\"><svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg></div>\n        </a>\n\n      </div>\n    </div>\n\n    <button class=\"na-ugc__arrow na-ugc__arrow--right\" id=\"na-next\" aria-label=\"Próximo\">\n      <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M9 18l6-6-6-6\"/></svg>\n    </button>\n  </div>\n</div>\n\n<script>\n(function() {\n  var track = document.getElementById('na-track');\n  var viewport = document.getElementById('na-viewport');\n  var btnPrev = document.getElementById('na-prev');\n  var btnNext = document.getElementById('na-next');\n  var current = 0;\n  var gap = 8;\n\n  function getVisible() {\n    var w = viewport.offsetWidth;\n    if (w >= 900) return 4;\n    if (w >= 600) return 3;\n    return 2;\n  }\n\n  function getTotal() {\n    return track.querySelectorAll('.na-ugc__card').length;\n  }\n\n  function update() {\n    var visible = getVisible();\n    var cardW = (viewport.offsetWidth - gap * (visible - 1)) / visible;\n    track.style.transform = 'translateX(-' + (current * (cardW + gap)) + 'px)';\n    btnPrev.disabled = current === 0;\n    btnNext.disabled = current >= getTotal() - visible;\n  }\n\n  btnPrev.addEventListener('click', function() { if (current > 0) { current--; update(); } });\n  btnNext.addEventListener('click', function() { if (current < getTotal() - getVisible()) { current++; update(); } });\n\n  var startX = 0;\n  track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });\n  track.addEventListener('touchend', function(e) {\n    var diff = startX - e.changedTouches[0].clientX;\n    if (Math.abs(diff) > 40) {\n      if (diff > 0 && current < getTotal() - getVisible()) { current++; update(); }\n      if (diff < 0 && current > 0) { current--; update(); }\n    }\n  });\n\n  window.addEventListener('resize', function() { update(); });\n  update();\n})();\n</script>\n</section>",
+        "color_scheme": "",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "custom_liquid_HKKnz4": {
+      "type": "custom-liquid",
+      "name": "Custom Liquid",
+      "settings": {
+        "custom_liquid": "<section class=\"na-about\">\n<style>\n  .na-about {\n    display: flex;\n    flex-direction: row;\n    min-height: 90vh;\n    background: #ffffff;\n    overflow: hidden;\n    font-family: 'Montserrat', sans-serif;\n  }\n  .na-about__left {\n    flex: 0 0 55%;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-end;\n    padding: 80px 80px 80px 60px;\n    box-sizing: border-box;\n  }\n  .na-about__label {\n    font-size: 13px;\n    font-weight: 400;\n    color: #111;\n    margin: 0 0 20px;\n    text-transform: uppercase;\n    letter-spacing: 0.08em;\n  }\n  .na-about__text {\n    font-size: 15px;\n    font-weight: 400;\n    color: #111;\n    line-height: 1.65;\n    margin: 0 0 36px;\n    max-width: 520px;\n  }\n  .na-about__text p { margin: 0 0 16px; }\n  .na-about__text p:last-child { margin-bottom: 0; }\n  .na-about__btn {\n    display: inline-block;\n    padding: 16px 32px;\n    background: #111111;\n    color: #ffffff;\n    text-decoration: none;\n    font-size: 14px;\n    font-weight: 500;\n    border-radius: 100px;\n    transition: opacity 0.2s;\n    width: fit-content;\n  }\n  .na-about__btn:hover { opacity: 0.8; color: #ffffff; }\n\n  .na-about__right {\n    flex: 0 0 45%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    background: #f4f4f2;\n    padding: 60px 40px;\n    box-sizing: border-box;\n  }\n  .na-about__img-wrap {\n    width: 100%;\n    max-width: 380px;\n    border-radius: 20px;\n    overflow: hidden;\n    box-shadow: 0 20px 60px rgba(0,0,0,0.15);\n    aspect-ratio: 4/5;\n    position: relative;\n  }\n  .na-about__img-wrap img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center top;\n    display: block;\n  }\n\n  @media (max-width: 768px) {\n    .na-about {\n      flex-direction: column;\n      min-height: auto;\n    }\n    .na-about__left {\n      flex: none;\n      order: 2;\n      padding: 36px 24px 56px;\n      justify-content: flex-start;\n    }\n    .na-about__right {\n      flex: none;\n      order: 1;\n      padding: 40px 24px;\n    }\n    .na-about__img-wrap {\n      max-width: 100%;\n      aspect-ratio: 4/3;\n      border-radius: 16px;\n    }\n    .na-about__img-wrap img {\n      object-position: center center;\n    }\n    .na-about__text { font-size: 14px; }\n  }\n</style>\n\n<div class=\"na-about__left\">\n  <p class=\"na-about__label\">Quem somos</p>\n  <div class=\"na-about__text\">\n    <p>A Natural Art nasceu em 1971 da paixão pelo surf e pela busca constante por evolução dentro e fora da água.</p>\n    <p>Construída entre as ondas da Califórnia, do Havaí e do litoral brasileiro, a marca tornou-se referência em pranchas, equipamentos e lifestyle surfwear, conquistando espaço em mais de 20 países ao redor do mundo.</p>\n    <p>Desde 1983 no Brasil, seguimos desenvolvendo produtos inspirados pela liberdade do litoral, pela conexão com a natureza e pela cultura que faz do surf muito mais do que um esporte: um estilo de vida.</p>\n    <p><strong>Natural Art — Desde 1971.</strong><br>Inspirada pela liberdade do litoral.</p>\n  </div>\n  <a href=\"https://naturalart.com.br/nossa-historia/\" class=\"na-about__btn\">Saiba mais</a>\n</div>\n\n<div class=\"na-about__right\">\n  <div class=\"na-about__img-wrap\">\n    <img\n      src=\"https://cdn.shopify.com/s/files/1/0961/5084/7803/files/loja-natural-front-webp-rapido.webp?v=1791484902&width=500\"\n      alt=\"Loja Natural Art\"\n      loading=\"lazy\"\n    >\n  </div>\n</div>\n\n</section>",
+        "color_scheme": "",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "custom_liquid_V48RPg": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "name": "Custom Liquid",
+      "settings": {
+        "custom_liquid": "DISABLED_REVIEWS_PLACEHOLDER",
+        "color_scheme": "",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "section_zWK7tf": {
+      "type": "section",
+      "blocks": {
+        "text_QG8XiG": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>Assine nossos e-mails</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_wwH8Jp": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Seja o primeiro a saber sobre novas coleções e ofertas especiais. </p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "paragraph",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "email_signup_PPUFQX": {
+          "type": "email-signup",
+          "settings": {
+            "width": "custom",
+            "custom_width": 50,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "heading": "",
+            "heading_preset": "h3",
+            "border_style": "all",
+            "border_width": 1,
+            "border_radius": 100,
+            "input_type_preset": "paragraph",
+            "style_class": "button-unstyled",
+            "display_type": "arrow",
+            "label": "Inscrever-se",
+            "integrated_button": true,
+            "button_type_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_QG8XiG",
+        "text_wwH8Jp",
+        "email_signup_PPUFQX"
+      ],
+      "name": "t:names.email_signup",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-1",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    }
+  },
+  "order": [
+    "slideshow_Fd66Vg",
+    "custom_liquid_YCcDMR",
+    "product_list_fa6P9H",
+    "collection_list_4axxq9",
+    "product_list_9UHWmW",
+    "custom_liquid_nBN64e",
+    "custom_liquid_HKKnz4",
+    "custom_liquid_V48RPg",
+    "section_zWK7tf"
+  ]
+}

@@ -1,0 +1,220 @@
+{% liquid
+  assign na_kit_active = false
+  if product and product.tags contains 'sem-cupom-kit'
+    assign na_kit_active = true
+  endif
+
+  assign na_kit_video = 'na-video-bubble-kit-loop.mp4'
+  assign na_kit_video_full = 'na-video-bubble-kit.mp4'
+%}
+{% comment %}
+  Revisão E1 (14/10):
+  - A barra de frete por CEP (R$299 Sul/Sudeste, R$399 demais regiões) já está correta,
+    então a página do kit deixa de escondê-la e não mostra mais o aviso fixo
+    "Demais regiões, cote o frete no checkout".
+  - O vídeo da bolinha (271 KB) só começa a baixar depois que a página terminou de carregar,
+    para não disputar banda com a foto principal do kit.
+{% endcomment %}
+{% if na_kit_active %}
+<style>
+  /* Oculta o banner de cupom apenas nesta página de kit */
+  .na-coupon-banner { display: none !important; }
+
+  #na-kit-vbubble {
+    position: fixed;
+    top: 90px;
+    left: 16px;
+    z-index: 999999;
+    width: 72px;
+    height: 72px;
+  }
+  #na-kit-vbubble-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    padding: 3px;
+    background: conic-gradient(from 180deg, #f9ce34, #ee2a7b, #6228d7, #f9ce34);
+    animation: na-kit-rotate 4s linear infinite;
+  }
+  @keyframes na-kit-rotate {
+    to { transform: rotate(360deg); }
+  }
+  #na-kit-vbubble-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #fff;
+    background: #000;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    -webkit-tap-highlight-color: transparent;
+  }
+  #na-kit-vbubble-btn video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  #na-kit-vbubble-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+  #na-kit-vbubble-play svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  #na-kit-vmodal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000000;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  #na-kit-vmodal.na-kit-open {
+    display: flex;
+  }
+  #na-kit-vmodal-inner {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+  }
+  #na-kit-vmodal video {
+    width: 100%;
+    max-height: 80vh;
+    border-radius: 16px;
+    background: #000;
+    display: block;
+  }
+  #na-kit-vmodal-close {
+    position: absolute;
+    top: -44px;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media screen and (max-width: 749px) {
+    #na-kit-vbubble {
+      top: 90px;
+      left: 16px;
+      width: 64px;
+      height: 64px;
+    }
+  }
+</style>
+
+<div id="na-kit-vbubble">
+  <div id="na-kit-vbubble-ring"></div>
+  <button id="na-kit-vbubble-btn" type="button" aria-label="Ver vídeo">
+    <video
+      id="na-kit-vbubble-video"
+      data-src="{{ na_kit_video | asset_url }}"
+      loop
+      muted
+      playsinline
+      preload="none"
+      disablepictureinpicture
+      aria-hidden="true"
+      tabindex="-1"
+    ></video>
+    <span id="na-kit-vbubble-play" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+    </span>
+  </button>
+</div>
+
+<div id="na-kit-vmodal" role="dialog" aria-modal="true" aria-label="Vídeo do produto">
+  <div id="na-kit-vmodal-inner">
+    <button id="na-kit-vmodal-close" aria-label="Fechar vídeo">&times;</button>
+    <video
+      id="na-kit-vmodal-video"
+      src="{{ na_kit_video_full | asset_url }}"
+      controls
+      playsinline
+      preload="none"
+    ></video>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('na-kit-vbubble-btn');
+    var modal = document.getElementById('na-kit-vmodal');
+    var video = document.getElementById('na-kit-vmodal-video');
+    var closeBtn = document.getElementById('na-kit-vmodal-close');
+    var loop = document.getElementById('na-kit-vbubble-video');
+    if (!btn || !modal || !video) return;
+
+    /* Carrega o vídeo da bolinha só depois da página pronta */
+    function startLoop() {
+      if (!loop || loop.getAttribute('src')) return;
+      loop.setAttribute('src', loop.getAttribute('data-src'));
+      loop.play().catch(function () {});
+    }
+    function scheduleLoop() {
+      var later = window.requestIdleCallback || function (cb) { return setTimeout(cb, 1500); };
+      later(startLoop, { timeout: 4000 });
+    }
+    if (document.readyState === 'complete') scheduleLoop();
+    else window.addEventListener('load', scheduleLoop);
+
+    function openModal() {
+      modal.classList.add('na-kit-open');
+      video.currentTime = 0;
+      video.play().catch(function () {});
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.classList.remove('na-kit-open');
+      video.pause();
+      document.body.style.overflow = '';
+    }
+    btn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  })();
+</script>
+
+<script>
+  (function () {
+    /* Reordena as seções da página do kit: informações do produto -> avaliações (bkreview) -> FAQ -> prova social */
+    function naKitReorderSections() {
+      var main = document.querySelector('[id$="__main"]');
+      var reviews = document.querySelector('[id$="__1788968429ecc23c83"]');
+      var faq = document.querySelector('[id$="__section_faq"]');
+      var socialProof = document.querySelector('[id$="__na-social-proof"]');
+      if (!main || !reviews || !faq || !socialProof) return;
+      main.insertAdjacentElement('afterend', reviews);
+      reviews.insertAdjacentElement('afterend', faq);
+      faq.insertAdjacentElement('afterend', socialProof);
+    }
+    naKitReorderSections();
+  })();
+</script>
+{% endif %}
