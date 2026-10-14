@@ -24,6 +24,17 @@
           if (/[?&]debugvoltar=0/.test(location.search)) { sessionStorage.removeItem(KEY); sessionStorage.removeItem(LOG); }
           dbg = sessionStorage.getItem(KEY) === '1';
         } catch (e) {}
+        try {
+          var bq = location.search.match(/[?&]bloquear=([^&]*)/);
+          if (bq) { bq[1] === '0' ? sessionStorage.removeItem('na_bloquear') : sessionStorage.setItem('na_bloquear', decodeURIComponent(bq[1])); }
+          var bloq = (sessionStorage.getItem('na_bloquear') || '').split(',').filter(Boolean);
+          if (bloq.length) {
+            var barrar = function (n) { return n && n.tagName === 'SCRIPT' && n.src && bloq.some(function (b) { return n.src.indexOf(b) > -1; }); };
+            var ap = Node.prototype.appendChild, ib = Node.prototype.insertBefore;
+            Node.prototype.appendChild = function (n) { if (barrar(n)) { log('BLOQUEADO ' + short(n.src)); return n; } return ap.apply(this, arguments); };
+            Node.prototype.insertBefore = function (n) { if (barrar(n)) { log('BLOQUEADO ' + short(n.src)); return n; } return ib.apply(this, arguments); };
+          }
+        } catch (e) {}
         function short(u) { try { var x = new URL(u, location.href); return (x.origin === location.origin ? '' : x.host) + x.pathname.slice(0, 40) + (x.search ? x.search.slice(0, 40) : '') + x.hash.slice(0, 20); } catch (e) { return String(u).slice(0, 60); } }
         function who() { var st = (new Error().stack || '').split('\n'); for (var i = 2; i < st.length; i++) { var m = st[i].match(/https?:\/\/[^\s)]+/); if (m && m[0].indexOf('na-dbg') < 0) return short(m[0].replace(/:\d+:\d+$/, '')); } return '?'; }
         function log(msg) {
@@ -106,12 +117,8 @@
     <!-- UTMify: captura de UTMs -->
     <script>
       (function () {
-        /* Teste do botão voltar: ?semutmify=1 desliga a UTMify só neste navegador (volta com ?semutmify=0) */
-        try {
-          if (/[?&]semutmify=1/.test(location.search)) sessionStorage.setItem('na_sem_utmify', '1');
-          if (/[?&]semutmify=0/.test(location.search)) sessionStorage.removeItem('na_sem_utmify');
-          if (sessionStorage.getItem('na_sem_utmify') === '1') return;
-        } catch (e) {}
+        /* Teste do botão voltar: ?bloquear=utmify (ou clarity, ou utmify,clarity) não carrega esses scripts só neste navegador; ?bloquear=0 desfaz */
+        try { if ((sessionStorage.getItem('na_bloquear') || '').indexOf('utmify') > -1) return; } catch (e) {}
         var s = document.createElement('script');
         s.src = 'https://cdn.utmify.com.br/scripts/utms/latest.js';
         s.async = true;
