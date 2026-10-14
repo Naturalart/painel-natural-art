@@ -50,8 +50,18 @@
         window.addEventListener('pageshow', function (e) { if (e.persisted) log('voltou do cache ' + short(location.href)); });
         if (window.navigation && navigation.addEventListener) navigation.addEventListener('navigate', function (e) { log('navigate ' + e.navigationType + ' ' + short(e.destination.url)); });
         var last = history.length;
-        setInterval(function () { if (history.length !== last) { log('historico ' + last + ' -> ' + history.length); last = history.length; } }, 300);
-        new MutationObserver(function (ms) { ms.forEach(function (m) { m.addedNodes.forEach(function (n) { if (n.tagName === 'IFRAME') log('IFRAME ' + short(n.src || n.getAttribute('src') || 'sem src') + ' ' + (n.id || n.name || '')); }); }); }).observe(document.documentElement, { childList: true, subtree: true });
+        setInterval(function () { if (history.length !== last) { log('historico ' + last + ' -> ' + history.length + ' | frames ' + window.frames.length + ': ' + allFrames().map(desc).join(' ; ')); last = history.length; } }, 300);
+        var roots = [document];
+        try { var att = Element.prototype.attachShadow; Element.prototype.attachShadow = function () { var r = att.apply(this, arguments); roots.push(r); watch(r, this.tagName); return r; }; } catch (e) {}
+        function desc(f) { return (f.id || f.name || f.title || '').slice(0, 25) + ' ' + short(f.src || f.getAttribute('src') || 'sem src'); }
+        function allFrames() { var out = []; roots.forEach(function (r) { try { r.querySelectorAll('iframe').forEach(function (f) { out.push(f); }); } catch (e) {} }); return out; }
+        function watch(root, where) {
+          new MutationObserver(function (ms) { ms.forEach(function (m) {
+            if (m.type === 'attributes') { log('IFRAME src mudou ' + desc(m.target) + (where ? ' em ' + where : '')); return; }
+            m.addedNodes.forEach(function (n) { if (n.nodeType !== 1) return; var fs = n.tagName === 'IFRAME' ? [n] : (n.querySelectorAll ? [].slice.call(n.querySelectorAll('iframe')) : []); fs.forEach(function (f) { log('IFRAME novo ' + desc(f) + (where ? ' em ' + where : '') + ' por ' + who()); f.addEventListener('load', function () { log('IFRAME carregou ' + desc(f)); }); }); });
+          }); }).observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+        }
+        watch(document.documentElement, '');
         document.addEventListener('DOMContentLoaded', function () {
           var box = document.createElement('pre');
           box.id = 'na-dbg-voltar';
@@ -94,7 +104,22 @@
     {{ content_for_header }}
     <style>.cart-discount{display:none!important;}.resource-list__carousel{--peek-next-slide-size:0px;}</style>
     <!-- UTMify: captura de UTMs -->
-    <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
+    <script>
+      (function () {
+        /* Teste do botão voltar: ?semutmify=1 desliga a UTMify só neste navegador (volta com ?semutmify=0) */
+        try {
+          if (/[?&]semutmify=1/.test(location.search)) sessionStorage.setItem('na_sem_utmify', '1');
+          if (/[?&]semutmify=0/.test(location.search)) sessionStorage.removeItem('na_sem_utmify');
+          if (sessionStorage.getItem('na_sem_utmify') === '1') return;
+        } catch (e) {}
+        var s = document.createElement('script');
+        s.src = 'https://cdn.utmify.com.br/scripts/utms/latest.js';
+        s.async = true;
+        s.setAttribute('data-utmify-prevent-xcod-sck', '');
+        s.setAttribute('data-utmify-prevent-subids', '');
+        document.head.appendChild(s);
+      })();
+    </script>
     {% # theme-check-enable RemoteAsset %}
   </head>
 
