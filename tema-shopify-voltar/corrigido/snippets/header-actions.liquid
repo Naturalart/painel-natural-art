@@ -324,6 +324,17 @@
     text-decoration: none;
   }
 
+  /* Sem o <shopify-account> o Horizon mandava a busca para a direita no celular; mantém a busca à esquerda como antes */
+  @media screen and (max-width: 749px) {
+    .header__columns:has(.account-button__link) .search-action {
+      grid-area: leftB;
+    }
+  }
+
+  #header-component[data-menu-style='drawer'] .header__columns:has(.account-button__link) .search-action {
+    grid-area: leftB;
+  }
+
   .account-button__fallback {
     width: 28px;
     height: 28px;
