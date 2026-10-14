@@ -35,14 +35,19 @@
 -%}
 
 {%- comment -%}
-  Revisão E1 (14/10): parcelas sem juros = o que o checkout da Yampi cobra hoje (3x sem juros;
-  a partir de 4x tem juros). Se a Yampi passar a dar 6x sem juros, troque só o número abaixo.
+  Revisão E1 (14/10): parcelas sem juros = o que o checkout da Yampi oferece.
+  Yampi (conferido 14/10): até 6x sem juros com parcela mínima de R$50, então o número de
+  parcelas depende do preço (R$149,90 = 2x, R$239,99 = 4x, R$299,90 = 5x, a partir de R$300 = 6x).
+  Abaixo de 2 parcelas a linha de parcelamento não aparece.
 {%- endcomment -%}
 {%- liquid
-  assign na_parcelas = 3
+  assign na_parcelas_max = 6
+  assign na_parcela_minima = 5000
+  assign na_parcelas = 1
   if selected_variant != blank
     assign base_price = selected_variant.price
     assign pix_price = base_price | times: 0.95 | round
+    assign na_parcelas = base_price | divided_by: na_parcela_minima | at_most: na_parcelas_max | at_least: 1
     assign installment_value = base_price | times: 1.0 | divided_by: na_parcelas | round
   endif
 -%}
@@ -77,12 +82,14 @@
       <div class="na-pix-wrap">
         <span class="na-pix-badge-product">OU {{ pix_price | money }} NO PIX</span>
       </div>
-      <p class="na-installments"><strong>{{ na_parcelas }}x</strong> de <strong>{{ installment_value | money }}</strong> sem juros</p>
+      {%- if na_parcelas > 1 -%}
+        <p class="na-installments"><strong>{{ na_parcelas }}x</strong> de <strong>{{ installment_value | money }}</strong> sem juros</p>
+      {%- endif -%}
 
     {%- elsif template.name == 'collection' or template.name == 'index' or template.name == 'search' -%}
       <p class="na-installments">
-        <strong>{{ na_parcelas }}x</strong> de <strong>{{ installment_value | money }}</strong> sem juros<br>
-        ou <strong class="na-pix-value">{{ pix_price | money }}</strong> no PIX
+        {% if na_parcelas > 1 %}<strong>{{ na_parcelas }}x</strong> de <strong>{{ installment_value | money }}</strong> sem juros<br>
+        ou {% endif %}<strong class="na-pix-value">{{ pix_price | money }}</strong> no PIX
       </p>
 
     {%- endif -%}

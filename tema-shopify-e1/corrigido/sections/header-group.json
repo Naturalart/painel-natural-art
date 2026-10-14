@@ -21,7 +21,7 @@
         "announcement_na6x": {
           "type": "_announcement",
           "settings": {
-            "text": "ATÉ 3X SEM JUROS NO CARTÃO",
+            "text": "ATÉ 6X SEM JUROS NO CARTÃO",
             "link": "",
             "font": "var(--font-subheading--family)",
             "font_size": "0.75rem",
