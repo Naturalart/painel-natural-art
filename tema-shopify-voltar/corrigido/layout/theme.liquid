@@ -35,6 +35,7 @@
         } catch (e) {}
         function short(u) { try { var x = new URL(u, location.href); return (x.origin === location.origin ? '' : x.host) + x.pathname.slice(0, 40) + (x.search ? x.search.slice(0, 40) : '') + x.hash.slice(0, 20); } catch (e) { return String(u).slice(0, 60); } }
         function who() { var st = (new Error().stack || '').split('\n'); for (var i = 2; i < st.length; i++) { var m = st[i].match(/https?:\/\/[^\s)]+/); if (m && m[0].indexOf('na-dbg') < 0) return short(m[0].replace(/:\d+:\d+$/, '')); } return '?'; }
+        window.naVoltarLog = function (m) { log(m); };
         function log(msg) {
           if (!dbg) return;
           var line = new Date().toTimeString().slice(3, 8) + ' [' + history.length + '] ' + msg;
@@ -72,6 +73,47 @@
           try { box.textContent = JSON.parse(sessionStorage.getItem(LOG) || '[]').slice().reverse().join('\n'); } catch (e) {}
           document.body.appendChild(box);
         });
+      })();
+    </script>
+    <script>
+      /*
+        Botão voltar (14/10): o script da UTMify acrescenta ?utm_... no endereço dos iframes que a Shopify
+        põe na página (pixels e login do Shop). Cada troca faz o iframe recarregar, e no iPhone cada recarga
+        vira um passo no histórico: o cliente aperta voltar e continua na mesma página.
+        Aqui, uma troca de src de iframe que só muda parâmetros de rastreio (utm_*, src, sck, xcod, fbclid,
+        gclid) é ignorada. A UTMify continua guardando as UTMs e marcando links e o checkout normalmente.
+      */
+      (function () {
+        try {
+          var RASTREIO = /^(utm_[a-z_]+|src|sck|xcod|fbclid|gclid)$/i;
+          var limpo = function (u) {
+            try {
+              var x = new URL(u, location.href), tirar = [];
+              x.searchParams.forEach(function (v, k) { if (RASTREIO.test(k)) tirar.push(k); });
+              tirar.forEach(function (k) { x.searchParams.delete(k); });
+              return x.href;
+            } catch (e) { return String(u); }
+          };
+          var soRastreio = function (f, nova) {
+            var atual = f.getAttribute('src');
+            if (!atual || atual === 'about:blank' || nova == null) return false;
+            return limpo(atual) === limpo(String(nova));
+          };
+          var d = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'src');
+          if (d && d.set) {
+            Object.defineProperty(HTMLIFrameElement.prototype, 'src', {
+              configurable: true,
+              enumerable: d.enumerable,
+              get: d.get,
+              set: function (v) { if (soRastreio(this, v)) { if (window.naVoltarLog) window.naVoltarLog('iframe: UTM ignorada'); return; } d.set.call(this, v); }
+            });
+          }
+          var sa = Element.prototype.setAttribute;
+          Element.prototype.setAttribute = function (n, v) {
+            if (this instanceof HTMLIFrameElement && String(n).toLowerCase() === 'src' && soRastreio(this, v)) { if (window.naVoltarLog) window.naVoltarLog('iframe: UTM ignorada'); return; }
+            return sa.apply(this, arguments);
+          };
+        } catch (e) {}
       })();
     </script>
     {%- if settings.favicon != blank -%}
