@@ -70,7 +70,7 @@
       var f = comForm ? form() : '';
       if (t >= OUTRAS) return [(prod ? 'Levando esta peça, seu pedido tem ' : 'Seu pedido tem ') + '<strong>frete grátis</strong> no Sul e Sudeste e nas demais regiões ✅', 100];
       if (t >= SS) return ['<strong>Frete grátis</strong> no Sul e Sudeste ✅<br>Nas demais regiões, faltam <strong>' + fmt(OUTRAS - t) + '</strong>' + f, Math.round(t / OUTRAS * 100)];
-      return [(prod ? 'Com esta peça, faltam ' : 'Faltam ') + '<strong>' + fmt(SS - t) + '</strong> para <strong>frete grátis</strong> no Sul e Sudeste<br>Nas demais regiões, frete grátis acima de R$ 399' + f, Math.round(t / SS * 100)];
+      return [(prod ? 'Com esta peça, faltam ' : 'Faltam ') + '<strong>' + fmt(SS - t) + '</strong> para <strong>frete grátis</strong> no Sul e Sudeste<br>Nas demais regiões, frete grátis a partir de R$ 399' + f, Math.round(t / SS * 100)];
     }
     function render(bar, textEl, fill, t, prod, comForm) {
       var m = msg(t, prod, comForm);
