@@ -1,0 +1,21 @@
+
+
+{%- comment -%}
+  Construção 14/10: se a página tiver o metacampo custom.conteudo_v2 (texto novo do setor de Copy),
+  ele é impresso no lugar de page.content. Sem o metacampo, nada muda.
+{%- endcomment -%}
+{%- assign na_conteudo_v2 = page.metafields.custom.conteudo_v2.value -%}
+<rte-formatter>
+  {%- if na_conteudo_v2 != blank -%}
+    {{ na_conteudo_v2 }}
+  {%- else -%}
+    {{ page.content }}
+  {%- endif -%}
+</rte-formatter>
+
+{% schema %}
+{
+  "name": "t:names.page_content",
+  "class": "rte"
+}
+{% endschema %}

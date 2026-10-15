@@ -1,0 +1,128 @@
+{%- comment -%}
+  Natural Art, ajustes globais da loja (renderizado no rodapé):
+  1. Esconde o selo "ECONOMIZE R$ X" (blocks/price.liquid); o preço riscado continua.
+  2. Barra "faltam R$ X para frete grátis" no carrinho (gaveta e página /cart).
+     Regra: frete grátis acima de R$ 299 no Sul e Sudeste e acima de R$ 399 nas
+     demais regiões (mesma regra do checkout Yampi). O cliente informa o CEP na
+     barra; ele fica salvo no navegador (localStorage "na_cep") e a meta passa a
+     ser a da região dele. A barra da página de produto (#na-free-shipping-bar,
+     product.json) usa a mesma lógica.
+  3. Banner principal com link (slide_link): o tema embrulha a imagem num <a>,
+     e as regras "slideshow-slide > .slide__image-container" deixam de valer
+     (imagem encolhia e sobrava espaço branco). Repete as regras para o <a>.
+{%- endcomment -%}
+<style>
+  .na-discount-badge{display:none!important}
+  .na-cart-frete{margin:10px 0 4px;padding:10px 12px;border-radius:8px;background:#f3f7f3;text-align:center;font-family:var(--font-body--family),sans-serif}
+  .na-cart-frete p{margin:0 0 6px;font-size:13px;line-height:1.35;color:#222}
+  .na-cart-frete p strong{color:#1a7a1a}
+  .na-cart-frete__track{height:5px;border-radius:3px;background:rgba(0,0,0,.08);overflow:hidden}
+  .na-cart-frete__fill{height:100%;width:0;background:#1a7a1a;border-radius:3px;transition:width .4s ease}
+  .na-cart-frete[hidden]{display:none}
+  .cart-drawer__header + .na-cart-frete{margin:4px 20px 8px}
+  .na-frete-cep{display:flex;gap:6px;justify-content:center;align-items:center;margin:8px 0 2px;font-size:12.5px;color:#444}
+  .na-frete-cep input{width:110px;padding:6px 8px;border:1px solid #c9c9c9;border-radius:6px;font-size:13px;background:#fff;color:#222}
+  .na-frete-cep button{padding:6px 10px;border:0;border-radius:6px;background:#1a7a1a;color:#fff;font-size:12.5px;font-weight:600;cursor:pointer}
+  .na-frete-troca{background:none;border:0;padding:0;margin-left:4px;color:#555;font-size:12px;text-decoration:underline;cursor:pointer}
+  .na-frete-erro{color:#b3261e;font-size:12px;margin:4px 0 0}
+  slideshow-slide > a > .slide__image-container{display:flex;width:100%;height:100%;overflow:hidden;position:absolute;inset:0}
+  @media screen and (max-width:749px){
+    slideshow-slide > a > .slide__image-container{aspect-ratio:1196/1315;position:relative!important;height:auto!important}
+    slideshow-slide > a > .slide__image-container > .slide__image,slideshow-slide > a > .slide__image-container > picture{width:100%;position:relative!important;height:auto!important}
+    slideshow-slide > a > .slide__image-container > picture > img{width:100%;height:auto;display:block}
+  }
+</style>
+<script>
+  (function () {
+    var SS = 29900, OUTRAS = 39900;
+    // Faixas de CEP (5 primeiros dígitos) por estado
+    var FX = [[1000,19999,'SP'],[20000,28999,'RJ'],[29000,29999,'ES'],[30000,39999,'MG'],
+      [40000,48999,'BA'],[49000,49999,'SE'],[50000,56999,'PE'],[57000,57999,'AL'],[58000,58999,'PB'],
+      [59000,59999,'RN'],[60000,63999,'CE'],[64000,64999,'PI'],[65000,65999,'MA'],
+      [66000,68899,'PA'],[68900,68999,'AP'],[69000,69299,'AM'],[69300,69399,'RR'],[69400,69899,'AM'],[69900,69999,'AC'],
+      [70000,72799,'DF'],[72800,72999,'GO'],[73000,73699,'DF'],[73700,76799,'GO'],[76800,76999,'RO'],
+      [77000,77999,'TO'],[78000,78899,'MT'],[79000,79999,'MS'],
+      [80000,87999,'PR'],[88000,89999,'SC'],[90000,99999,'RS']];
+    var SUL_SUDESTE = 'SP RJ ES MG PR SC RS';
+    var total = null, erro = false;
+    function getCep() { try { return localStorage.getItem('na_cep') || ''; } catch (e) { return ''; } }
+    function setCep(v) { try { v ? localStorage.setItem('na_cep', v) : localStorage.removeItem('na_cep'); } catch (e) {} }
+    function uf(cep) {
+      var n = parseInt(String(cep).replace(/\D/g, '').slice(0, 5), 10);
+      for (var i = 0; i < FX.length; i++) if (n >= FX[i][0] && n <= FX[i][1]) return FX[i][2];
+      return '';
+    }
+    function meta(u) { return SUL_SUDESTE.indexOf(u) > -1 ? SS : OUTRAS; }
+    function fmt(c) { return 'R$ ' + (c / 100).toFixed(2).replace('.', ','); }
+    function form() {
+      return '<form class="na-frete-cep" data-na-cep><span>Seu CEP:</span>' +
+        '<input inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" aria-label="CEP">' +
+        '<button type="submit">OK</button></form>' + (erro ? '<p class="na-frete-erro">CEP não encontrado, confira os números</p>' : '');
+    }
+    // t = valor considerado (centavos); pre = prefixo ("" no carrinho, "Com esta peça, " no produto)
+    function msg(t, prod, comForm) {
+      var u = uf(getCep());
+      if (u) {
+        var M = meta(u), troca = comForm ? '<button type="button" class="na-frete-troca" data-na-troca>trocar CEP</button>' : '';
+        if (t >= M) return [(prod ? 'Levando esta peça, seu pedido tem ' : 'Seu pedido tem ') + '<strong>frete grátis</strong> para o seu CEP (' + u + ') ✅' + troca, 100];
+        return [(prod ? 'Com esta peça, faltam ' : 'Faltam ') + '<strong>' + fmt(M - t) + '</strong> para <strong>frete grátis</strong> no seu CEP (' + u + ')' + troca, Math.round(t / M * 100)];
+      }
+      var f = comForm ? form() : '';
+      if (t >= OUTRAS) return [(prod ? 'Levando esta peça, seu pedido tem ' : 'Seu pedido tem ') + '<strong>frete grátis</strong> no Sul e Sudeste e nas demais regiões ✅', 100];
+      if (t >= SS) return ['<strong>Frete grátis</strong> no Sul e Sudeste ✅<br>Nas demais regiões, faltam <strong>' + fmt(OUTRAS - t) + '</strong>' + f, Math.round(t / OUTRAS * 100)];
+      return [(prod ? 'Com esta peça, faltam ' : 'Faltam ') + '<strong>' + fmt(SS - t) + '</strong> para <strong>frete grátis</strong> no Sul e Sudeste<br>Nas demais regiões, frete grátis acima de R$ 399' + f, Math.round(t / SS * 100)];
+    }
+    function render(bar, textEl, fill, t, prod, comForm) {
+      var m = msg(t, prod, comForm);
+      if (bar.getAttribute('data-h') !== m[0]) { textEl.innerHTML = m[0]; bar.setAttribute('data-h', m[0]); }
+      fill.style.width = Math.min(100, m[1]) + '%';
+      bar.hidden = false;
+    }
+    function paint() {
+      document.querySelectorAll('.cart-drawer__header, .cart-page__title').forEach(function (a) {
+        var bar = a.nextElementSibling;
+        if (!bar || !bar.classList || !bar.classList.contains('na-cart-frete')) {
+          bar = document.createElement('div');
+          bar.className = 'na-cart-frete';
+          bar.hidden = true;
+          bar.innerHTML = '<div></div><div class="na-cart-frete__track"><div class="na-cart-frete__fill"></div></div>';
+          a.insertAdjacentElement('afterend', bar);
+        }
+        if (total === null || total === 0) { bar.hidden = true; return; }
+        render(bar, bar.firstElementChild, bar.querySelector('.na-cart-frete__fill'), total, false, true);
+      });
+      var pb = document.getElementById('na-free-shipping-bar');
+      if (pb && total !== null) {
+        var p = parseInt(pb.getAttribute('data-price') || '0', 10) || 0;
+        render(pb, document.getElementById('na-shipping-bar-message'), document.getElementById('na-shipping-bar-fill'), total + p, true, false);
+      }
+    }
+    document.addEventListener('submit', function (e) {
+      var f = e.target.closest && e.target.closest('[data-na-cep]');
+      if (!f) return;
+      e.preventDefault();
+      var v = f.querySelector('input').value.replace(/\D/g, '');
+      if (v.length === 8 && uf(v)) { erro = false; setCep(v); } else { erro = true; }
+      document.querySelectorAll('.na-cart-frete, #na-free-shipping-bar').forEach(function (b) { b.removeAttribute('data-h'); });
+      paint();
+    });
+    document.addEventListener('click', function (e) {
+      if (!(e.target.closest && e.target.closest('[data-na-troca]'))) return;
+      e.preventDefault();
+      setCep(''); erro = false;
+      document.querySelectorAll('.na-cart-frete, #na-free-shipping-bar').forEach(function (b) { b.removeAttribute('data-h'); });
+      paint();
+    });
+    function refresh() {
+      fetch('/cart.js', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (c) { total = c.total_price; paint(); })
+        .catch(function () { if (total === null) { total = 0; paint(); } });
+    }
+    var t;
+    new MutationObserver(function () { clearTimeout(t); t = setTimeout(paint, 60); })
+      .observe(document.body, { childList: true, subtree: true });
+    document.addEventListener('cart:update', function () { setTimeout(refresh, 150); });
+    refresh();
+  })();
+</script>

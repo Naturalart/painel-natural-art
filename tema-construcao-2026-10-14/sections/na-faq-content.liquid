@@ -1,0 +1,77 @@
+{% comment %} FAQ completo Natural Art {% endcomment %}
+<div class="na-faq">
+<div class="na-faq-tabs" role="tablist">
+  <button type="button" class="na-faq-tab is-active" data-faq-tab="produtos" role="tab" aria-selected="true">Nossos Produtos</button>
+  <button type="button" class="na-faq-tab" data-faq-tab="pagamento" role="tab" aria-selected="false">Pag &amp; Envios</button>
+  <button type="button" class="na-faq-tab" data-faq-tab="trocas" role="tab" aria-selected="false">Trocas &amp; Devoluções</button>
+</div>
+
+<div class="na-faq-panel is-active" data-faq-panel="produtos">
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>Posso entrar no mar com a Walk?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p>Não. Para o mar, veja a Híbrida.</p></div></div>
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>Qual tamanho eu peço?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p>Use a tabela; se ficar entre dois, peça o maior: a troca é grátis.</p></div></div>
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>Posso confiar na loja?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p>Sim. Nascida no surf em 1971, com loja física em Santos-SP. Mais de 4.500 clientes na loja online. Vendida também em lojas multimarcas.</p></div></div>
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>Qual é a diferença entre boardshort, híbrida e walk?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p><strong>Boardshort:</strong> Para o mar. Para o surf.<br><strong>Híbrida:</strong> Do mar ao almoço, sem trocar de roupa.<br><strong>Walk:</strong> Alinhada como calça. Livre como bermuda. Do almoço à reunião, da viagem ao fim de semana.</p></div></div>
+</div>
+
+<div class="na-faq-panel" data-faq-panel="pagamento">
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>Como posso pagar?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p>Cartão em até 6x sem juros (parcela mínima de R$50) ou Pix com 5% de desconto.</p></div></div>
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>Como rastreio meu pedido?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p>Você recebe o código de rastreio por e-mail após a confirmação do pagamento.</p></div></div>
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>Frete grátis?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p>Sim. Frete grátis a partir de R$299 (Sul e Sudeste) e R$399 (demais regiões). Abaixo desses valores, o frete é calculado no checkout pelo seu CEP.</p></div></div>
+</div>
+
+<div class="na-faq-panel" data-faq-panel="trocas">
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>E se o tamanho não servir?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p>Troca em até 30 dias. Primeira troca grátis. Produto tem que estar sem uso, com etiqueta. <a href="/pages/use-para-trocas-e-devolucoes" class="na-faq-link">Clique aqui</a> pra pedir.</p></div></div>
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>Posso devolver e receber o dinheiro de volta?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p>Sim, em até 7 dias após receber o produto, sem precisar dar explicação.</p></div></div>
+  <div class="na-faq-item"><button type="button" class="na-faq-question"><span>Quanto tempo pro reembolso cair?</span><span class="na-faq-icon">+</span></button><div class="na-faq-answer"><p>A gente processa em até 5 dias úteis após receber o produto. No cartão pode levar até 2 faturas dependendo da operadora.</p></div></div>
+</div>
+</div>
+
+<style>
+.na-faq{width:100%;padding:32px 0;font-family:var(--font-body--family);}
+.na-faq-tabs{display:flex;justify-content:center;align-items:center;gap:2px;background:#f5f5f5;border-radius:999px;padding:6px;max-width:100%;overflow-x:auto;margin:0 0 24px 0;}
+.na-faq-tab{flex:0 0 auto;border:none;background:transparent;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:600;color:#333;cursor:pointer;white-space:nowrap;font-family:inherit;}
+.na-faq-tab.is-active{background:#1a1a1a;color:#fff;}
+.na-faq-panel{display:none;}.na-faq-panel.is-active{display:block;}
+.na-faq-item{border-bottom:1px solid #e5e5e5;}.na-faq-item:first-child{border-top:1px solid #e5e5e5;}
+.na-faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:none;border:none;text-align:left;padding:16px 4px;font-size:14px;font-weight:700;color:#1a1a1a;cursor:pointer;font-family:inherit;}
+.na-faq-icon{flex:0 0 auto;font-size:18px;font-weight:400;color:#1a1a1a;line-height:1;}
+.na-faq-item.is-open .na-faq-icon{transform:rotate(45deg);}
+.na-faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
+.na-faq-answer p{margin:0;padding:0 4px 16px 4px;font-size:13px;line-height:1.6;color:#555;}
+.na-faq-link{color:#1a1a1a;font-weight:700;text-decoration:underline;}
+@media(max-width:749px){.na-faq-tab{padding:12px;font-size:12px;min-height:44px;display:flex;align-items:center;}.na-faq-question{font-size:13px;min-height:44px;}}
+</style>
+
+<script>
+(function(){
+  function initFaq(root){
+    if(!root||root.dataset.faqInit==='1')return;
+    root.dataset.faqInit='1';
+    var tabs=root.querySelectorAll('.na-faq-tab');
+    var panels=root.querySelectorAll('.na-faq-panel');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click',function(){
+        var target=tab.getAttribute('data-faq-tab');
+        tabs.forEach(function(t){var a=t===tab;t.classList.toggle('is-active',a);t.setAttribute('aria-selected',a?'true':'false');});
+        panels.forEach(function(p){p.classList.toggle('is-active',p.getAttribute('data-faq-panel')===target);});
+      });
+    });
+    root.querySelectorAll('.na-faq-question').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var item=btn.closest('.na-faq-item');
+        var ans=item.querySelector('.na-faq-answer');
+        var open=item.classList.contains('is-open');
+        if(open){item.classList.remove('is-open');ans.style.maxHeight=null;}
+        else{item.classList.add('is-open');ans.style.maxHeight=ans.scrollHeight+'px';}
+      });
+    });
+  }
+  function initAll(){document.querySelectorAll('.na-faq').forEach(initFaq);}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initAll);}else{initAll();}
+  document.addEventListener('shopify:section:load',initAll);
+})();
+</script>
+
+{% schema %}
+{"name": "FAQ Natural Art", "settings": [], "presets": [{"name": "FAQ Natural Art"}]}
+{% endschema %}
