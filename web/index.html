@@ -621,10 +621,10 @@ async function carregar(){
 }
 
 /* ---------- saúde das atualizações ---------- */
-const FONTES=[['shopify','Shopify','vendas, sessões, produtos',2],['meta','Meta Ads','verba das duas contas por campanha',2],
-  ['nuvemshop','Nuvemshop','vendas e etiquetas do Nuvem Envio',8],['yampi','Yampi','checkouts, carrinhos, Pix x cartão',8],
-  ['clarity','Clarity','comportamento no site',8],['bling','Bling','custo por SKU e estoque e-commerce',8],
-  ['melhorenvio','Melhor Envio','etiquetas reais da Shopify',8]];
+const FONTES=[['shopify','Shopify','vendas, sessões, produtos',9],['meta','Meta Ads','verba das duas contas por campanha',9],
+  ['nuvemshop','Nuvemshop','vendas e etiquetas do Nuvem Envio',13],['yampi','Yampi','checkouts, carrinhos, Pix x cartão',13],
+  ['clarity','Clarity','comportamento no site',13],['bling','Bling','custo por SKU e estoque e-commerce',13],
+  ['melhorenvio','Melhor Envio','etiquetas reais da Shopify',13]];
 function renderSaude(){
   const hora=t=>new Date(t).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ});
   $('t-saude').innerHTML=FONTES.map(([k,nome,o,lim])=>{
