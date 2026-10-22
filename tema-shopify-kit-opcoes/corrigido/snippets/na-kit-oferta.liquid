@@ -1,0 +1,205 @@
+{%- comment -%}
+  Natural Art: oferta de kit na página da bermuda avulsa ("Leve 2 por R$ X").
+  Mapa: handle do produto avulso -> kits candidatos "handle;qtd;cores", separados por "|".
+  Usa o primeiro kit publicado e com estoque; se nenhum estiver no ar, o bloco não aparece.
+  22/10 (pedido do Lucas): na página do KIT mostra "Outras opções" da mesma bermuda,
+  até 2 linhas (outro kit ou a peça avulsa), no mesmo visual. Mapa: handle do kit ->
+  opções "tipo;handle;qtd;texto", tipo k = kit, a = avulsa. Opção fora do ar ou sem estoque some.
+{%- endcomment -%}
+{%- liquid
+  assign k3_flat = 'compre-1-leve-3-bermudas-passeio-walk-flat-20-preto-verde-e-cinza;3;Preto, Verde e Cinza'
+  assign k2_flat = 'kit-2-bermudas-passeio-walk-flat-20-preto-e-verde;2;Preto e Verde'
+  assign k2_ibiza = 'compre-1-leve-2-bermudas-passeio-walk-ibiza-20-marinho-e-verde;2;Marinho e Verde'
+  assign k2_pocket = 'kit-2-bermudas-passeio-walk-pocket-20-bege-e-preto;2;Bege e Preto'
+  assign k2_hib = 'kit-2-bermudas-hibridas-20-clear-vermelho-e-neo-blend-chumbo;2;Clear Vermelho e Neo Blend Chumbo'
+  assign k2_stripe = 'kit-2-bermudas-hibridas-20-stripe-cinza-e-neo-blend-chumbo;2;Stripe Cinza e Neo Blend Chumbo'
+  assign k3_hib = 'kit-3-bermudas-hibridas-20-clear-vermelho-neo-blend-chumbo-e-stripe-chumbo;3;Clear, Neo Blend e Stripe'
+  assign k2_pc_cinza = 'kit-praia-e-cidade-20-walk-flat-cinza-e-hibrida-neo-blend-chumbo;2;Walk Flat Cinza e Híbrida Neo Blend'
+  assign k2_deep = 'kit-2-bermudas-elastico-deep-18-preto-e-caqui;2;Preto e Caqui'
+  assign k3_elastico = 'kit-3-bermudas-elastico-18-deep-preto-deep-caqui-e-degrade-logos;3;Deep Preto, Deep Caqui e Degradê'
+
+  assign candidatos = ''
+  unless product.tags contains 'sem-cupom-kit'
+    case product.handle
+      when 'bermuda-passeio-walk-flat-20', 'bermuda-passeio-walk-flat-20-verde-f2nrl'
+        assign candidatos = k2_flat | append: '|' | append: k3_flat
+      when 'bermuda-passeio-walk-flat-20-cinza'
+        assign candidatos = k2_pc_cinza | append: '|' | append: k3_flat
+      when 'bermuda-passeio-walk-pocket-20-bege-9bx16', 'bermuda-passeio-walk-pocket-20-preto-1e81f'
+        assign candidatos = k2_pocket
+      when 'bermuda-c-bolso-hibrida-clear-20-vermelho-1itws', 'bermuda-c-bolso-hybrida-neo-blend-20-chumbo-il7al'
+        assign candidatos = k2_hib | append: '|' | append: k3_hib
+      when 'bermuda-c-bolso-hybrida-stripes-20-14vyf'
+        assign candidatos = k2_stripe
+      when 'bermuda-c-bolso-hybrida-stripes-20-chumbo-1k1j6'
+        assign candidatos = k3_hib
+      when 'bermuda-elastico-deep-18', 'bermuda-elastico-deep-19'
+        assign candidatos = k2_deep | append: '|' | append: k3_elastico
+      when 'shorts-elastico-degrade-logos-18-azul'
+        assign candidatos = k3_elastico
+      else
+        if product.handle contains 'walk-flat'
+          assign candidatos = k2_flat | append: '|' | append: k3_flat
+        elsif product.handle contains 'walk-ibiza'
+          assign candidatos = k2_ibiza
+        endif
+    endcase
+  endunless
+
+  assign opcoes = ''
+  if product.tags contains 'sem-cupom-kit'
+    assign o_k3_flat = 'k;compre-1-leve-3-bermudas-passeio-walk-flat-20-preto-verde-e-cinza;3;Walk Flat Preto, Verde e Cinza'
+    assign o_k2_flat = 'k;kit-2-bermudas-passeio-walk-flat-20-preto-e-verde;2;Walk Flat Preto e Verde'
+    assign o_k3_mix = 'k;kit-3-bermudas-passeio-walk-20-2-flat-e-1-ibiza-preto-cinza-e-verde;3;2 Walk Flat e 1 Walk Ibiza'
+    assign o_k2_hib = 'k;kit-2-bermudas-hibridas-20-clear-vermelho-e-neo-blend-chumbo;2;Clear Vermelho e Neo Blend Chumbo'
+    assign o_k3_hib = 'k;kit-3-bermudas-hibridas-20-clear-vermelho-neo-blend-chumbo-e-stripe-chumbo;3;Clear, Neo Blend e Stripe'
+    assign o_k2_deep = 'k;kit-2-bermudas-elastico-deep-18-preto-e-caqui;2;Deep Preto e Caqui'
+    assign o_k3_elastico = 'k;kit-3-bermudas-elastico-18-deep-preto-deep-caqui-e-degrade-logos;3;Deep Preto, Deep Caqui e Degradê'
+    assign o_a_flat = 'a;bermuda-passeio-walk-flat-20;1;Walk Flat 20" Preto (tem também Verde e Cinza)'
+    assign o_a_flat_cinza = 'a;bermuda-passeio-walk-flat-20-cinza;1;Walk Flat 20" Cinza'
+    assign o_a_flat_verde = 'a;bermuda-passeio-walk-flat-20-verde-f2nrl;1;Walk Flat 20" Verde'
+    assign o_a_ibiza = 'a;bermuda-passeio-walk-ibiza-20-marinho-7xd9m;1;Walk Ibiza 20" Marinho (tem também Verde)'
+    assign o_a_pocket_bege = 'a;bermuda-passeio-walk-pocket-20-bege-9bx16;1;Walk Pocket 20" Bege'
+    assign o_a_pocket_preto = 'a;bermuda-passeio-walk-pocket-20-preto-1e81f;1;Walk Pocket 20" Preto'
+    assign o_a_clear = 'a;bermuda-c-bolso-hibrida-clear-20-vermelho-1itws;1;Híbrida Clear 20" Vermelho'
+    assign o_a_neo = 'a;bermuda-c-bolso-hybrida-neo-blend-20-chumbo-il7al;1;Híbrida Neo Blend 20" Chumbo'
+    assign o_a_deep = 'a;bermuda-elastico-deep-18;1;Elástico Deep 18"'
+    case product.handle
+      when 'compre-1-leve-3-bermudas-passeio-walk-flat-20-preto-verde-e-cinza'
+        assign opcoes = o_k2_flat | append: '|' | append: o_a_flat
+      when 'kit-2-bermudas-passeio-walk-flat-20-preto-e-verde'
+        assign opcoes = o_k3_flat | append: '|' | append: o_a_flat
+      when 'kit-3-bermudas-passeio-walk-20-2-flat-e-1-ibiza-preto-cinza-e-verde'
+        assign opcoes = o_k3_flat | append: '|' | append: o_k2_flat | append: '|' | append: o_a_flat
+      when 'kit-4-bermudas-passeio-walk-20-uma-para-cada-dia'
+        assign opcoes = o_k3_flat | append: '|' | append: o_k2_flat
+      when 'compre-1-leve-2-bermudas-passeio-walk-ibiza-20-marinho-e-verde'
+        assign opcoes = o_a_ibiza | append: '|' | append: o_k3_mix
+      when 'kit-2-bermudas-passeio-walk-pocket-20-bege-e-preto'
+        assign opcoes = o_a_pocket_bege | append: '|' | append: o_a_pocket_preto
+      when 'kit-2-bermudas-hibridas-20-clear-vermelho-e-neo-blend-chumbo'
+        assign opcoes = o_k3_hib | append: '|' | append: o_a_clear | append: '|' | append: o_a_neo
+      when 'kit-2-bermudas-hibridas-20-stripe-cinza-e-neo-blend-chumbo'
+        assign opcoes = o_k3_hib | append: '|' | append: o_k2_hib | append: '|' | append: o_a_neo
+      when 'kit-3-bermudas-hibridas-20-clear-vermelho-neo-blend-chumbo-e-stripe-chumbo'
+        assign opcoes = o_k2_hib | append: '|' | append: o_a_clear
+      when 'kit-praia-e-cidade-20-walk-flat-cinza-e-hibrida-neo-blend-chumbo'
+        assign opcoes = o_a_flat_cinza | append: '|' | append: o_a_neo
+      when 'kit-praia-e-cidade-20-walk-flat-verde-e-hibrida-clear-vermelho'
+        assign opcoes = o_a_flat_verde | append: '|' | append: o_a_clear
+      when 'kit-2-bermudas-elastico-deep-18-preto-e-caqui'
+        assign opcoes = o_k3_elastico | append: '|' | append: o_a_deep
+      when 'kit-3-bermudas-elastico-18-deep-preto-deep-caqui-e-degrade-logos'
+        assign opcoes = o_k2_deep | append: '|' | append: o_a_deep
+    endcase
+  endif
+
+  assign kit = blank
+  assign lista = candidatos | split: '|'
+  for c in lista
+    assign partes = c | split: ';'
+    assign k = all_products[partes[0]]
+    if k != blank and k.available
+      assign kit = k
+      assign kit_qtd = partes[1] | plus: 0
+      assign kit_cores = partes[2]
+      break
+    endif
+  endfor
+-%}
+{%- if kit != blank and kit.available -%}
+  {%- liquid
+    if kit.compare_at_price > kit.price
+      assign economia = kit.compare_at_price | minus: kit.price
+    else
+      assign unit = product.selected_or_first_available_variant.price
+      assign avulsas = unit | times: kit_qtd
+      assign economia = avulsas | minus: kit.price
+    endif
+    assign cada = kit.price | divided_by: kit_qtd
+  -%}
+  <a class="na-kit-oferta" href="{{ kit.url }}">
+    <span class="na-kit-oferta__tag">Kit</span>
+    <span class="na-kit-oferta__txt">
+      <strong>Leve {{ kit_qtd }} por {{ kit.price | money }}</strong>
+      <span>{{ kit_cores }} · sai {{ cada | money }} cada{% if economia > 0 %} · economize {{ economia | money }}{% endif %}</span>
+    </span>
+    <span class="na-kit-oferta__cta">Ver kit →</span>
+  </a>
+{%- endif -%}
+{%- liquid
+  assign na_mostradas = 0
+  assign na_opcoes = opcoes | split: '|'
+-%}
+{%- capture na_linhas -%}
+  {%- for o in na_opcoes -%}
+    {%- if na_mostradas >= 2 -%}{%- break -%}{%- endif -%}
+    {%- liquid
+      assign op = o | split: ';'
+      assign alvo = all_products[op[1]]
+      assign ok = false
+      if alvo != blank and alvo.available and alvo.handle != product.handle
+        assign ok = true
+      endif
+    -%}
+    {%- if ok -%}
+      {%- assign na_mostradas = na_mostradas | plus: 1 -%}
+      {%- if op[0] == 'k' -%}
+        {%- liquid
+          assign o_qtd = op[2] | plus: 0
+          assign o_cada = alvo.price | divided_by: o_qtd
+          assign o_eco = 0
+          if alvo.compare_at_price > alvo.price
+            assign o_eco = alvo.compare_at_price | minus: alvo.price
+          endif
+        -%}
+        <a class="na-kit-oferta" href="{{ alvo.url }}">
+          <span class="na-kit-oferta__tag">Kit</span>
+          <span class="na-kit-oferta__txt">
+            <strong>Leve {{ o_qtd }} por {{ alvo.price | money }}</strong>
+            <span>{{ op[3] }} · sai {{ o_cada | money }} cada{% if o_eco > 0 %} · economize {{ o_eco | money }}{% endif %}</span>
+          </span>
+          <span class="na-kit-oferta__cta">Ver kit →</span>
+        </a>
+      {%- else -%}
+        <a class="na-kit-oferta na-kit-oferta--avulsa" href="{{ alvo.url }}">
+          <span class="na-kit-oferta__tag">1 peça</span>
+          <span class="na-kit-oferta__txt">
+            <strong>Só 1 por {{ alvo.price | money }}</strong>
+            <span>{{ op[3] }}</span>
+          </span>
+          <span class="na-kit-oferta__cta">Ver →</span>
+        </a>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if na_mostradas > 0 -%}
+  <div class="na-kit-opcoes">
+    <p class="na-kit-opcoes__titulo">Outras opções</p>
+    {{ na_linhas }}
+  </div>
+{%- endif -%}
+{%- liquid
+  assign na_estilo = false
+  if kit != blank and kit.available
+    assign na_estilo = true
+  endif
+  if na_mostradas > 0
+    assign na_estilo = true
+  endif
+-%}
+{%- if na_estilo -%}
+  <style>
+    .na-kit-oferta{display:flex;align-items:center;gap:12px;margin:6px 0 4px;padding:12px 14px;border:1.5px solid #1a7a1a;border-radius:10px;background:#f3f7f3;color:#111;text-decoration:none;font-family:var(--font-body--family),sans-serif}
+    .na-kit-oferta__tag{flex-shrink:0;background:#1a7a1a;color:#fff;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+    .na-kit-oferta__txt{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+    .na-kit-oferta__txt strong{font-size:15px}
+    .na-kit-oferta__txt span{font-size:12px;color:#444}
+    .na-kit-oferta__cta{flex-shrink:0;font-size:13px;font-weight:700;color:#1a7a1a;white-space:nowrap}
+    .na-kit-oferta--avulsa{border-color:#c9d3c9;background:#fff}
+    .na-kit-oferta--avulsa .na-kit-oferta__tag{background:#fff;color:#1a7a1a;border:1px solid #1a7a1a}
+    .na-kit-opcoes{margin:8px 0 4px}
+    .na-kit-opcoes__titulo{margin:0 0 2px;font-size:13px;font-weight:700;color:#111;font-family:var(--font-body--family),sans-serif}
+  </style>
+{%- endif -%}
