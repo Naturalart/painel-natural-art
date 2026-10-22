@@ -7,27 +7,31 @@
   # 22/10: o vídeo da bolinha vem do campo do produto "Vídeo da bolinha (kit)"
   # (custom.video_bolinha). Kit sem vídeo nesse campo não mostra bolinha.
   assign na_kit_vid = product.metafields.custom.video_bolinha.value
-  # A Shopify só entrega ao tema o mp4 de 1080p; as versões de 480p (bolinha) e
-  # 720p (vídeo aberto) existem no mesmo endereço com outro nome. Se uma delas
-  # não carregar, o script volta para o 1080p (data-fallback).
+  # "Vídeo curto da bolinha (opcional)" (custom.video_bolinha_loop): clipe leve
+  # (~70 KB) que roda em repetição dentro da bolinha. Sem ele, a bolinha mostra
+  # só a capa do vídeo, sem baixar nada até o cliente tocar.
+  assign na_loop_file = product.metafields.custom.video_bolinha_loop.value
+  # A Shopify só entrega ao tema o mp4 de 1080p; a versão de 720p (vídeo aberto)
+  # existe no mesmo endereço com outro nome. Se ela não carregar, o script volta
+  # para o 1080p (data-fallback).
   assign na_mp4 = ''
   assign na_loop_src = ''
   assign na_full_src = ''
   assign na_poster = ''
+  assign na_poster_full = ''
   if na_kit_vid != blank
     for s in na_kit_vid.sources
       if s.format == 'mp4' and na_mp4 == ''
         assign na_mp4 = s.url
       endif
     endfor
-    assign na_loop_src = na_mp4
-    assign na_full_src = na_mp4
-    if na_mp4 contains 'HD-1080p-7.2Mbps'
-      assign na_loop_src = na_mp4 | replace: 'HD-1080p-7.2Mbps', 'SD-480p-1.5Mbps'
-      assign na_full_src = na_mp4 | replace: 'HD-1080p-7.2Mbps', 'HD-720p-4.5Mbps'
-    endif
+    assign na_full_src = na_mp4 | replace: 'HD-1080p-7.2Mbps', 'HD-720p-4.5Mbps'
     if na_kit_vid.preview_image
       assign na_poster = na_kit_vid.preview_image | image_url: width: 160
+      assign na_poster_full = na_kit_vid.preview_image | image_url: width: 720
+    endif
+    if na_loop_file != blank and na_loop_file.url != blank
+      assign na_loop_src = na_loop_file.url
     endif
   endif
 %}
@@ -36,7 +40,7 @@
   - A barra de frete por CEP (R$299 Sul/Sudeste, R$399 demais regiões) já está correta,
     então a página do kit deixa de escondê-la e não mostra mais o aviso fixo
     "Demais regiões, cote o frete no checkout".
-  - O vídeo da bolinha (271 KB) só começa a baixar depois que a página terminou de carregar,
+  - O vídeo curto da bolinha só começa a baixar depois que a página terminou de carregar,
     para não disputar banda com a foto principal do kit.
 {% endcomment %}
 {% if na_kit_active %}
@@ -148,14 +152,13 @@
   }
 </style>
 
-{% if na_loop_src != '' %}
+{% if na_mp4 != '' %}
 <div id="na-kit-vbubble">
   <div id="na-kit-vbubble-ring"></div>
   <button id="na-kit-vbubble-btn" type="button" aria-label="Ver vídeo">
     <video
       id="na-kit-vbubble-video"
-      data-src="{{ na_loop_src }}"
-      data-fallback="{{ na_mp4 }}"
+      {% if na_loop_src != '' %}data-src="{{ na_loop_src }}"{% endif %}
       {% if na_poster != '' %}poster="{{ na_poster }}"{% endif %}
       loop
       muted
@@ -178,6 +181,7 @@
       id="na-kit-vmodal-video"
       src="{{ na_full_src }}"
       data-fallback="{{ na_mp4 }}"
+      {% if na_poster_full != '' %}poster="{{ na_poster_full }}"{% endif %}
       controls
       playsinline
       preload="none"
@@ -194,26 +198,20 @@
     var loop = document.getElementById('na-kit-vbubble-video');
     if (!btn || !modal || !video) return;
 
-    /* Se a versão menor do vídeo não existir, usa a de 1080p */
-    [loop, video].forEach(function (v) {
-      if (!v) return;
-      v.addEventListener('error', function () {
-        var fb = v.getAttribute('data-fallback');
-        if (fb && v.getAttribute('src') !== fb) {
-          v.setAttribute('src', fb);
-          if (v === loop) v.play().catch(function () {});
-        }
-      });
+    /* Se o vídeo de 720p não existir, usa o de 1080p */
+    video.addEventListener('error', function () {
+      var fb = video.getAttribute('data-fallback');
+      if (fb && video.getAttribute('src') !== fb) {
+        video.setAttribute('src', fb);
+        if (modal.classList.contains('na-kit-open')) video.play().catch(function () {});
+      }
     });
 
-    /* Carrega o vídeo da bolinha só depois da página pronta */
+    /* Carrega o vídeo curto da bolinha só depois da página pronta.
+       Sem vídeo curto cadastrado, a bolinha fica só com a capa. */
     function startLoop() {
-      if (!loop || loop.getAttribute('src')) return;
+      if (!loop || loop.getAttribute('src') || !loop.getAttribute('data-src')) return;
       loop.setAttribute('src', loop.getAttribute('data-src'));
-      /* Na bolinha roda só o começo do vídeo (6 s) em repetição, para baixar pouco */
-      loop.addEventListener('timeupdate', function () {
-        if (loop.currentTime > 6) loop.currentTime = 0;
-      });
       loop.play().catch(function () {});
     }
     function scheduleLoop() {
