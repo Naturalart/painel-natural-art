@@ -7,26 +7,24 @@
   # 22/10: o vídeo da bolinha vem do campo do produto "Vídeo da bolinha (kit)"
   # (custom.video_bolinha). Kit sem vídeo nesse campo não mostra bolinha.
   assign na_kit_vid = product.metafields.custom.video_bolinha.value
+  # A Shopify só entrega ao tema o mp4 de 1080p; as versões de 480p (bolinha) e
+  # 720p (vídeo aberto) existem no mesmo endereço com outro nome. Se uma delas
+  # não carregar, o script volta para o 1080p (data-fallback).
+  assign na_mp4 = ''
   assign na_loop_src = ''
   assign na_full_src = ''
   assign na_poster = ''
   if na_kit_vid != blank
-    assign na_loop_h = 99999
-    assign na_full_h = 0
     for s in na_kit_vid.sources
-      if s.format == 'mp4'
-        if s.height < na_loop_h
-          assign na_loop_h = s.height
-          assign na_loop_src = s.url
-        endif
-        if s.height <= 720 and s.height > na_full_h
-          assign na_full_h = s.height
-          assign na_full_src = s.url
-        endif
+      if s.format == 'mp4' and na_mp4 == ''
+        assign na_mp4 = s.url
       endif
     endfor
-    if na_full_src == ''
-      assign na_full_src = na_loop_src
+    assign na_loop_src = na_mp4
+    assign na_full_src = na_mp4
+    if na_mp4 contains 'HD-1080p-7.2Mbps'
+      assign na_loop_src = na_mp4 | replace: 'HD-1080p-7.2Mbps', 'SD-480p-1.5Mbps'
+      assign na_full_src = na_mp4 | replace: 'HD-1080p-7.2Mbps', 'HD-720p-4.5Mbps'
     endif
     if na_kit_vid.preview_image
       assign na_poster = na_kit_vid.preview_image | image_url: width: 160
@@ -157,6 +155,7 @@
     <video
       id="na-kit-vbubble-video"
       data-src="{{ na_loop_src }}"
+      data-fallback="{{ na_mp4 }}"
       {% if na_poster != '' %}poster="{{ na_poster }}"{% endif %}
       loop
       muted
@@ -178,6 +177,7 @@
     <video
       id="na-kit-vmodal-video"
       src="{{ na_full_src }}"
+      data-fallback="{{ na_mp4 }}"
       controls
       playsinline
       preload="none"
@@ -193,6 +193,18 @@
     var closeBtn = document.getElementById('na-kit-vmodal-close');
     var loop = document.getElementById('na-kit-vbubble-video');
     if (!btn || !modal || !video) return;
+
+    /* Se a versão menor do vídeo não existir, usa a de 1080p */
+    [loop, video].forEach(function (v) {
+      if (!v) return;
+      v.addEventListener('error', function () {
+        var fb = v.getAttribute('data-fallback');
+        if (fb && v.getAttribute('src') !== fb) {
+          v.setAttribute('src', fb);
+          if (v === loop) v.play().catch(function () {});
+        }
+      });
+    });
 
     /* Carrega o vídeo da bolinha só depois da página pronta */
     function startLoop() {
